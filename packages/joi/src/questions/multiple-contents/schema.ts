@@ -1,5 +1,5 @@
 import { markKeysForbidden } from "../../helper";
-import Joi from "@hapi/joi";
+import Joi from "joi";
 import {
 	CommonQuestionPartsSchema,
 	TextStatementSchema,
@@ -20,7 +20,7 @@ import {
 	RSortItemsContentSchema,
 	SortItemsContentSchema,
 } from "../sort-items/schema";
-import { ContentType } from "../../../content/questions/common-schemas";
+import { ContentType } from "m-tests-core/lib/questions/common-schemas";
 
 export const MultipleContentsSchema = CommonQuestionPartsSchema.keys({
 	type: Joi.number()

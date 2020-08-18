@@ -1,6 +1,6 @@
-import Joi from "@hapi/joi";
-import { ContentType } from "../../../content/questions/common-schemas";
-import { MCContentDesignStructures } from "../../../content/questions/multiple-choice/types";
+import Joi from "joi";
+import { ContentType } from "m-tests-core/lib/questions/common-schemas";
+import { MCContentDesignStructures } from "m-tests-core/lib/questions/multiple-choice/types";
 import { CommonQuestionPartsSchema, StatementSchema } from "../common-schemas";
 
 export const MultipleChoiceContentSchema = CommonQuestionPartsSchema.keys({

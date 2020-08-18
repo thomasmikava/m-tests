@@ -1,7 +1,7 @@
-import Joi from "@hapi/joi";
+import Joi from "joi";
 import { CommonQuestionPartsSchema, StatementSchema } from "../common-schemas";
-import { ContentType } from "../../../content/questions/common-schemas";
-import { RelationTypes } from "../../../content/questions/grouping-items/types";
+import { ContentType } from "m-tests-core/lib/questions/common-schemas";
+import { RelationTypes } from "m-tests-core/lib/questions/grouping-items/types";
 import { markKeysForbidden } from "../../helper";
 
 export const GroupingItemsContentSchema = CommonQuestionPartsSchema.keys({

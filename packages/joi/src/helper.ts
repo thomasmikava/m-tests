@@ -1,4 +1,4 @@
-import { AnySchema } from "@hapi/joi";
+import { AnySchema } from "joi";
 
 export const markKeysOptional = (schema: AnySchema) => schema.optional();
 export const markKeysForbidden = (schema: AnySchema) => schema.forbidden();

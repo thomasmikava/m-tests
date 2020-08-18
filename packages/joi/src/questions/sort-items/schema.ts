@@ -1,10 +1,10 @@
 import { markKeysForbidden } from "../../helper";
-import Joi from "@hapi/joi";
+import Joi from "joi";
 import { CommonQuestionPartsSchema, StatementSchema } from "../common-schemas";
 import {
 	forbiddenProperties,
 	ContentType,
-} from "../../../content/questions/common-schemas";
+} from "m-tests-core/lib/questions/common-schemas";
 
 export const SortItemsContentSchema = CommonQuestionPartsSchema.keys({
 	type: Joi.number()

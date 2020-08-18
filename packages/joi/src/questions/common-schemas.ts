@@ -1,8 +1,8 @@
-import Joi from "@hapi/joi";
+import Joi from "joi";
 import {
 	ContentTypesFields,
 	ContentType,
-} from "../../content/questions/common-schemas";
+} from "m-tests-core/lib/questions/common-schemas";
 
 ///
 

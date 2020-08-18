@@ -4,11 +4,11 @@ import {
 	FBContentDesignStructures,
 	CheckerTypeFields,
 	FBInputSizes,
-} from "../../../content/questions/filling-blanks/types";
-import Joi from "@hapi/joi";
+} from "m-tests-core/lib/questions/filling-blanks/types";
+import Joi from "joi";
 import { CommonQuestionPartsSchema, StatementSchema } from "../common-schemas";
-import { ContentType } from "../../../content/questions/common-schemas";
-import { markKeysForbidden } from "new-tests/schemas/helper";
+import { ContentType } from "m-tests-core/lib/questions/common-schemas";
+import { markKeysForbidden } from "../../helper";
 
 ///
 
