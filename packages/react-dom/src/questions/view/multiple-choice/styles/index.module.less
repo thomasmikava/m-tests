@@ -1,0 +1,87 @@
+.choices-container {
+	margin: 1em 0;
+}
+
+.choice-container {
+	display: flex;
+	margin: 0.5em 0;
+	width: fit-content;
+}
+
+.choice-text-container {
+	display: flex;
+	align-items: center;
+	display: flex;
+	align-items: center;
+	padding-left: 0.5em;
+}
+
+.choice-decoration-container {
+	width: 2em;
+	height: 2em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: 1px solid #ccc;
+	border-radius: 2em;
+}
+
+.choice-decoration-container > svg {
+	font-size: 1.5em;
+}
+
+.choice-can-select-multiple .choice-decoration-container {
+	border-radius: 0.2em;
+}
+
+.choice-container:not(.disabled-choice) {
+	cursor: pointer;
+}
+
+@correct-bg-color: #11b811;
+@correct-color: white;
+
+@partially-checked-correct-bg-color: #97b811;
+@partially-checked-correct-color: white;
+
+@unchecked-correct-answer-bg-color: transparent;
+@unchecked-correct-answer-color: #118ab8;
+
+@globally-unchecked-correct-answer-bg-color: transparent;
+@globally-unchecked-correct-answer-color: #b81111;
+
+@incorrect-bg-color: #b81111;
+@incorrect-color: white;
+
+.checked-choice.correct-choice.fully-correctly-answered
+	.choice-decoration-container {
+	background: @correct-bg-color;
+	color: @correct-color;
+	border-color: @correct-bg-color;
+}
+
+.checked-choice.correct-choice:not(.fully-correctly-answered)
+	.choice-decoration-container {
+	background: @partially-checked-correct-bg-color;
+	color: @partially-checked-correct-color;
+	border-color: @partially-checked-correct-bg-color;
+}
+
+.correct-choice:not(.checked-choice):not(.unanswered)
+	.choice-decoration-container {
+	background: @unchecked-correct-answer-bg-color;
+	color: @unchecked-correct-answer-color;
+	border-color: inherit;
+}
+
+.checked-choice:not(.correct-choice) .choice-decoration-container {
+	background: @incorrect-bg-color;
+	color: @incorrect-color;
+	border-color: @incorrect-bg-color;
+}
+
+.unanswered.correct-choice .choice-decoration-container {
+	background: @globally-unchecked-correct-answer-bg-color;
+	color: @globally-unchecked-correct-answer-color;
+	border-color: inherit;
+}

@@ -17,11 +17,26 @@
   "author": "Temuri Mikava",
   "license": "MIT",
   "dependencies": {
-    "react-flexible-contexts": "^0.0.7",
-    "weakmap-polyfill": "^2.0.2"
+		"react-select": "^3.1.0",
+		"draft-convert": "^2.1.8",
+		"draft-js": "^0.11.4",
+		"draft-js-buttons": "^2.0.2",
+		"draft-js-drag-n-drop-plugin": "^2.0.4",
+		"draft-js-focus-plugin": "^3.0.1",
+		"draft-js-image-plugin": "^2.0.7",
+		"draft-js-inline-toolbar-plugin": "^3.0.1",
+		"draft-js-linkify-plugin": "^2.0.2",
+		"draft-js-plugins-editor": "^3.0.0",
+		"draft-js-resizeable-plugin": "^2.0.9",
+		"asciimath-to-latex": "^0.3.2"
   },
   "peerDependencies": {
-    "react": ">=16.8.0"
+    "custo": "^0.0.3",
+    "m-tests-core": "^0.0.2",
+    "m-tests-react": "^0.0.1",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0",
+		"react-scripts": ">=3.2.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.17.0",
@@ -36,7 +51,12 @@
     "prettier": "^1.19.1",
     "typescript": ">=3.7.5",
     "react": "^16.12.0",
-    "@types/react": "16.9.41"
+		"react-dom": "^16.12.0",
+    "@types/react": "16.9.41",
+    "custo": "^0.0.3",
+    "m-tests-core": "^0.0.2",
+    "m-tests-react": "^0.0.2",
+		"react-scripts": "~3.2.0"
   },
   "eslintConfig": {
     "extends": "react-app"
