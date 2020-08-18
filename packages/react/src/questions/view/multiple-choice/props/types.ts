@@ -48,6 +48,7 @@ export interface MCPassableElements {
 		single: {
 			container?: GeneralCustoHTMLElement;
 			decorationContainer?: GeneralCustoHTMLElement;
+			icon?: GeneralCustoHTMLElement;
 			textContainer?: GeneralCustoHTMLElement;
 			text?: GeneralCustoHTMLElement;
 		};

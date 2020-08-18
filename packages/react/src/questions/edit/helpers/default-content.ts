@@ -1,12 +1,12 @@
-import { ContentType } from "@tests-core/schemas/questions/contnets/common-schemas";
-import MultipleChoice from "@tests-core/components/questions/contents/multiple-choice/class";
-import { MCContentDesignStructure } from "@tests-core/schemas/questions/contnets/multiple-choice/schema";
-import FillingBlanks from "@tests-core/components/questions/contents/filling-blanks/class";
-import { FBContentDesignStructure } from "@tests-core/schemas/questions/contnets/filling-blanks/schema";
-import SortItems from "@tests-core/components/questions/contents/sort-items/class";
-import GroupingItems from "@tests-core/components/questions/contents/grouping-items/class";
-import MultipleContents from "@tests-core/components/questions/contents/multiple-contents/class";
-import { IRawQuestionContent } from "@tests-core/schemas/questions/contnets/schemas";
+import { ContentType } from "m-tests-core/lib/questions/common-schemas";
+import MultipleChoice from "m-tests-core/lib/questions/multiple-choice/class";
+import { MCContentDesignStructure } from "m-tests-core/lib/questions/multiple-choice/types";
+import FillingBlanks from "m-tests-core/lib/questions/filling-blanks/class";
+import { FBContentDesignStructure } from "m-tests-core/lib/questions/filling-blanks/types";
+import SortItems from "m-tests-core/lib/questions/sort-items/class";
+import GroupingItems from "m-tests-core/lib/questions/grouping-items/class";
+import MultipleContents from "m-tests-core/lib/questions/multiple-contents/class";
+import { IRawQuestionContent } from "m-tests-core/lib/questions/schemas";
 
 export const getChangedContent = ({
 	oldContent,

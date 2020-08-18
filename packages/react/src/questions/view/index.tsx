@@ -1,23 +1,23 @@
-import { ContentType } from "@tests-core/schemas/questions/contnets/common-schemas";
+import { ContentType } from "m-tests-core/lib/questions/common-schemas";
 import {
 	IRawQuestionContent,
 	IRQuestionContent,
-} from "@tests-core/schemas/questions/contnets/schemas";
+} from "m-tests-core/lib/questions/schemas";
+import { ContentPath } from "m-tests-core/lib/utils/path";
 import React, { useRef } from "react";
-import { MultipleChoiceContainer } from "./multiple-choice/components/providers";
-import { IContentProps } from "./interfaces";
-import {
-	QuestionDisplaySettingsCont,
-	ItemAssessmentsCont,
-	CommonQuestionPartsCont,
-	UserAnswerCont,
-	ContentCont,
-} from "./common/hooks/contexts";
-import { ContentPath } from "new-tests/utils/path";
-import { useStateOnChange } from "new-tests/utils/hooks";
+import { useStateOnChange } from "../../utils/hooks";
 import { CounterComponent } from "./a";
-import { CustomizationsNullProvider } from "./customizations/providers";
 import { CommonElements } from "./common/components";
+import {
+	CommonQuestionPartsCont,
+	ContentCont,
+	ItemAssessmentsCont,
+	QuestionDisplaySettingsCont,
+	UserAnswerCont,
+} from "./common/hooks/contexts";
+import { CustomizationsNullProvider } from "./customizations/providers";
+import { IContentProps } from "./interfaces";
+import { MultipleChoiceContainer } from "./multiple-choice/components/providers";
 
 interface IProps extends IContentProps<any> {
 	containerRef?: React.RefObject<HTMLDivElement>;

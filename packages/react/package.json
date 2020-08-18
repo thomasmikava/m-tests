@@ -17,10 +17,10 @@
   "author": "Temuri Mikava",
   "license": "MIT",
   "dependencies": {
-    "react-flexible-contexts": "^0.0.7",
-    "weakmap-polyfill": "^2.0.2"
+    "custo": "^0.0.3"
   },
   "peerDependencies": {
+    "m-tests-core": "^0.0.1",
     "react": ">=16.8.0"
   },
   "devDependencies": {

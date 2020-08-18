@@ -1,9 +1,9 @@
 import {
 	IRQuestionContent,
 	IRawQuestionContent,
-} from "@tests-core/schemas/questions/contnets/schemas";
-import { IQuestionItemsAssessment } from "@tests-core/schemas/questions/helper-schemas";
-import { ContentPath } from "new-tests/utils/path";
+} from "m-tests-core/lib/questions/schemas";
+import { IQuestionItemsAssessment } from "m-tests-core/lib/questions/helper-schemas";
+import { ContentPath } from "m-tests-core/lib/utils/path";
 
 export interface IContentProps<U> {
 	content: IRQuestionContent | IRawQuestionContent;

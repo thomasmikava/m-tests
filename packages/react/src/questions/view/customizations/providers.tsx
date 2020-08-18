@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { normalizeLinkingFlags } from "../../../../utils/shortcuts";
+import { normalizeLinkingFlags } from "../../../utils/shortcuts";
 import { linkCommonProps } from "../common/props/links";
 import { linkMCProps } from "../multiple-choice/props/links";
 import {

@@ -1,7 +1,7 @@
-import MultipleChoice from "../../../../../content/questions/multiple-choice/class";
-import { shuffleArrayByKey } from "../../../../../utils/shuffle";
-import { pickKeys } from "../../../../../utils/objects";
-import { areDeeplyEqual } from "../../../../../utils/optimizations";
+import MultipleChoice from "m-tests-core/lib/questions/multiple-choice/class";
+import { shuffleArrayByKey } from "m-tests-core/lib/utils/shuffle";
+import { pickKeys } from "m-tests-core/lib/utils/objects";
+import { areDeeplyEqual } from "m-tests-core/lib/utils/optimizations";
 import { useCallback, useMemo } from "react";
 import { MCContentCont, MCChoiceCont } from "./contexts";
 import { commonHooks } from "../../common/hooks";

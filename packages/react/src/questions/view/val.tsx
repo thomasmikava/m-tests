@@ -1,4 +1,4 @@
-import { ContentType } from "@tests-core/schemas/questions/contnets/common-schemas";
+import { ContentType } from "m-tests-core/lib/questions/common-schemas";
 import { Common } from "./common/components";
 import { MC } from "./multiple-choice/components";
 

@@ -1,17 +1,15 @@
 import React from "react";
-import { mcHooks } from "../hooks";
-import CheckIcon from "@material-ui/icons/Check";
-import CloseIcon from "@material-ui/icons/Close";
-import { CounterComponent } from "../../a";
-import { MCContentCont, MCChoiceCont } from "../hooks/contexts";
 import { MCComps, MCElements } from ".";
+import { CounterComponent } from "../../a";
+import { mcHooks } from "../hooks";
+import { MCChoiceCont, MCContentCont } from "../hooks/contexts";
 import {
-	MultipleChoiceNewContainerProps,
 	MCBodyProps,
-	MCStatementProps,
 	MCChoicesProps,
-	MCSingleChoiceProps,
 	MCSingleChoiceDecorationProps,
+	MCSingleChoiceProps,
+	MCStatementProps,
+	MultipleChoiceNewContainerProps,
 } from "./types";
 
 export const MultipleChoiceContainer: React.FC<MultipleChoiceNewContainerProps> = React.memo(
@@ -95,14 +93,12 @@ export const MCSingleChoice: React.FC<MCSingleChoiceProps> = React.memo(
 
 export const MCSingleChoiceDecoration: React.FC<MCSingleChoiceDecorationProps> = React.memo(
 	() => {
-		const choiceId = mcHooks.useChoiceId();
-		const { isChecked, isCorrectChoice } = mcHooks.useChoiceState(choiceId);
+		const Cont = MCElements.choices.single.decorationContainer;
+		const Icon = MCElements.choices.single.icon;
 		return (
-			<MCElements.choices.single.decorationContainer>
-				{((isChecked && isCorrectChoice !== false) ||
-					isCorrectChoice) && <CheckIcon />}
-				{isChecked && isCorrectChoice === false && <CloseIcon />}
-			</MCElements.choices.single.decorationContainer>
+			<Cont>
+				<Icon />
+			</Cont>
 		);
 	}
 );

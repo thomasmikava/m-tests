@@ -1,6 +1,6 @@
 import { DynamicContext } from "react-flexible-contexts";
 import { IContentProps } from "../../interfaces";
-import { ICommonQuestionParts } from "../../../../../content/questions/common-schemas";
+import { ICommonQuestionParts } from "m-tests-core/lib/questions/common-schemas";
 
 export const CommonQuestionPartsCont = DynamicContext.createDestructured<
 	Omit<ICommonQuestionParts, "explanation">

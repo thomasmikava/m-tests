@@ -1,19 +1,14 @@
-import QuestionContentEditMode, {
-	IQContentEditPassableProps,
-} from "@tests-core/components/questions/contents/edit";
-import { ContentError } from "@tests-core/components/questions/contents/interfaces";
-import { ContentType } from "@tests-core/schemas/questions/contnets/common-schemas";
-import { IRawQuestionContent } from "@tests-core/schemas/questions/contnets/schemas";
-import { IFullQuestion } from "@tests-core/schemas/questions/helper-schemas";
-import { useOptimizedFunc } from "new-tests/utils/hooks";
+import { ContentType } from "m-tests-core/lib/questions/common-schemas";
+import { ContentError } from "m-tests-core/lib/questions/errors";
+import { IRawQuestionContent } from "m-tests-core/lib/questions/schemas";
+import { ContentPath } from "m-tests-core/lib/utils/path";
 import React, { useCallback, useRef, useState } from "react";
-import { ChooseQuestionContentType } from "./helpers/components/content-type";
-import { getChangedContent } from "./helpers/default-content";
-import { CustomizationsEditNullProvider } from "./customizations/providers";
-import { MultipleChoiceEditContainer } from "./multiple-choice/components/providers";
-import { ContentPath } from "new-tests/utils/path";
+import { useOptimizedFunc } from "../../utils/hooks";
 import { CounterComponent } from "../view/a";
 import { CommonEdit } from "./common/components";
+import { CustomizationsEditNullProvider } from "./customizations/providers";
+import { getChangedContent } from "./helpers/default-content";
+import { MultipleChoiceEditContainer } from "./multiple-choice/components/providers";
 
 export type GetChangedContentFN = (args: {
 	old: { content?: IRawQuestionContent; designStructure?: string };
@@ -21,9 +16,8 @@ export type GetChangedContentFN = (args: {
 }) => IRawQuestionContent | undefined;
 
 interface IProps {
-	defaultQuestionContent?: IFullQuestion["content"];
+	defaultQuestionContent?: IRawQuestionContent;
 	onSave?: (errors: ContentError[] | null, data: IRawQuestionContent) => void;
-	customized?: IQContentEditPassableProps;
 	defaultContentType?: ContentType;
 	defaultDesignStructure?: string;
 }
@@ -32,7 +26,6 @@ export const QuestionEditwrapper: React.FC<IProps> = React.memo(
 	({
 		defaultQuestionContent,
 		onSave,
-		customized,
 		defaultContentType,
 		defaultDesignStructure,
 	}: IProps) => {
@@ -53,7 +46,7 @@ export const QuestionEditwrapper: React.FC<IProps> = React.memo(
 			(content as any)?.designStructure ?? null;
 		const contentType = content?.type;
 
-		const ref = useRef<QuestionContentEditMode | null>(null);
+		const ref = useRef<any>(null);
 
 		const getData = useOptimizedFunc(() => {
 			if (!ref.current) return;
@@ -77,6 +70,8 @@ export const QuestionEditwrapper: React.FC<IProps> = React.memo(
 		const [x, setX] = useState(0);
 		const incr = useCallback(() => setX(x => x + 1), []);
 
+		const ChooseQuestionContentType = CommonEdit.components.contentSelector;
+
 		return (
 			<CustomizationsEditNullProvider value={null}>
 				<div style={{ textAlign: "left" }}>
@@ -86,27 +81,8 @@ export const QuestionEditwrapper: React.FC<IProps> = React.memo(
 						selectedType={contentType ?? null}
 						selectedDesignStructure={designStructure ?? null}
 					/>
-					{content && content.type === ContentType.MultipleChoice ? (
-						<Content content={content} />
-					) : (
-						contentType !== undefined &&
-						!!content && (
-							<>
-								<QuestionContentEditMode
-									key={
-										contentType +
-										"-" +
-										(designStructure || "")
-									}
-									content={content}
-									contentType={contentType}
-									ref={ref}
-									customized={customized}
-								/>
-								<button onClick={handleSave}>Save</button>
-							</>
-						)
-					)}
+					{content && <Content content={content} ref={ref} />}
+					<button onClick={handleSave}>Save</button>
 				</div>
 			</CustomizationsEditNullProvider>
 		);

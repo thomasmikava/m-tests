@@ -1,5 +1,5 @@
 import { IContentGeneralProps } from "../../interfaces";
-import { IStatement } from "../../../../../content/questions/common-schemas";
+import { IStatement } from "m-tests-core/lib/questions/common-schemas";
 
 export type TextComponentProps = IContentGeneralProps & {
 	stat: IStatement;

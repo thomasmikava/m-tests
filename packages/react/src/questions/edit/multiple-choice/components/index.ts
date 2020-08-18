@@ -1,4 +1,4 @@
-import { ContentType } from "@tests-core/schemas/questions/contnets/common-schemas";
+import { ContentType } from "m-tests-core/lib/questions/common-schemas";
 import { CreateCusto, CustoType } from "custo";
 import { ToCustoTreeObj } from "custo/lib/classes/helper-fns/tree";
 import { useNormalizedQuestionEditContextSubscriber } from "../../customizations/providers";

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { ContentPath } from "../../../../../utils/path";
+import { ContentPath } from "m-tests-core/lib/utils/path";
 import { commonHooks } from ".";
 import { NormalizedQuestionContentCustomization } from "../../customizations/types";
 import { QCust } from "../../val";

@@ -1,5 +1,5 @@
-import { IRawQuestionContent } from "@tests-core/schemas/questions/contnets/schemas";
-import { IContentGeneralProps } from "new-tests/components/questions/view/interfaces";
+import { IRawQuestionContent } from "m-tests-core/lib/questions/schemas";
+import { IContentGeneralProps } from "../../../view/interfaces";
 
 type IContent = IRawQuestionContent;
 

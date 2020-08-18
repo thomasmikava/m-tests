@@ -1,4 +1,4 @@
-import { normalizeLinkingFlags } from "new-tests/utils/shortcuts";
+import { normalizeLinkingFlags } from "../../../utils/shortcuts";
 import { linkCommonEditProps } from "../common/props/links";
 import { linkMCEditProps } from "../multiple-choice/props/links";
 import {

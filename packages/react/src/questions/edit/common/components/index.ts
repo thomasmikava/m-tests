@@ -10,6 +10,7 @@ const CommonEditOnes: ToCustoTreeObj<CommonEditPassable> = {
 			container: CustoType.component,
 			text: CustoType.component,
 		},
+		contentSelector: CustoType.component,
 	},
 	elements: {
 		outerContainer: CustoType.component,

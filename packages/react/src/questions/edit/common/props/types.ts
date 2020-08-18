@@ -8,8 +8,9 @@ import {
 import {
 	TextComponentProps,
 	ExplanationProps,
-} from "new-tests/components/questions/view/common/components/types";
-import { ContentType } from "@tests-core/schemas/questions/contnets/common-schemas";
+} from "../../../view/common/components/types";
+import { ContentType } from "m-tests-core/lib/questions/common-schemas";
+import { IChooseQuestionContentTypeProps } from "../components/providers";
 
 export interface CommonEditComponents {
 	text: GeneralCustoComp<TextComponentProps>;
@@ -17,6 +18,7 @@ export interface CommonEditComponents {
 		container: GeneralCustoComp<ExplanationProps>;
 		text?: GeneralCustoComp<TextComponentProps>;
 	};
+	contentSelector: GeneralCustoComp<IChooseQuestionContentTypeProps>;
 }
 
 export interface CommonEditElements {

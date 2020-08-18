@@ -1,7 +1,7 @@
 import {
 	IMultipleChoiceContent,
 	IRMultipleChoiceContent,
-} from "@tests-core/schemas/questions/contnets/multiple-choice/schema";
+} from "m-tests-core/lib/questions/multiple-choice/types";
 import { DynamicContext } from "react-flexible-contexts";
 
 type IContent = IRMultipleChoiceContent | IMultipleChoiceContent;

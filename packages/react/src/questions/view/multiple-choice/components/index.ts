@@ -1,4 +1,4 @@
-import { ContentType } from "@tests-core/schemas/questions/contnets/common-schemas";
+import { ContentType } from "m-tests-core/lib/questions/common-schemas";
 import { CreateCusto, CustoType } from "custo";
 import { ToCustoTreeObj } from "custo/lib/classes/helper-fns/tree";
 import { useNormalizedQuestionContextSelector } from "../../customizations/providers";
@@ -38,6 +38,7 @@ const MCOnes: ToCustoTreeObj<MCPassable> = {
 			single: {
 				container: CustoType.component,
 				decorationContainer: CustoType.component,
+				icon: CustoType.component,
 				text: CustoType.component,
 				textContainer: CustoType.component,
 			},

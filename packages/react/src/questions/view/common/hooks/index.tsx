@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { IRawQuestionContent } from "../../../../../content/questions/schemas";
-import { pickKeys } from "../../../../../utils/objects";
-import { areDeeplyEqual } from "../../../../../utils/optimizations";
+import { IRawQuestionContent } from "m-tests-core/lib/questions/schemas";
+import { pickKeys } from "m-tests-core/lib/utils/objects";
+import { areDeeplyEqual } from "m-tests-core/lib/utils/optimizations";
 import {
 	ContentCont,
 	ItemAssessmentsCont,
