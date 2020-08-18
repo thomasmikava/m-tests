@@ -20,7 +20,7 @@
     "custo": "^0.0.3"
   },
   "peerDependencies": {
-    "m-tests-core": "^0.0.1",
+    "m-tests-core": "^0.0.2",
     "react": ">=16.8.0"
   },
   "devDependencies": {
