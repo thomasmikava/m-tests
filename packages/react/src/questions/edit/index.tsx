@@ -5,10 +5,12 @@ import { ContentPath } from "m-tests-core/lib/utils/path";
 import React, { useCallback, useRef, useState } from "react";
 import { useOptimizedFunc } from "../../utils/hooks";
 import { CounterComponent } from "../view/a";
-import { CommonEdit } from "./common/components";
+import { CommonEditCusto } from "./common/components";
 import { CustomizationsEditNullProvider } from "./customizations/providers";
 import { getChangedContent } from "./helpers/default-content";
 import { MultipleChoiceEditContainer } from "./multiple-choice/components/providers";
+import { EditContentCont } from "./common/hooks/contexts";
+import { SetState } from "../../utils/interfaces";
 
 export type GetChangedContentFN = (args: {
 	old: { content?: IRawQuestionContent; designStructure?: string };
@@ -41,6 +43,8 @@ export const QuestionEditwrapper: React.FC<IProps> = React.memo(
 				newDesignStructure: defaultDesignStructure || null,
 			});
 		});
+		const contentRef = useRef(content as IRawQuestionContent);
+		const getContent = useCallback(() => contentRef.current, []);
 
 		const designStructure: string | null =
 			(content as any)?.designStructure ?? null;
@@ -70,7 +74,7 @@ export const QuestionEditwrapper: React.FC<IProps> = React.memo(
 		const [x, setX] = useState(0);
 		const incr = useCallback(() => setX(x => x + 1), []);
 
-		const ChooseQuestionContentType = CommonEdit.components.contentSelector;
+		const ChooseQuestionContentType = CommonEditCusto.components.contentSelector;
 
 		return (
 			<CustomizationsEditNullProvider value={null}>
@@ -81,8 +85,10 @@ export const QuestionEditwrapper: React.FC<IProps> = React.memo(
 						selectedType={contentType ?? null}
 						selectedDesignStructure={designStructure ?? null}
 					/>
-					{content && <Content content={content} ref={ref} />}
-					<button onClick={handleSave}>Save</button>
+					{content && <EditContentCont.Provider content={content!} onChange={setContent as SetState<IRawQuestionContent>} getContent={getContent}>
+						<Content contentType={content.type} ref={ref} />
+						<button onClick={handleSave}>Save</button>
+					</EditContentCont.Provider>}
 				</div>
 			</CustomizationsEditNullProvider>
 		);
@@ -93,14 +99,13 @@ const defaultContentPath = new ContentPath();
 
 const Content = React.memo(
 	React.forwardRef(
-		({ content }: { content: IRawQuestionContent }, ref: any) => {
-			const Cont = CommonEdit.elements.outerContainer;
+		({ contentType }: { contentType: ContentType }, ref: any) => {
+			const Cont = CommonEditCusto.elements.outerContainer;
 			return (
 				<Cont ref={ref}>
 					<CounterComponent title={"Content"} />
-					{content.type === ContentType.MultipleChoice && (
+					{contentType === ContentType.MultipleChoice && (
 						<MultipleChoiceEditContainer
-							content={content}
 							path={defaultContentPath}
 						/>
 					)}

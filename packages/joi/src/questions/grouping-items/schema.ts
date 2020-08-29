@@ -8,7 +8,7 @@ export const GroupingItemsContentSchema = CommonQuestionPartsSchema.keys({
 	type: Joi.number()
 		.valid(ContentType.GroupingItems)
 		.required(),
-	statement: StatementSchema,
+	statement: StatementSchema.required(),
 	groups: Joi.array()
 		.items(StatementSchema)
 		.required(),

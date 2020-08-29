@@ -4,7 +4,7 @@ import { CounterComponent } from "../../a";
 import { commonHooks } from "../hooks";
 import { ExplanationProps, TextComponentProps } from "./types";
 import { useCustomizationProp } from "../hooks/helper";
-import { CommonFunctions } from ".";
+import { CommonHooks } from ".";
 
 export const Explanation: React.FC<ExplanationProps> = React.memo(
 	({ path, forcefullyDisplay }) => {
@@ -44,7 +44,7 @@ export const Explanation: React.FC<ExplanationProps> = React.memo(
 export const TextComponent = WrapInCustHookChangeError(
 	React.memo(({ path, stat }: TextComponentProps) => {
 		const Cont = useCustomizationProp("elements", path);
-		const newText = CommonFunctions.useContentTextTransformer.use(
+		const newText = CommonHooks.contentTextTransformer.use(
 			stat.text
 		);
 		return <Cont>{newText}</Cont>;
@@ -53,7 +53,7 @@ export const TextComponent = WrapInCustHookChangeError(
 
 export const SimpleTextComponent = WrapInCustHookChangeError(
 	React.memo(({ text }: { text: string }) => {
-		const newText = CommonFunctions.useContentTextTransformer.use(text);
+		const newText = CommonHooks.contentTextTransformer.use(text);
 		return <React.Fragment>{newText}</React.Fragment>;
 	})
 );

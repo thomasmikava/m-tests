@@ -16,8 +16,7 @@
   "keywords": [],
   "author": "Temuri Mikava",
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "peerDependencies": {
     "m-tests-core": "^0.0.1",
     "joi": "^17.1.0"

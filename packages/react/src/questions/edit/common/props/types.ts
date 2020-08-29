@@ -6,36 +6,32 @@ import {
 	GeneralCustoHook,
 } from "custo/lib/utils/prop-generics";
 import {
-	TextComponentProps,
-	ExplanationProps,
+	ExplanationProps, CheckboxWithLabelProps,
 } from "../../../view/common/components/types";
 import { ContentType } from "m-tests-core/lib/questions/common-schemas";
-import { IChooseQuestionContentTypeProps } from "../components/providers";
+import { IChooseQuestionContentTypeProps } from "../components/types";
+import { EditTextComponentProps } from "../components/types";
 
-export interface CommonEditComponents {
-	text: GeneralCustoComp<TextComponentProps>;
+interface CommonEditComponents {
+	text: GeneralCustoComp<EditTextComponentProps>;
 	explanation: {
 		container: GeneralCustoComp<ExplanationProps>;
-		text?: GeneralCustoComp<TextComponentProps>;
+		text?: GeneralCustoComp<EditTextComponentProps>;
 	};
 	contentSelector: GeneralCustoComp<IChooseQuestionContentTypeProps>;
+	checkboxWithLabel: GeneralCustoComp<CheckboxWithLabelProps>;
 }
 
-export interface CommonEditElements {
+interface CommonEditElements {
 	outerContainer: GeneralCustoHTMLElement;
+	bodyContainer: GeneralCustoHTMLElement;
+	text: GeneralCustoHTMLElement;
+	innerContainers?: GeneralCustoHTMLElement;
+	explanation: {
+		container?: GeneralCustoHTMLElement;
+		text?: GeneralCustoHTMLElement;
+	};
 }
-
-export interface CommonEditFunctions {
-	useContentTextTransformer: GeneralCustoHook<
-		(text: string) => string | JSX.Element | null
-	>;
-	useNonContentTextTransformer?: GeneralCustoHook<
-		(
-			text: string | number | JSX.Element | null
-		) => string | number | JSX.Element | null
-	>;
-}
-
 type RichText = string | JSX.Element;
 
 export interface ContentTypeChooseValue {
@@ -43,9 +39,10 @@ export interface ContentTypeChooseValue {
 	designStructure: string | null;
 }
 
-export interface CommonEditTexts {
+interface CommonEditTexts {
 	explanation: {
 		title: GeneralCustoText;
+		placeholder: GeneralCustData<string>;
 	};
 	contentTypes: GeneralCustData<
 		{
@@ -55,9 +52,26 @@ export interface CommonEditTexts {
 	>;
 }
 
+interface CommonEditFunctions {
+	getEmptyText: GeneralCustData<() => any>;
+}
+
+interface CommonEditHooks {
+	contentTextTransformer?: GeneralCustoHook<
+		(text: string) => string | JSX.Element | null
+	>;
+	nonContentTextTransformer?: GeneralCustoHook<
+		(
+			text: string | number | JSX.Element | null
+		) => string | number | JSX.Element | null
+	>;
+}
+
+
 export interface CommonEditPassable {
 	components: CommonEditComponents;
 	elements: CommonEditElements;
-	functions: CommonEditFunctions;
 	texts: CommonEditTexts;
+	functions: CommonEditFunctions;
+	hooks: CommonEditHooks;
 }

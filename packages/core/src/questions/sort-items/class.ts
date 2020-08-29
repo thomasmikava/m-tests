@@ -112,6 +112,14 @@ class SortItems extends QuestionContent<ISortItemsUserAns, ISortItemsUserAns>
 		this.items = content.items;
 		this.correctOrder = content.correctOrder;
 	}
+	
+	getUsedIds(): number[] {
+		const ids: number[] = [];
+		ids.push(this.statement.id);
+		this.items.forEach(e => ids.push(e.id));
+		if (this.explanation) ids.push(this.explanation.id);
+		return ids;
+	};
 
 	getStripped() {
 		const stripped: IRSortItemsContent = {

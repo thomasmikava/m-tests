@@ -2,8 +2,8 @@
 import { ContentPath } from "m-tests-core/lib/utils/path";
 import { commonHooks } from ".";
 import { NormalizedQuestionContentCustomization } from "../../customizations/types";
-import { QCust } from "../../val";
-import { getAbsoluteProperty } from "custo/lib/utils/prop";
+import { QCusto } from "../../val";
+import { getAbsoluteProperty } from "../../../../utils/prop";
 
 export const useCustomizationProp = <
 	T extends keyof NormalizedQuestionContentCustomization[keyof NormalizedQuestionContentCustomization]
@@ -13,11 +13,11 @@ export const useCustomizationProp = <
 ): any => {
 	const contentType = commonHooks.useContentType();
 	const key = contentPathToPropsPath(path.relativePath);
-	const obj = (QCust[contentType as any] || QCust.common)[type];
+	const obj = (QCusto[contentType as any] || QCusto.common)[type];
 	return getAbsoluteProperty(obj, key);
 };
 
-const contentPathToPropsPath = (str: string) => {
+export const contentPathToPropsPath = (str: string) => {
 	const p = str.split(".");
 	return p
 		.map(e => {

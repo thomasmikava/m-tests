@@ -8,3 +8,9 @@ export type TextComponentProps = IContentGeneralProps & {
 export type ExplanationProps = IContentGeneralProps & {
 	forcefullyDisplay?: boolean;
 };
+
+export interface CheckboxWithLabelProps {
+	onChange: (checked: boolean) => void;
+	value: boolean;
+	label?: JSX.Element | string | number | null;
+}

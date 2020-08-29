@@ -1,40 +1,14 @@
-import { joinClassNames } from "m-tests-react/lib/utils/classnames";
 import { pckgDefComponents } from "m-tests-react/lib/utils/shortcuts";
 import { CounterComponent } from "m-tests-react/lib/questions/view/a";
-import {
-	MCBody,
-	MCChoices,
-	MCSingleChoice,
-	MCSingleChoiceDecoration,
-	MCStatement,
-} from "m-tests-react/lib/questions/view/multiple-choice/components/providers";
-import { mcHooks } from "m-tests-react/lib/questions/view/multiple-choice/hooks";
+import { reactDefaultMCPassable } from "m-tests-react/lib/questions/view/multiple-choice/components/value";
 import styles from "./styles/index.module.css";
-import {
-	MCPassableComponents,
-	MCPassableElements,
-	MCPassableTexts,
-	MCPassable,
-} from "m-tests-react/lib/questions/view/multiple-choice/props/types";
+import { MCPassable } from "m-tests-react/lib/questions/view/multiple-choice/props/types";
 import { CreateCusto } from "custo";
-
-const defaultMCPassableComponents: MCPassableComponents = {
-	body: CreateCusto.hookOf.Component(() => pckgDefComponents.newComp(MCBody)),
-	statement: {
-		container: pckgDefComponents.newComp(MCStatement),
-	},
-	choices: {
-		container: pckgDefComponents.newComp(MCChoices),
-		single: {
-			container: pckgDefComponents.newComp(MCSingleChoice),
-			decoration: pckgDefComponents.newComp(MCSingleChoiceDecoration),
-		},
-	},
-};
+import { useChoiceIcon, useSingleChoiceContainer } from "./providers";
 
 const Texts = pckgDefComponents.newDivEl({ style: { color: "red" } });
 
-const defaultMCPassableElements: MCPassableElements = {
+const defaultMCPassableElements: MCPassable["elements"] = {
 	statement: {
 		container: pckgDefComponents.newDivEl({
 			style: { boxShadow: "rgba(0,0,0,0.5) 0 0 10px inset" },
@@ -54,49 +28,14 @@ const defaultMCPassableElements: MCPassableElements = {
 			}
 		),
 		single: {
-			container: CreateCusto.hookOf.Component(() => {
-				const choiceId = mcHooks.useChoiceId();
-				const {
-					isChecked,
-					isDisabled,
-					isCorrectChoice,
-					isFullyCorrectlyAnswered,
-					canSelectMultiple,
-					isUnanswered,
-				} = mcHooks.useChoiceState(choiceId);
-				return pckgDefComponents.newDivEl(
-					{
-						className: joinClassNames(
-							styles["choice-container"],
-							isChecked && styles["checked-choice"],
-							isDisabled && styles["disabled-choice"],
-							isCorrectChoice && styles["correct-choice"],
-							canSelectMultiple &&
-								styles["choice-can-select-multiple"],
-							isFullyCorrectlyAnswered &&
-								styles["fully-correctly-answered"],
-							isUnanswered && styles["unanswered"]
-						),
-					},
-					{
-						outerBeforeComponents: pckgDefComponents.newComp(
-							CounterComponent,
-							{
-								title: "SingleChoice",
-							}
-						),
-					}
-				);
-			}),
-			text: pckgDefComponents.newDivEl({
-				style: { color: "green" },
-			}),
+			container: CreateCusto.hookOf.Component(useSingleChoiceContainer),
 			textContainer: pckgDefComponents.newDivEl({
 				className: styles["choice-text-container"],
 			}),
 			decorationContainer: pckgDefComponents.newDivEl({
 				className: styles["choice-decoration-container"],
 			}),
+			icon: CreateCusto.hookOf.Component(useChoiceIcon),
 		},
 	},
 	explanation: {
@@ -109,10 +48,8 @@ const defaultMCPassableElements: MCPassableElements = {
 	},
 };
 
-const defaultMCPassableTexts: MCPassableTexts = {};
-
 export const defaultMCPassable: MCPassable = {
-	components: defaultMCPassableComponents,
+	components: reactDefaultMCPassable.components,
 	elements: defaultMCPassableElements,
-	texts: defaultMCPassableTexts,
+	texts: reactDefaultMCPassable.texts,
 };

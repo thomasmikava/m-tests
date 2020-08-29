@@ -15,6 +15,7 @@ export abstract class QuestionContent<AnswerType, UserAns extends IUserAnswer>
 	public abstract getCreditShare(userAnswer: UserAns): number;
 	public abstract getMaxCredit(): number;
 	public abstract getShortStat(separator?: string): string;
+	public abstract getUsedIds(): number[];
 	public abstract serialize(separator?: string): string;
 	public defaultSeparator = "<br/>";
 

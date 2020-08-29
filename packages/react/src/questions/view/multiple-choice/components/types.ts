@@ -17,7 +17,7 @@ export type MCStatementProps = IContentGeneralProps;
 export type MCChoicesProps = IContentGeneralProps;
 
 export type MCSingleChoiceProps = IContentGeneralProps & {
-	choice: IContent["choices"][number];
+	choiceId: number;
 };
 
 export type MCSingleChoiceDecorationProps = IContentGeneralProps;

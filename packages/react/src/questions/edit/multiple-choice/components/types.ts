@@ -1,10 +1,22 @@
-import { IRawQuestionContent } from "m-tests-core/lib/questions/schemas";
 import { IContentGeneralProps } from "../../../view/interfaces";
 
-type IContent = IRawQuestionContent;
-
-export interface MultipleChoiceNewContainerProps extends IContentGeneralProps {
-	content: IContent;
+export interface MultipleChoiceEditContainerProps extends IContentGeneralProps {
 }
 
+export type MCEditHeadProps = IContentGeneralProps;
 export type MCEditBodyProps = IContentGeneralProps;
+export type MCEditTailProps = IContentGeneralProps;
+
+export type MCEditStatementProps = IContentGeneralProps;
+
+export type MCEditChoicesProps = IContentGeneralProps;
+
+export interface MCEditSingleChoiceProps extends IContentGeneralProps {
+	choiceIndex: number;
+};
+
+export type MCEditSingleChoiceDecorationProps = IContentGeneralProps;
+
+export type MCEditAddChoiceButtonProps = {
+	onClick: () => void;
+};

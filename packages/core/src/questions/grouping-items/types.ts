@@ -18,7 +18,7 @@ export const RelationTypes = [
 
 export interface IGroupingItemsContent extends ICommonQuestionParts {
 	type: ContentType.GroupingItems;
-	statement?: IStatement;
+	statement: IStatement;
 	groups: IStatement[];
 	items: IStatement[];
 	itemsToGroups: {

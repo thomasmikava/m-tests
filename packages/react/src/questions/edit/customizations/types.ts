@@ -4,7 +4,7 @@ import { CommonEditPassable } from "../common/props/types";
 import {
 	DeeplyRequired,
 	DeeplyOptional,
-} from "m-tests-core/lib/utils/generics";
+} from "custo/lib/utils/generics";
 
 export interface QuestionEditContentCustomization {
 	[ContentType.MultipleChoice]: MCEditPassable;

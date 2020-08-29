@@ -28,6 +28,7 @@ class GroupingItems
 	}
 	type: IGroupingItemsContent["type"];
 
+	statement: IGroupingItemsContent["statement"];
 	items: IGroupingItemsContent["items"];
 	itemsToGroups: IGroupingItemsContent["itemsToGroups"];
 	groups: IGroupingItemsContent["groups"];
@@ -51,10 +52,24 @@ class GroupingItems
 			}
 		});
 	}
+	
+	getUsedIds(): number[] {
+		const ids: number[] = [];
+		ids.push(this.statement.id);
+		this.items.forEach((item) => {
+			ids.push(item.id);
+		});
+		this.groups.forEach((group) => {
+			ids.push(group.id);
+		});
+		if (this.explanation) ids.push(this.explanation.id);
+		return ids;
+	};
 
 	getStripped() {
 		const stripped: IRGroupingItemsContent = {
 			type: this.type,
+			statement: this.statement,
 			allowPartialCredit: this.allowPartialCredit,
 			minScoreForCredit: this.minScoreForCredit,
 			items: this.items,

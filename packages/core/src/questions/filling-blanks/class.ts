@@ -133,6 +133,19 @@ class FillingBlanks extends QuestionContent<IAnswer, IFillingBlanksUserAns>
 			}
 		});
 	}
+	
+
+	getUsedIds(): number[] {
+		const ids: number[] = [];
+		this.items.forEach(item => {
+			ids.push(item.id);
+			if (item.type === FBItemType.Input) {
+				item.correctInputs.forEach(inp => ids.push(inp.id));
+			}
+		});
+		if (this.explanation) ids.push(this.explanation.id);
+		return ids;
+	}
 
 	getStripped() {
 		const itemsToPut: IRFillingBlanksContent["items"] = [];

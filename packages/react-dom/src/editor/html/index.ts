@@ -1,69 +1,16 @@
-import { convertFromHTML, convertToHTML } from "draft-convert";
-import { EditorState } from "draft-js";
-import { compositeDecorator } from "../decorators";
-import { AudioBlock, AudioToHTML } from "./audio";
 import {
-	replaceTagWithChildren,
-	setTagInnerHTML,
 	createElementFromHTML,
 	forEachTag,
-	putElementInParent,
+	putElementInParent, replaceTagWithChildren,
+	setTagInnerHTML
 } from "./dom-utils";
-import { ImageBlock, ImageToHTML } from "./image";
-import { Blockk, StateToHTML } from "./interfaces";
-import { SubAndSupScriptsToHTML, SubAndSupScriptsToState } from "./scripts";
-import {
-	createHTMLToState,
-	createStateToHTML,
-	firstComeFirstServe,
-} from "./convert-utils";
 
-const blocks: Blockk[] = [ImageBlock, AudioBlock, SubAndSupScriptsToState];
-const toHTML: StateToHTML[] = [
-	ImageToHTML,
-	AudioToHTML,
-	SubAndSupScriptsToHTML,
-];
+const isHTMLEmpty = (html: string) => {
+	return html.trim().match(/^(&nbsp;)+$/g)
+}
 
-const htmlConverter = convertFromHTML(createHTMLToState(blocks) as any);
-const stateConverter = convertToHTML(createStateToHTML(toHTML) as any);
-
-export const blockRendererFn = firstComeFirstServe(
-	blocks.map(e => e.blockRendererFn)
-) as any;
-
-export const fromHTMLToState = (html: string): EditorState => {
-	if (
-		!html ||
-		(typeof html === "string" && html.trim().match(/^(&nbsp;)+$/g))
-	) {
-		return EditorState.createEmpty(compositeDecorator);
-	}
-
-	html = normalizeHTML(html || "");
-
-	const content = htmlConverter(html);
-	const editorState = EditorState.createWithContent(content);
-
-	return editorState;
-};
-
-export const fromStateToHTML = (editorState: EditorState) => {
-	const content = editorState.getCurrentContent();
-	if (!content.hasText()) return "";
-
-	let html = stateConverter(content);
-
+export const htmlToSavableHtml = (html: string) => {
 	const body = createElementFromHTML(html);
-
-	setTagInnerHTML(body, "audio", "");
-	forEachTag(body, "audio", audio => {
-		if (audio.getAttribute("controls") === "") {
-			audio.setAttribute("controls", "controls");
-		}
-	});
-
-	replaceTagWithChildren(body, "figure");
 
 	replaceTagWithChildren(body, "p", (p, { isLastChildOfRoot }) => {
 		const inner = p.innerHTML;
@@ -80,6 +27,7 @@ export const fromStateToHTML = (editorState: EditorState) => {
 	});
 
 	html = body.innerHTML;
+	html = html.replace(/&nbsp;/g, " ");
 	html = html.replace(/\n/g, "");
 	html = html.replace(/(<br>|<br ?\/>)/g, "\n");
 	if (html[0] === specialEmptySpace) {
@@ -106,11 +54,12 @@ export const normalizeHTML = (html: string): string => {
 	if (html[html.length - 1] === " ") {
 		html = html.substr(0, html.length - 1) + "&nbsp;";
 	}
+	html = html.replace(/( )((&nbsp;){1,})/g, "&nbsp;$2");
 
 	return html;
 };
 
-const normalizeBreakLines = (body: HTMLElement) => {
+export const normalizeBreakLines = (body: HTMLElement) => {
 	const children = [...body.childNodes];
 	for (const child of children) {
 		if (child.nodeName !== "BR") break;

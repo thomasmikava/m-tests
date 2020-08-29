@@ -6,7 +6,7 @@ import {
 } from "custo/lib/utils/prop-generics";
 import { ExplanationProps, TextComponentProps } from "../components/types";
 
-export interface CommonComponents {
+interface CommonComponents {
 	text: GeneralCustoComp<TextComponentProps>;
 	explanation: {
 		container: GeneralCustoComp<ExplanationProps>;
@@ -14,7 +14,7 @@ export interface CommonComponents {
 	};
 }
 
-export interface CommonElements {
+interface CommonElements {
 	outerContainer: GeneralCustoHTMLElement;
 	bodyContainer: GeneralCustoHTMLElement;
 	text: GeneralCustoHTMLElement;
@@ -27,21 +27,23 @@ export interface CommonElements {
 	};
 }
 
-export interface CommonFunctions {
-	useContentTextTransformer: GeneralCustoHook<
+
+interface CommonTexts {
+	explanation: {
+		title: GeneralCustoText;
+	};
+}
+interface CommonFunctions {
+}
+interface CommonHooks {
+	contentTextTransformer?: GeneralCustoHook<
 		(text: string) => string | JSX.Element | null
 	>;
-	useNonContentTextTransformer?: GeneralCustoHook<
+	nonContentTextTransformer?: GeneralCustoHook<
 		(
 			text: string | number | JSX.Element | null
 		) => string | number | JSX.Element | null
 	>;
-}
-
-export interface CommonTexts {
-	explanation: {
-		title: GeneralCustoText;
-	};
 }
 
 export interface CommonPassable {
@@ -49,4 +51,5 @@ export interface CommonPassable {
 	elements: CommonElements;
 	texts: CommonTexts;
 	functions: CommonFunctions;
+	hooks: CommonHooks;
 }

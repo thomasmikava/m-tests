@@ -1,63 +1,47 @@
 import {
-	MCEditPassableComponents,
-	MCEditPassableElements,
-	MCEditPassableTexts,
 	MCEditPassable,
 } from "m-tests-react/lib/questions/edit/multiple-choice/props/types";
 import { pckgDefComponents } from "m-tests-react/lib/utils/shortcuts";
-import { MCEditBody } from "m-tests-react/lib/questions/edit/multiple-choice/components/providers";
 import styles from "./styles/index.module.css";
-import { removeKeys } from "m-tests-core/lib/utils/objects";
 import { CreateCusto } from "custo";
+import { useEditChoiceIcon, useEditSingleChoiceContainer } from "./providers";
+import { CloseIcon } from "../../../icons/close";
+import { reactDefaultMCEditPassable } from "m-tests-react/lib/questions/edit/multiple-choice/components/value";
 
-const defaultMCEditPassableComponents: MCEditPassableComponents = {
-	body: CreateCusto.hookOf.Component(() =>
-		pckgDefComponents.newComp(MCEditBody)
-	),
-};
-
-const defaultMCEditPassableElements: MCEditPassableElements = {
+const defaultMCEditPassableElements: MCEditPassable["elements"] = {
+	headContainer: pckgDefComponents.newDivEl(),
+	bodyContainer: pckgDefComponents.newDivEl(),
+	tailContainer: pckgDefComponents.newDivEl(),
+	container: pckgDefComponents.newDivEl(),
+	containers: pckgDefComponents.newDivEl(),
 	statement: {
-		text: pckgDefComponents.newDivEl({ style: { color: "red" } }),
 	},
 	choices: {
 		container: pckgDefComponents.newDivEl({
 			className: styles["choices-container"],
 		}),
 		single: {
-			container: pckgDefComponents.newComp(
-				"div",
-				{},
-				{ transformProps: props => removeKeys(props, "choiceId") }
-			),
-			text: pckgDefComponents.newDivEl({
-				style: { color: "green" },
+			container: CreateCusto.hookOf.Component(useEditSingleChoiceContainer),
+			textContainer: pckgDefComponents.newDivEl({
+				className: styles["choice-text-container"],
 			}),
-			textContainer: pckgDefComponents.newComp(
-				"div",
-				{
-					className: styles["choice-text-container"],
-				} as { className: string; choiceId: number },
-				{ transformProps: props => removeKeys(props, "choiceId") }
-			),
-			decorationContainer: pckgDefComponents.newComp(
-				"div",
-				{
-					className: styles["choice-decoration-container"],
-				} as { className: string; choiceId: number },
-				{ transformProps: props => removeKeys(props, "choiceId") }
-			),
+			decorationContainer: pckgDefComponents.newDivEl({
+				className: styles["choice-decoration-container"],
+			}),
+			icon: CreateCusto.hookOf.Component(useEditChoiceIcon),
+			rightDecorationContainer: pckgDefComponents.newDivEl({
+				className: styles["choice-right-decoration-container"],
+			}),
+			rightIcon: pckgDefComponents.newComp(CloseIcon),
 		},
+		button: pckgDefComponents.newHTMLEl("button"),
 	},
 	explanation: {
-		text: pckgDefComponents.newDivEl({ style: { color: "blue" } }),
 	},
 };
 
-const defaultMCEditPassableTexts: MCEditPassableTexts = {};
-
 export const defaultMCEditPassable: MCEditPassable = {
-	components: defaultMCEditPassableComponents,
+	components: reactDefaultMCEditPassable.components,
 	elements: defaultMCEditPassableElements,
-	texts: defaultMCEditPassableTexts,
+	texts: reactDefaultMCEditPassable.texts,
 };

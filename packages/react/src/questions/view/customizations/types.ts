@@ -2,7 +2,7 @@ import { ContentType } from "m-tests-core/lib/questions/common-schemas";
 import {
 	DeeplyOptional,
 	DeeplyRequired,
-} from "m-tests-core/lib/utils/generics";
+} from "custo/lib/utils/generics";
 import { CommonPassable } from "../common/props/types";
 import { MCPassable } from "../multiple-choice/props/types";
 

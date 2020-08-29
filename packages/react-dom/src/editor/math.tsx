@@ -1,29 +1,9 @@
 import React from "react";
-import { ContentBlock } from "draft-js";
 import asciimath2latex from "asciimath-to-latex";
 
-export function mathEquationStrategy(contentBlock, callback) {
-	findWithRegex(MATH_EQUATION_REGEX, contentBlock, callback);
-}
 export const MathTagSpan = props => (
 	<span className="contentEditableMathEquationSpan">{props.children}</span>
 );
-
-export const MATH_EQUATION_REGEX = /`(.+?)`/g;
-
-function findWithRegex(
-	regex: RegExp,
-	contentBlock: ContentBlock,
-	callback: (start: number, end: number) => void
-) {
-	const text = contentBlock.getText();
-	let matchArr;
-	let start;
-	while ((matchArr = regex.exec(text)) !== null) {
-		start = matchArr.index;
-		callback(start, start + matchArr[0].length);
-	}
-}
 
 export const MathRegexes = [/`(.+?)`/g, /<<(.+?)>>/g, /&lt;&lt;(.+?)&gt;&gt;/g];
 

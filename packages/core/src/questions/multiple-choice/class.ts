@@ -123,6 +123,14 @@ class MultipleChoice
 			}
 		});
 	}
+	
+	getUsedIds(): number[] {
+		const ids: number[] = [];
+		ids.push(this.statement.id);
+		this.choices.forEach(e => ids.push(e.id));
+		if (this.explanation) ids.push(this.explanation.id);
+		return ids;
+	};
 
 	getStripped() {
 		const stripped: IRMultipleChoiceContent = {

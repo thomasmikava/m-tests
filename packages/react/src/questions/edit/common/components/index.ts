@@ -11,24 +11,36 @@ const CommonEditOnes: ToCustoTreeObj<CommonEditPassable> = {
 			text: CustoType.component,
 		},
 		contentSelector: CustoType.component,
+		checkboxWithLabel: CustoType.component,
 	},
 	elements: {
 		outerContainer: CustoType.component,
-	},
-	functions: {
-		useContentTextTransformer: CustoType.data,
-		useNonContentTextTransformer: CustoType.data,
+		bodyContainer: CustoType.component,
+		explanation: {
+			container: CustoType.component,
+			text: CustoType.component,
+		},
+		innerContainers: CustoType.component,
+		text: CustoType.component,
 	},
 	texts: {
 		explanation: {
 			title: CustoType.text,
+			placeholder: CustoType.data,
 		},
 		contentTypes: CustoType.data,
 	},
+	functions: {
+		getEmptyText: CustoType.data,
+	},
+	hooks: {
+		contentTextTransformer: CustoType.data,
+		nonContentTextTransformer: CustoType.data,
+	},
 };
 
-export const CommonEdit = CreateCusto.Tree<CommonEditPassable>(
+export const CommonEditCusto = CreateCusto.Tree<CommonEditPassable>(
 	CommonEditOnes as any,
 	useNormalizedQuestionEditContextSubscriber,
-	{ prefixes: ["common"] }
+	{ prefixes: ["common"], }
 );

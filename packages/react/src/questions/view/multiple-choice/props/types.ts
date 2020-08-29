@@ -15,7 +15,7 @@ import {
 	MCSingleChoiceDecorationProps,
 } from "../components/types";
 
-export interface MCPassableComponents {
+interface MCPassableComponents {
 	body: GeneralCustoComp<MCBodyProps>;
 	statement: {
 		container: GeneralCustoComp<MCStatementProps>;
@@ -35,7 +35,7 @@ export interface MCPassableComponents {
 	};
 }
 
-export interface MCPassableElements {
+interface MCPassableElements {
 	containers?: GeneralCustoHTMLElement;
 	bodyContainer?: GeneralCustoHTMLElement;
 	text?: GeneralCustoHTMLElement;
@@ -61,7 +61,7 @@ export interface MCPassableElements {
 	};
 }
 
-export interface MCPassableTexts {
+interface MCPassableTexts {
 	explanation?: {
 		title?: GeneralCustoText;
 	};

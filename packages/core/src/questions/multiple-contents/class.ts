@@ -49,6 +49,18 @@ class MultipleContents
 			});
 		}
 	}
+	getUsedIds(): number[] {
+		const ids: number[] = [];
+		this.items.forEach(item => {
+			ids.push(item.id);
+			if (item.content.type !== ContentType.Text) {
+				const content = newContent(item.content);
+				ids.push(...content.getUsedIds());
+			}
+		});
+		if (this.explanation) ids.push(this.explanation.id);
+		return ids;
+	};
 
 	getStripped() {
 		const stripped: IRMultipleContents = {

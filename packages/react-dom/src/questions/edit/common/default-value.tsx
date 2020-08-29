@@ -1,37 +1,35 @@
 import { covertASCIIMathToLaTex } from "../../../editor/math";
-import { ContentType } from "m-tests-core/lib/questions/common-schemas";
-import { FBContentDesignStructure } from "m-tests-core/lib/questions/filling-blanks/types";
+import { reactDefaultCommonEditPassable } from "m-tests-react/lib/questions/edit/common/components/value";
 import { normalizeHTML } from "../../../editor/html";
 import {
-	Explanation,
-	TextComponent,
-} from "m-tests-react/lib/questions/view/common/components/providers";
+	EditExplanation,
+} from "m-tests-react/lib/questions/edit/common/components/providers";
 import React from "react";
 import {
-	CommonEditComponents,
-	CommonEditElements,
-	CommonEditFunctions,
-	CommonEditTexts,
 	CommonEditPassable,
 } from "m-tests-react/lib/questions/edit/common/props/types";
 import { pckgDefComponents } from "m-tests-react/lib/utils/shortcuts";
 import { CreateCusto } from "custo";
-import { ChooseQuestionContentType } from "./providers";
+import { ChooseQuestionContentType, EditTextComponent, CheckboxWithLabel } from "./providers";
 
-const defaultCommonEditComponents: CommonEditComponents = {
+const defaultCommonEditComponents: CommonEditPassable["components"] = {
 	text: CreateCusto.hookOf.Component(() =>
-		pckgDefComponents.newComp(TextComponent)
+		pckgDefComponents.newComp(EditTextComponent)
 	),
 	explanation: {
-		container: pckgDefComponents.newComp(Explanation),
+		container: pckgDefComponents.newComp(EditExplanation),
 	},
 	contentSelector: pckgDefComponents.newComp(ChooseQuestionContentType),
+	checkboxWithLabel: pckgDefComponents.newComp(CheckboxWithLabel)
 };
 
-const defaultCommonEditElements: CommonEditElements = {
+const defaultCommonEditElements: CommonEditPassable["elements"] = {
 	outerContainer: pckgDefComponents.newDivEl({
 		style: { fontFamily: "FiraGO", border: "2px solid red" },
 	}),
+	bodyContainer: pckgDefComponents.newDivEl(),
+	explanation: {},
+	text: pckgDefComponents.newComp("textarea", { style: { border: "10px solid blue" } }),
 };
 
 const defaultContentTextTransformer = (text: string) => {
@@ -44,65 +42,17 @@ const defaultContentTextTransformer = (text: string) => {
 	);
 };
 
-const defaultCommonEditFunctions: CommonEditFunctions = {
-	useContentTextTransformer: CreateCusto.hookOf.Data(
+const defaultCommonEditHooks: CommonEditPassable["hooks"] = {
+	contentTextTransformer: CreateCusto.hookOf.Data(
 		defaultContentTextTransformer
 	),
-};
-
-const defaultCommonEditTexts: CommonEditTexts = {
-	explanation: {
-		title: CreateCusto.Text("Explanation"),
-	},
-	contentTypes: CreateCusto.hookOf.Data(() => [
-		{
-			value: {
-				contentType: ContentType.MultipleChoice,
-				designStructure: null,
-			},
-			label: "Multiple Choice",
-		},
-		{
-			value: {
-				contentType: ContentType.SortItems,
-				designStructure: null,
-			},
-			label: "Sorting Items",
-		},
-		{
-			value: {
-				contentType: ContentType.FillingBlanks,
-				designStructure: null,
-			},
-			label: "Filling Blanks",
-		},
-		{
-			value: {
-				contentType: ContentType.MultipleContents,
-				designStructure: null,
-			},
-			label: "Multiple Contents",
-		},
-		{
-			value: {
-				contentType: ContentType.FillingBlanks,
-				designStructure: FBContentDesignStructure.essay,
-			},
-			label: "Essay",
-		},
-		{
-			value: {
-				contentType: ContentType.FillingBlanks,
-				designStructure: FBContentDesignStructure.essayWithFiles,
-			},
-			label: "Essay With Files",
-		},
-	]),
+	nonContentTextTransformer: CreateCusto.hookOf.Data((x) => x),
 };
 
 export const defaultCommonEdit: CommonEditPassable = {
 	components: defaultCommonEditComponents,
 	elements: defaultCommonEditElements,
-	texts: defaultCommonEditTexts,
-	functions: defaultCommonEditFunctions,
+	texts: reactDefaultCommonEditPassable.texts,
+	functions: reactDefaultCommonEditPassable.functions,
+	hooks: defaultCommonEditHooks,
 };

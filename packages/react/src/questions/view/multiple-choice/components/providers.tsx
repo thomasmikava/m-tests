@@ -26,67 +26,80 @@ export const MultipleChoiceContainer: React.FC<MultipleChoiceNewContainerProps> 
 );
 
 export const MCBody: React.FC<MCBodyProps> = React.memo(({ path }) => {
+	const Container = MCElements.bodyContainer;
+	const Statement = MCComps.statement.container;
+	const Choices = MCComps.choices.container;
+	const Explanation = MCComps.explanation.container;
 	return (
-		<MCElements.bodyContainer>
-			<MCComps.statement.container path={path.add("statement")} />
-			<MCComps.choices.container path={path.add("choices")} />
-			<MCComps.explanation.container path={path.add("explanation")} />
-		</MCElements.bodyContainer>
+		<Container>
+			<Statement path={path.add("statement")} />
+			<Choices path={path.add("choices")} />
+			<Explanation path={path.add("explanation")} />
+		</Container>
 	);
 });
 
 export const MCStatement: React.FC<MCStatementProps> = React.memo(
 	({ path }) => {
 		const statement = mcHooks.useStatement();
+		const Container = MCElements.statement.container;
+		const Text = MCComps.statement.text;
 		return (
-			<MCElements.statement.container>
+			<Container>
 				<CounterComponent title="Statementtt" />
-				<MCComps.statement.text
+				<Text
 					path={path.add("text")}
 					stat={statement}
 				/>
-			</MCElements.statement.container>
+			</Container>
 		);
 	},
 	() => true
 );
 
 export const MCChoices: React.FC<MCChoicesProps> = React.memo(({ path }) => {
-	const choices = mcHooks.useChoices();
+	const choiceIds = mcHooks.useChoiceIds();
+	const Container = MCElements.choices.container;
+	const SingleChoice = MCComps.choices.single.container;
 	return (
 		<>
 			<CounterComponent title="MCChoices O" />
-			<MCElements.choices.container>
+			<Container>
 				<CounterComponent title="MCChoices I" />
-				{choices.map((choice, index) => (
-					<MCChoiceCont.Provider value={choice} key={choice.id}>
-						<MCComps.choices.single.container
-							choice={choice}
-							path={path.add(index)}
-						/>
-					</MCChoiceCont.Provider>
+				{choiceIds.map((choiceId, index) => (
+					<SingleChoice
+						key={choiceId}
+						choiceId={choiceId}
+						path={path.add(index)}
+					/>
 				))}
-			</MCElements.choices.container>
+			</Container>
 		</>
 	);
 });
 
 export const MCSingleChoice: React.FC<MCSingleChoiceProps> = React.memo(
-	({ path, choice }) => {
-		const choiceId = choice.id;
-
+	({ path, choiceId }) => {
+		const choice = mcHooks.useChoiceById(choiceId);
 		const handleChange = mcHooks.useOnChoiceCheck(choiceId);
 
+		const Container = MCElements.choices.single.container;
+		const Decoration = MCComps.choices.single.decoration;
+		const TextContainer = MCElements.choices.single.textContainer;
+		const Text = MCComps.choices.single.text;
+
 		return (
-			<MCElements.choices.single.container onClick={handleChange}>
-				<MCComps.choices.single.decoration path={path} />
-				<MCElements.choices.single.textContainer>
-					<MCComps.choices.single.text
-						stat={choice}
-						path={path.add("text")}
-					/>
-				</MCElements.choices.single.textContainer>
-			</MCElements.choices.single.container>
+			<MCChoiceCont.Provider value={choice}>
+				<Container onClick={handleChange}>
+					<Decoration path={path} />
+					<TextContainer>
+						<Text
+							stat={choice}
+							path={path.add("text")}
+						/>
+					</TextContainer>
+				</Container>
+			</MCChoiceCont.Provider>
 		);
 	}
 );

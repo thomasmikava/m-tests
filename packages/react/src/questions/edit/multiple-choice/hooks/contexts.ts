@@ -1,6 +1,12 @@
 import { IRawQuestionContent } from "m-tests-core/lib/questions/schemas";
 import { DynamicContext } from "react-flexible-contexts";
+import { IMultipleChoiceContent } from "m-tests-core/lib/questions/multiple-choice/types";
+import { EditContentCont } from "../../common/hooks/contexts";
 
-type IContent = IRawQuestionContent;
+type IContent = IMultipleChoiceContent;
 
-export const MCEditContentCont = DynamicContext.create<IContent>();
+export const MCEditContentCont = EditContentCont.addInternalContext(x => x.content as IContent);
+
+export const MCEditChoiceCont = DynamicContext.create<
+	IContent["choices"][number]
+>();

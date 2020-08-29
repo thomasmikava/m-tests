@@ -1,5 +1,5 @@
 import { useMemo, useRef, useCallback } from "react";
-import { getAbsoluteProperty } from "custo/lib/utils/prop";
+import { getAbsoluteProperty } from "./prop";
 
 export const useAbsoluteProperty = (obj: any, key: string) => {
 	return useMemo(() => {
@@ -33,8 +33,11 @@ export const useOptimizedFunc = <FN extends (...args: any) => any>(
 ): FN => {
 	const fnRef = useRef(fn);
 	fnRef.current = fn;
-	const optimizedFn = useRef((...args: any) => {
-		return fnRef.current(...args) as any;
-	});
+	const optimizedFn = useRef<FN>();
+	if (!optimizedFn.current) {
+		optimizedFn.current = ((...args: any) => {
+			return fnRef.current(...args) as any;
+		}) as any;
+	}
 	return optimizedFn.current as FN;
 };

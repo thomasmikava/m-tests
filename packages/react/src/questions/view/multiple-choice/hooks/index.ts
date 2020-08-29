@@ -5,12 +5,21 @@ import { areDeeplyEqual } from "m-tests-core/lib/utils/optimizations";
 import { useCallback, useMemo } from "react";
 import { MCContentCont, MCChoiceCont } from "./contexts";
 import { commonHooks } from "../../common/hooks";
+import { IStatement } from "m-tests-core/lib/questions/common-schemas";
+import { IRMultipleChoiceContent, IMultipleChoiceContent } from "m-tests-core/lib/questions/multiple-choice/types";
+import { IContentProps } from "../../interfaces";
 
 const useStatement = () =>
 	MCContentCont.useSelector(content => content.statement, []);
 
 const useRawChoices = () =>
 	MCContentCont.useSelector(content => content.choices, []);
+
+const useChoiceById = (id: number): (IRMultipleChoiceContent["choices"][number] | IMultipleChoiceContent["choices"][number]) =>
+	MCContentCont.useSelector(content => content.choices.find(e => e.id === id)!, [id]);
+
+const useChoicesCount = () =>
+	MCContentCont.useSelector(content => content.choices.length, []);
 
 const useCorrectAnswer = () =>
 	MCContentCont.useSelector(
@@ -43,14 +52,25 @@ const useSettings = () =>
 		[]
 	);
 
+const choicesShuffleFn = <T extends any>(arr: T[], { disableShuffle, shuffleKey }: Pick<IMultipleChoiceContent, "disableShuffle"> & Pick<IContentProps<any>, "shuffleKey">): T[] => {
+	if (disableShuffle || shuffleKey === undefined) return arr;
+	return shuffleArrayByKey(arr, shuffleKey);
+}
+
 const useChoices = () => {
 	const { shuffleKey } = commonHooks.useQuestionDisplaySettings();
 	const { disableShuffle } = useSettings();
 	const choises = useRawChoices();
-	return useMemo(() => {
-		if (disableShuffle || shuffleKey === undefined) return choises;
-		return shuffleArrayByKey(choises, shuffleKey);
-	}, [choises, shuffleKey, disableShuffle]);
+	return useMemo(() => choicesShuffleFn(choises, { disableShuffle, shuffleKey }), [choises, shuffleKey, disableShuffle]);
+};
+
+const useChoiceIds = () => {
+	const { shuffleKey } = commonHooks.useQuestionDisplaySettings();
+	const { disableShuffle } = useSettings();
+	return MCContentCont.useSelector(content => {
+		const choiseIds = (content.choices as IStatement[]).map(e => e.id);
+		return choicesShuffleFn(choiseIds, { disableShuffle, shuffleKey })
+	}, [shuffleKey, disableShuffle]);
 };
 
 const useChoiceState = (choiceId: number) => {
@@ -127,9 +147,13 @@ const useChoiceId = () => MCChoiceCont.useProperty("id");
 export const mcHooks = {
 	useStatement,
 	useChoices,
+	useChoicesCount,
+	useChoiceIds,
+	useChoiceById,
 	useSettings,
 	useChoiceState,
 	useCorrectAnswer,
 	useOnChoiceCheck,
 	useChoiceId,
+	choicesShuffleFn,
 };
