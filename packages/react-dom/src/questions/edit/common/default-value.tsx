@@ -13,23 +13,23 @@ import { CreateCusto } from "custo";
 import { ChooseQuestionContentType, EditTextComponent, CheckboxWithLabel } from "./providers";
 
 const defaultCommonEditComponents: CommonEditPassable["components"] = {
-	text: CreateCusto.hookOf.Component(() =>
+	Text: CreateCusto.hookOf.Component(() =>
 		pckgDefComponents.newComp(EditTextComponent)
 	),
 	explanation: {
-		container: pckgDefComponents.newComp(EditExplanation),
+		Container: pckgDefComponents.newComp(EditExplanation),
 	},
-	contentSelector: pckgDefComponents.newComp(ChooseQuestionContentType),
-	checkboxWithLabel: pckgDefComponents.newComp(CheckboxWithLabel)
+	ContentSelector: pckgDefComponents.newComp(ChooseQuestionContentType),
+	CheckboxWithLabel: pckgDefComponents.newComp(CheckboxWithLabel)
 };
 
 const defaultCommonEditElements: CommonEditPassable["elements"] = {
-	outerContainer: pckgDefComponents.newDivEl({
+	OuterContainer: pckgDefComponents.newDivEl({
 		style: { fontFamily: "FiraGO", border: "2px solid red" },
 	}),
-	bodyContainer: pckgDefComponents.newDivEl(),
+	BodyContainer: pckgDefComponents.newDivEl(),
 	explanation: {},
-	text: pckgDefComponents.newComp("textarea", { style: { border: "10px solid blue" } }),
+	Text: pckgDefComponents.newComp("textarea", { style: { border: "10px solid blue" } }),
 };
 
 const defaultContentTextTransformer = (text: string) => {
@@ -43,10 +43,10 @@ const defaultContentTextTransformer = (text: string) => {
 };
 
 const defaultCommonEditHooks: CommonEditPassable["hooks"] = {
-	contentTextTransformer: CreateCusto.hookOf.Data(
+	contentTextTransformer: CreateCusto.Hook(
 		defaultContentTextTransformer
 	),
-	nonContentTextTransformer: CreateCusto.hookOf.Data((x) => x),
+	nonContentTextTransformer: CreateCusto.Hook((x) => x),
 };
 
 export const defaultCommonEdit: CommonEditPassable = {

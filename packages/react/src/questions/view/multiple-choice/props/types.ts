@@ -14,57 +14,53 @@ import {
 	MCSingleChoiceProps,
 	MCSingleChoiceDecorationProps,
 } from "../components/types";
+import { CommonPassable } from "../../common/props/types";
+import { DeeplyOptional } from "custo/lib/utils/generics";
+
+type CommonTexts = CommonPassable["texts"];
+type CommonElements = CommonPassable["elements"];
+type CommonComponents = CommonPassable["components"];
 
 interface MCPassableComponents {
-	body: GeneralCustoComp<MCBodyProps>;
+	Body: GeneralCustoComp<MCBodyProps>;
 	statement: {
-		container: GeneralCustoComp<MCStatementProps>;
-		text?: GeneralCustoComp<TextComponentProps>;
+		Container: GeneralCustoComp<MCStatementProps>;
+		Text?: GeneralCustoComp<TextComponentProps>;
 	};
 	choices: {
-		container: GeneralCustoComp<MCChoicesProps>;
+		Container: GeneralCustoComp<MCChoicesProps>;
 		single: {
-			container: GeneralCustoComp<MCSingleChoiceProps>;
-			text?: GeneralCustoComp<TextComponentProps>;
-			decoration?: GeneralCustoComp<MCSingleChoiceDecorationProps>;
+			Container: GeneralCustoComp<MCSingleChoiceProps>;
+			Text?: GeneralCustoComp<TextComponentProps>;
+			Decoration?: GeneralCustoComp<MCSingleChoiceDecorationProps>;
 		};
 	};
-	explanation?: {
-		container?: GeneralCustoComp<ExplanationProps>;
-		text?: GeneralCustoComp<TextComponentProps>;
-	};
+	explanation: DeeplyOptional<CommonComponents["explanation"]>;
 }
 
 interface MCPassableElements {
-	containers?: GeneralCustoHTMLElement;
-	bodyContainer?: GeneralCustoHTMLElement;
-	text?: GeneralCustoHTMLElement;
+	Containers?: GeneralCustoHTMLElement;
+	BodyContainer?: GeneralCustoHTMLElement;
+	Text?: GeneralCustoHTMLElement;
 	statement: {
-		container?: GeneralCustoHTMLElement;
-		text?: GeneralCustoHTMLElement;
+		Container?: GeneralCustoHTMLElement;
+		Text?: GeneralCustoHTMLElement;
 	};
 	choices: {
-		container?: GeneralCustoHTMLElement;
+		Container?: GeneralCustoHTMLElement;
 		single: {
-			container?: GeneralCustoHTMLElement;
-			decorationContainer?: GeneralCustoHTMLElement;
-			icon?: GeneralCustoHTMLElement;
-			textContainer?: GeneralCustoHTMLElement;
-			text?: GeneralCustoHTMLElement;
+			Container?: GeneralCustoHTMLElement;
+			DecorationContainer?: GeneralCustoHTMLElement;
+			Icon?: GeneralCustoHTMLElement;
+			TextContainer?: GeneralCustoHTMLElement;
+			Text?: GeneralCustoHTMLElement;
 		};
 	};
-	explanation: {
-		container?: GeneralCustoHTMLElement;
-		title?: GeneralCustoHTMLElement;
-		body?: GeneralCustoHTMLElement;
-		text?: GeneralCustoHTMLElement;
-	};
+	explanation: DeeplyOptional<CommonElements["explanation"]>;
 }
 
 interface MCPassableTexts {
-	explanation?: {
-		title?: GeneralCustoText;
-	};
+	explanation: DeeplyOptional<CommonTexts["explanation"]>;
 }
 
 export interface MCPassable {

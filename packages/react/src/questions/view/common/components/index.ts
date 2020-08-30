@@ -3,29 +3,29 @@ import { ToCustoTreeObj } from "custo/lib/classes/helper-fns/tree";
 import { useNormalizedQuestionContextSelector } from "../../customizations/providers";
 import { CommonPassable } from "../props/types";
 
-const CommonOnes: ToCustoTreeObj<CommonPassable> = {
+export const CommonOnes: ToCustoTreeObj<CommonPassable> = {
 	components: {
-		text: CustoType.component,
+		Text: CustoType.component,
 		explanation: {
-			container: CustoType.component,
-			text: CustoType.component,
+			Container: CustoType.component,
+			Text: CustoType.component,
 		},
 	},
 	elements: {
-		outerContainer: CustoType.component,
-		bodyContainer: CustoType.component,
-		text: CustoType.component,
-		innerContainers: CustoType.component,
+		OuterContainer: CustoType.component,
+		BodyContainer: CustoType.component,
+		Text: CustoType.component,
+		InnerContainers: CustoType.component,
 		explanation: {
-			container: CustoType.component,
-			title: CustoType.component,
-			body: CustoType.component,
-			text: CustoType.component,
+			Container: CustoType.component,
+			Title: CustoType.component,
+			Body: CustoType.component,
+			Text: CustoType.component,
 		},
 	},
 	texts: {
 		explanation: {
-			title: CustoType.data,
+			Title: CustoType.text,
 		},
 	},
 	functions: {

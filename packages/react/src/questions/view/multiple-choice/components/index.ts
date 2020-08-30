@@ -3,57 +3,47 @@ import { CreateCusto, CustoType } from "custo";
 import { ToCustoTreeObj } from "custo/lib/classes/helper-fns/tree";
 import { useNormalizedQuestionContextSelector } from "../../customizations/providers";
 import { MCPassable } from "../props/types";
-import { getTextTransformationHook } from "../../common/components";
+import { getTextTransformationHook, CommonOnes } from "../../common/components";
 
 const MCOnes: ToCustoTreeObj<MCPassable> = {
 	components: {
-		body: CustoType.component,
+		Body: CustoType.component,
 		statement: {
-			container: CustoType.component,
-			text: CustoType.component,
+			Container: CustoType.component,
+			Text: CustoType.component,
 		},
 		choices: {
-			container: CustoType.component,
+			Container: CustoType.component,
 			single: {
-				container: CustoType.component,
-				decoration: CustoType.component,
-				text: CustoType.component,
+				Container: CustoType.component,
+				Decoration: CustoType.component,
+				Text: CustoType.component,
 			},
 		},
-		explanation: {
-			container: CustoType.component,
-			text: CustoType.component,
-		},
+		explanation: CommonOnes.components.explanation,
 	},
 	elements: {
-		containers: CustoType.component,
-		text: CustoType.component,
-		bodyContainer: CustoType.component,
+		Containers: CustoType.component,
+		Text: CustoType.component,
+		BodyContainer: CustoType.component,
 		statement: {
-			container: CustoType.component,
-			text: CustoType.component,
+			Container: CustoType.component,
+			Text: CustoType.component,
 		},
 		choices: {
-			container: CustoType.component,
+			Container: CustoType.component,
 			single: {
-				container: CustoType.component,
-				decorationContainer: CustoType.component,
-				icon: CustoType.component,
-				text: CustoType.component,
-				textContainer: CustoType.component,
+				Container: CustoType.component,
+				DecorationContainer: CustoType.component,
+				Icon: CustoType.component,
+				Text: CustoType.component,
+				TextContainer: CustoType.component,
 			},
 		},
-		explanation: {
-			container: CustoType.component,
-			text: CustoType.component,
-			title: CustoType.component,
-			body: CustoType.component,
-		},
+		explanation: CommonOnes.elements.explanation,
 	},
 	texts: {
-		explanation: {
-			title: CustoType.text,
-		},
+		explanation: CommonOnes.texts.explanation,
 	},
 };
 

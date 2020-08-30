@@ -7,30 +7,30 @@ import {
 import { ExplanationProps, TextComponentProps } from "../components/types";
 
 interface CommonComponents {
-	text: GeneralCustoComp<TextComponentProps>;
+	Text: GeneralCustoComp<TextComponentProps>;
 	explanation: {
-		container: GeneralCustoComp<ExplanationProps>;
-		text?: GeneralCustoComp<TextComponentProps>;
+		Container: GeneralCustoComp<ExplanationProps>;
+		Text?: GeneralCustoComp<TextComponentProps>;
 	};
 }
 
 interface CommonElements {
-	outerContainer: GeneralCustoHTMLElement;
-	bodyContainer: GeneralCustoHTMLElement;
-	text: GeneralCustoHTMLElement;
-	innerContainers?: GeneralCustoHTMLElement;
+	OuterContainer: GeneralCustoHTMLElement;
+	BodyContainer: GeneralCustoHTMLElement;
+	Text: GeneralCustoHTMLElement;
+	InnerContainers?: GeneralCustoHTMLElement;
 	explanation: {
-		container?: GeneralCustoHTMLElement;
-		title: GeneralCustoHTMLElement;
-		body: GeneralCustoHTMLElement;
-		text?: GeneralCustoHTMLElement;
+		Container?: GeneralCustoHTMLElement;
+		Title: GeneralCustoHTMLElement;
+		Body: GeneralCustoHTMLElement;
+		Text?: GeneralCustoHTMLElement;
 	};
 }
 
 
 interface CommonTexts {
 	explanation: {
-		title: GeneralCustoText;
+		Title: GeneralCustoText;
 	};
 }
 interface CommonFunctions {

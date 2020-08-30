@@ -10,13 +10,13 @@ const Texts = pckgDefComponents.newDivEl({ style: { color: "red" } });
 
 const defaultMCPassableElements: MCPassable["elements"] = {
 	statement: {
-		container: pckgDefComponents.newDivEl({
+		Container: pckgDefComponents.newDivEl({
 			style: { boxShadow: "rgba(0,0,0,0.5) 0 0 10px inset" },
 		}),
-		text: Texts,
+		Text: Texts,
 	},
 	choices: {
-		container: pckgDefComponents.newDivEl(
+		Container: pckgDefComponents.newDivEl(
 			{
 				className: styles["choices-container"],
 			},
@@ -28,21 +28,21 @@ const defaultMCPassableElements: MCPassable["elements"] = {
 			}
 		),
 		single: {
-			container: CreateCusto.hookOf.Component(useSingleChoiceContainer),
-			textContainer: pckgDefComponents.newDivEl({
+			Container: CreateCusto.hookOf.Component(useSingleChoiceContainer),
+			TextContainer: pckgDefComponents.newDivEl({
 				className: styles["choice-text-container"],
 			}),
-			decorationContainer: pckgDefComponents.newDivEl({
+			DecorationContainer: pckgDefComponents.newDivEl({
 				className: styles["choice-decoration-container"],
 			}),
-			icon: CreateCusto.hookOf.Component(useChoiceIcon),
+			Icon: CreateCusto.hookOf.Component(useChoiceIcon),
 		},
 	},
 	explanation: {
-		container: pckgDefComponents.newHTMLEl("span", {
+		Container: pckgDefComponents.newHTMLEl("span", {
 			style: { boxShadow: "rgba(0,0,0,0.8) 0 0 10px 25px" },
 		}),
-		text: pckgDefComponents.newDivEl({
+		Text: pckgDefComponents.newDivEl({
 			style: { color: "blue", fontWeight: "bold" },
 		}),
 	},

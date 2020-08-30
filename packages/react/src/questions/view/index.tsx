@@ -93,7 +93,7 @@ const Content = React.memo(
 			{ content }: { content: IRQuestionContent | IRawQuestionContent },
 			ref: any
 		) => {
-			const Cont = CommonElements.outerContainer;
+			const Cont = CommonElements.OuterContainer;
 			return (
 				<Cont ref={ref}>
 					<CounterComponent title={"Content"} />

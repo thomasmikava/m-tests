@@ -8,6 +8,8 @@ import { getUniqueId } from "../../../../utils/array";
 import { newContent } from "m-tests-core/lib/questions/new-content";
 import { CommonEditCusto } from "../../common/components";
 import { IRMultipleChoiceContent } from "m-tests-core/lib/questions/multiple-choice/types";
+import { CreateHookInjection } from "custo/lib/components/wrappers";
+import React from "react";
 
 const useStatement = () =>
 	MCEditContentCont.useSelector(content => content.statement, []);
@@ -148,3 +150,12 @@ export const mcEditHooks = {
 	useSetPropFn,
 	useCanSelectMultipleChangeFn,
 };
+
+
+
+export const ConnectWithEditingChoice = CreateHookInjection(
+	({ choiceIndex }: { choiceIndex: number }) => ({
+		choice: MCEditContentCont.useSelector(x => x.choices[choiceIndex], [choiceIndex])
+	}),
+	(props) => <MCEditChoiceCont.Provider value={props.choice}>{props.children}</MCEditChoiceCont.Provider>
+);

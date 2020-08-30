@@ -1,4 +1,3 @@
-import { IRawQuestionContent } from "m-tests-core/lib/questions/schemas";
 import { DynamicContext } from "react-flexible-contexts";
 import { IMultipleChoiceContent } from "m-tests-core/lib/questions/multiple-choice/types";
 import { EditContentCont } from "../../common/hooks/contexts";

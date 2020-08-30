@@ -10,22 +10,22 @@ export const linkMCProps = (
 	/* eslint-disable */
 	// Components
 	link(obj.common.components.explanation, obj[t].components, "explanation");
-	link(obj.common.components.text, obj[t].components.statement, "text");
-	link(obj.common.components.text, obj[t].components.choices.single, "text");
+	link(obj.common.components.Text, obj[t].components.statement, "Text");
+	link(obj.common.components.Text, obj[t].components.choices.single, "Text");
 
 	// Elements
-	link(obj.common.elements.bodyContainer, obj[t].elements, "bodyContainer");
-	link(obj.common.elements.innerContainers, obj[t].elements, "containers");
-	link(obj.common.elements.text, obj[t].elements, "text");
+	link(obj.common.elements.BodyContainer, obj[t].elements, "BodyContainer");
+	link(obj.common.elements.InnerContainers, obj[t].elements, "Containers");
+	link(obj.common.elements.Text, obj[t].elements, "Text");
 
-	link(obj[t].elements.text, obj[t].elements.statement, "text");
-	link(obj[t].elements.text, obj[t].elements.choices.single, "text");
-	link(obj[t].elements.text, obj[t].elements.explanation, "text");
+	link(obj[t].elements.Text, obj[t].elements.statement, "Text");
+	link(obj[t].elements.Text, obj[t].elements.choices.single, "Text");
+	link(obj[t].elements.Text, obj[t].elements.explanation, "Text");
 	
-	link(obj[t].elements.containers, obj[t].elements.statement, "container");
-	link(obj[t].elements.containers, obj[t].elements.choices, "container");
-	link(obj[t].elements.containers, obj[t].elements.choices.single, "container");
-	link(obj[t].elements.containers, obj[t].elements.explanation, "container");
+	link(obj[t].elements.Containers, obj[t].elements.statement, "Container");
+	link(obj[t].elements.Containers, obj[t].elements.choices, "Container");
+	link(obj[t].elements.Containers, obj[t].elements.choices.single, "Container");
+	link(obj[t].elements.Containers, obj[t].elements.explanation, "Container");
 	
 	link(obj.common.elements.explanation, obj[t].elements, "explanation");
 	

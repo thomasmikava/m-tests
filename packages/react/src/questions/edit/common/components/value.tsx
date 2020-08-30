@@ -6,7 +6,7 @@ import { FBContentDesignStructure } from "m-tests-core/lib/questions/filling-bla
 export const reactDefaultCommonEditPassable: Pick<CommonEditPassable, "texts" | "functions" | "hooks"> = {
     texts: {
         explanation: {
-            title: CreateCusto.Text("Explanation"),
+            Title: CreateCusto.Text("Explanation"),
             placeholder: CreateCusto.Data("Explanation"),
         },
         contentTypes: CreateCusto.hookOf.Data(() => [

@@ -12,19 +12,19 @@ import { CreateCusto } from "custo";
 const empty = pckgDefComponents.newDivEl();
 
 const defaultCommonElements: CommonPassable["elements"] = {
-	outerContainer: empty,
-	bodyContainer: empty,
-	innerContainers: pckgDefComponents.newDivEl({
+	OuterContainer: empty,
+	BodyContainer: empty,
+	InnerContainers: pckgDefComponents.newDivEl({
 		style: {
 			fontFamily: "FiraGO",
 			background: "rgba(0,0,0,0.2)",
 			borderRadius: 20,
 		},
 	}),
-	text: empty,
+	Text: empty,
 	explanation: {
-		title: empty,
-		body: empty,
+		Title: empty,
+		Body: empty,
 	},
 };
 

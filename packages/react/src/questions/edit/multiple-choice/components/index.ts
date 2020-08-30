@@ -3,86 +3,80 @@ import { CreateCusto, CustoType } from "custo";
 import { ToCustoTreeObj } from "custo/lib/classes/helper-fns/tree";
 import { useNormalizedQuestionEditContextSubscriber } from "../../customizations/providers";
 import { MCEditPassable } from "../props/types";
+import { CommonEditOnes } from "../../common/components";
 
 const MCEditOnes: ToCustoTreeObj<MCEditPassable> = {
 	components: {
-		head: CustoType.component,
-		body: CustoType.component,
-		tail: CustoType.component,
+		Head: CustoType.component,
+		Body: CustoType.component,
+		Tail: CustoType.component,
 		statement: {
-			container: CustoType.component,
-			text: CustoType.component,
+			Container: CustoType.component,
+			Text: CustoType.component,
 		},
 		choices: {
-			container: CustoType.component,
+			Container: CustoType.component,
 			single: {
-				container: CustoType.component,
-				text: CustoType.component,
-				decoration: CustoType.component,
-				rightDecoration: CustoType.component,
+				Container: CustoType.component,
+				Text: CustoType.component,
+				LeftDecoration: CustoType.component,
+				RightDecoration: CustoType.component,
 			},
-			addChoice: CustoType.component,
+			AddChoice: CustoType.component,
 		},
-		explanation: {
-			container: CustoType.component,
-			text: CustoType.component,
-		},
+		explanation: CommonEditOnes.components.explanation,
 	},
 	texts: {
-		explanation: {
-			title: CustoType.text,
-			placeholder: CustoType.data,
-		},
+		explanation: CommonEditOnes.texts.explanation,
 		statement: {
 			placeholder: CustoType.data,
 		},
 		choices: {
-			addChoice: CustoType.text,
+			AddChoice: CustoType.text,
 			single: {
 				placeholder: CustoType.data,
 			}
 		},
-		canSelectMultiple: CustoType.text,
-		disableShuffle: CustoType.text,
-		allowPartialCredit: CustoType.text,
+		CanSelectMultiple: CustoType.text,
+		DisableShuffle: CustoType.text,
+		AllowPartialCredit: CustoType.text,
 	},
 	elements: {
-		container: CustoType.component,
-		headContainer: CustoType.component,
-		bodyContainer: CustoType.component,
-		tailContainer: CustoType.component,
-		text: CustoType.component,
+		Container: CustoType.component,
+		HeadContainer: CustoType.component,
+		BodyContainer: CustoType.component,
+		TailContainer: CustoType.component,
+		Text: CustoType.component,
 		statement: {
-			container: CustoType.component,
-			text: CustoType.component,
+			Container: CustoType.component,
+			Text: CustoType.component,
 		},
 		choices: {
-			container: CustoType.component,
+			Container: CustoType.component,
 			single: {
-				container: CustoType.component,
-				decorationContainer: CustoType.component,
-				icon: CustoType.component,
-				rightDecorationContainer: CustoType.component,
-				rightIcon: CustoType.component,
-				textContainer: CustoType.component,
-				text: CustoType.component,
+				Container: CustoType.component,
+				left: {
+					DecorationContainer: CustoType.component,
+					Icon: CustoType.component,
+				},
+				right: {
+					DecorationContainer: CustoType.component,
+					Icon: CustoType.component,
+				},
+				TextContainer: CustoType.component,
+				Text: CustoType.component,
 			},
-			button: CustoType.component,
+			Button: CustoType.component,
 		},
-		explanation: {
-			container: CustoType.component,
-			title: CustoType.component,
-			body: CustoType.component,
-			text: CustoType.component,
-		},
-		containers: CustoType.component,
+		explanation: CommonEditOnes.elements.explanation,
+		Containers: CustoType.component,
 	},
 };
 
 export const MCEdit = CreateCusto.Tree<MCEditPassable>(
 	MCEditOnes as any,
 	useNormalizedQuestionEditContextSubscriber,
-	{ prefixes: [ContentType.MultipleChoice] }
+	{ prefixes: [ContentType.MultipleChoice], defaultValuesByTypes: { [CustoType.component]: CreateCusto.Component("div") } }
 );
 
 export const MCEditTexts = MCEdit.texts;

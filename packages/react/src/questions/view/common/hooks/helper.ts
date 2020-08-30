@@ -20,9 +20,15 @@ export const useCustomizationProp = <
 export const contentPathToPropsPath = (str: string) => {
 	const p = str.split(".");
 	return p
-		.map(e => {
+		.map((e, i, arr) => {
 			if (+e + "" === e) return "single"; // replace indexes with `single` keyword
+			const isLast = i === arr.length - 1;
+			if (isLast) return capitalize(e);
 			return e;
 		})
 		.join(".");
 };
+
+const capitalize = (str: string) => {
+	return str.charAt(0).toUpperCase() + str.slice(1);
+}

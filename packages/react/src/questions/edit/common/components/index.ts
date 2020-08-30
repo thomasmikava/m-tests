@@ -3,29 +3,31 @@ import { ToCustoTreeObj } from "custo/lib/classes/helper-fns/tree";
 import { useNormalizedQuestionEditContextSubscriber } from "../../customizations/providers";
 import { CommonEditPassable } from "../props/types";
 
-const CommonEditOnes: ToCustoTreeObj<CommonEditPassable> = {
+export const CommonEditOnes: ToCustoTreeObj<CommonEditPassable> = {
 	components: {
-		text: CustoType.component,
+		Text: CustoType.component,
 		explanation: {
-			container: CustoType.component,
-			text: CustoType.component,
+			Container: CustoType.component,
+			Text: CustoType.component,
 		},
-		contentSelector: CustoType.component,
-		checkboxWithLabel: CustoType.component,
+		ContentSelector: CustoType.component,
+		CheckboxWithLabel: CustoType.component,
 	},
 	elements: {
-		outerContainer: CustoType.component,
-		bodyContainer: CustoType.component,
+		OuterContainer: CustoType.component,
+		BodyContainer: CustoType.component,
 		explanation: {
-			container: CustoType.component,
-			text: CustoType.component,
+			Container: CustoType.component,
+			Text: CustoType.component,
+			Body: CustoType.component,
+			Title: CustoType.component,
 		},
-		innerContainers: CustoType.component,
-		text: CustoType.component,
+		InnerContainers: CustoType.component,
+		Text: CustoType.component,
 	},
 	texts: {
 		explanation: {
-			title: CustoType.text,
+			Title: CustoType.text,
 			placeholder: CustoType.data,
 		},
 		contentTypes: CustoType.data,

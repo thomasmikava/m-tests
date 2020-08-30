@@ -9,32 +9,36 @@ import { CloseIcon } from "../../../icons/close";
 import { reactDefaultMCEditPassable } from "m-tests-react/lib/questions/edit/multiple-choice/components/value";
 
 const defaultMCEditPassableElements: MCEditPassable["elements"] = {
-	headContainer: pckgDefComponents.newDivEl(),
-	bodyContainer: pckgDefComponents.newDivEl(),
-	tailContainer: pckgDefComponents.newDivEl(),
-	container: pckgDefComponents.newDivEl(),
-	containers: pckgDefComponents.newDivEl(),
+	HeadContainer: pckgDefComponents.newDivEl(),
+	BodyContainer: pckgDefComponents.newDivEl(),
+	TailContainer: pckgDefComponents.newDivEl(),
+	Container: pckgDefComponents.newDivEl(),
+	Containers: pckgDefComponents.newDivEl(),
 	statement: {
 	},
 	choices: {
-		container: pckgDefComponents.newDivEl({
+		Container: pckgDefComponents.newDivEl({
 			className: styles["choices-container"],
 		}),
 		single: {
-			container: CreateCusto.hookOf.Component(useEditSingleChoiceContainer),
-			textContainer: pckgDefComponents.newDivEl({
+			Container: CreateCusto.hookOf.Component(useEditSingleChoiceContainer),
+			TextContainer: pckgDefComponents.newDivEl({
 				className: styles["choice-text-container"],
 			}),
-			decorationContainer: pckgDefComponents.newDivEl({
-				className: styles["choice-decoration-container"],
-			}),
-			icon: CreateCusto.hookOf.Component(useEditChoiceIcon),
-			rightDecorationContainer: pckgDefComponents.newDivEl({
-				className: styles["choice-right-decoration-container"],
-			}),
-			rightIcon: pckgDefComponents.newComp(CloseIcon),
+			left: {
+				DecorationContainer: pckgDefComponents.newDivEl({
+					className: styles["choice-decoration-container"],
+				}),
+				Icon: CreateCusto.hookOf.Component(useEditChoiceIcon),
+			},
+			right: {
+				DecorationContainer: pckgDefComponents.newDivEl({
+					className: styles["choice-right-decoration-container"],
+				}),
+				Icon: pckgDefComponents.newComp(CloseIcon),
+			}
 		},
-		button: pckgDefComponents.newHTMLEl("button"),
+		Button: pckgDefComponents.newHTMLEl("button"),
 	},
 	explanation: {
 	},

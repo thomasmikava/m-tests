@@ -13,23 +13,25 @@ import { IChooseQuestionContentTypeProps } from "../components/types";
 import { EditTextComponentProps } from "../components/types";
 
 interface CommonEditComponents {
-	text: GeneralCustoComp<EditTextComponentProps>;
+	Text: GeneralCustoComp<EditTextComponentProps>;
+	ContentSelector: GeneralCustoComp<IChooseQuestionContentTypeProps>;
+	CheckboxWithLabel: GeneralCustoComp<CheckboxWithLabelProps>;
 	explanation: {
-		container: GeneralCustoComp<ExplanationProps>;
-		text?: GeneralCustoComp<EditTextComponentProps>;
+		Container: GeneralCustoComp<ExplanationProps>;
+		Text?: GeneralCustoComp<EditTextComponentProps>;
 	};
-	contentSelector: GeneralCustoComp<IChooseQuestionContentTypeProps>;
-	checkboxWithLabel: GeneralCustoComp<CheckboxWithLabelProps>;
 }
 
 interface CommonEditElements {
-	outerContainer: GeneralCustoHTMLElement;
-	bodyContainer: GeneralCustoHTMLElement;
-	text: GeneralCustoHTMLElement;
-	innerContainers?: GeneralCustoHTMLElement;
+	OuterContainer: GeneralCustoHTMLElement;
+	BodyContainer: GeneralCustoHTMLElement;
+	Text: GeneralCustoHTMLElement;
+	InnerContainers?: GeneralCustoHTMLElement;
 	explanation: {
-		container?: GeneralCustoHTMLElement;
-		text?: GeneralCustoHTMLElement;
+		Container?: GeneralCustoHTMLElement;
+		Title?: GeneralCustoHTMLElement;
+		Body?: GeneralCustoHTMLElement;
+		Text?: GeneralCustoHTMLElement;
 	};
 }
 type RichText = string | JSX.Element;
@@ -41,7 +43,7 @@ export interface ContentTypeChooseValue {
 
 interface CommonEditTexts {
 	explanation: {
-		title: GeneralCustoText;
+		Title: GeneralCustoText;
 		placeholder: GeneralCustData<string>;
 	};
 	contentTypes: GeneralCustData<

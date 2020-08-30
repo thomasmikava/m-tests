@@ -15,7 +15,9 @@ export interface MCEditSingleChoiceProps extends IContentGeneralProps {
 	choiceIndex: number;
 };
 
-export type MCEditSingleChoiceDecorationProps = IContentGeneralProps;
+export type MCEditSingleChoiceDecorationProps = IContentGeneralProps & {
+	dir: "left" | "right";
+};
 
 export type MCEditAddChoiceButtonProps = {
 	onClick: () => void;

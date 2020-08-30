@@ -74,7 +74,7 @@ export const QuestionEditwrapper: React.FC<IProps> = React.memo(
 		const [x, setX] = useState(0);
 		const incr = useCallback(() => setX(x => x + 1), []);
 
-		const ChooseQuestionContentType = CommonEditCusto.components.contentSelector;
+		const ChooseQuestionContentType = CommonEditCusto.components.ContentSelector;
 
 		return (
 			<CustomizationsEditNullProvider value={null}>
@@ -85,7 +85,7 @@ export const QuestionEditwrapper: React.FC<IProps> = React.memo(
 						selectedType={contentType ?? null}
 						selectedDesignStructure={designStructure ?? null}
 					/>
-					{content && <EditContentCont.Provider content={content!} onChange={setContent as SetState<IRawQuestionContent>} getContent={getContent}>
+					{content && <EditContentCont.Provider content={content} onChange={setContent as SetState<IRawQuestionContent>} getContent={getContent}>
 						<Content contentType={content.type} ref={ref} />
 						<button onClick={handleSave}>Save</button>
 					</EditContentCont.Provider>}
@@ -100,7 +100,7 @@ const defaultContentPath = new ContentPath();
 const Content = React.memo(
 	React.forwardRef(
 		({ contentType }: { contentType: ContentType }, ref: any) => {
-			const Cont = CommonEditCusto.elements.outerContainer;
+			const Cont = CommonEditCusto.elements.OuterContainer;
 			return (
 				<Cont ref={ref}>
 					<CounterComponent title={"Content"} />

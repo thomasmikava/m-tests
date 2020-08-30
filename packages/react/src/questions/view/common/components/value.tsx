@@ -4,15 +4,15 @@ import { TextComponent, Explanation } from "./providers";
 import { CreateCusto } from "custo";
 
 const defaultCommonComponents: CommonPassable["components"] = {
-	text: pckgDefComponents.newComp(TextComponent),
+	Text: pckgDefComponents.newComp(TextComponent),
 	explanation: {
-		container: pckgDefComponents.newComp(Explanation),
+		Container: pckgDefComponents.newComp(Explanation),
 	},
 };
 
 const defaultCommonTexts: CommonPassable["texts"] = {
 	explanation: {
-		title: CreateCusto.Text("Explanation"),
+		Title: CreateCusto.Text("Explanation"),
 	},
 };
 

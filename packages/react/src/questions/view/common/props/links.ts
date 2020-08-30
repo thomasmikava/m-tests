@@ -6,9 +6,9 @@ export const linkCommonProps = (
 	obj: QuestionContentCustomization
 ) => {
 	/* eslint-disable */
-	link(obj.common.components.text, obj.common.components.explanation, "text");
+	link(obj.common.components.Text, obj.common.components.explanation, "Text");
 
-	link(obj.common.elements.text, obj.common.elements.explanation, "text");
-	link(obj.common.elements.innerContainers, obj.common.elements.explanation, "container");
+	link(obj.common.elements.Text, obj.common.elements.explanation, "Text");
+	link(obj.common.elements.InnerContainers, obj.common.elements.explanation, "Container");
 	/* eslint-enable */
 };

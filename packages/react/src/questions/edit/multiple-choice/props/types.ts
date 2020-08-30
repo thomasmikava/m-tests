@@ -5,67 +5,64 @@ import {
 	GeneralCustData,
 } from "custo/lib/utils/prop-generics";
 import { MCEditBodyProps, MCEditStatementProps, MCEditChoicesProps, MCEditSingleChoiceProps, MCEditSingleChoiceDecorationProps, MCEditAddChoiceButtonProps, MCEditHeadProps, MCEditTailProps } from "../components/types";
-import { ExplanationProps } from "../../../view/common/components/types";
 import { EditTextComponentProps } from "../../common/components/types";
 import { DeeplyOptional } from "custo/lib/utils/generics";
 import { CommonEditPassable } from "../../common/props/types";
 
 type CommonEditTexts = CommonEditPassable["texts"];
+type CommonEditElements = CommonEditPassable["elements"];
+type CommonEditComponents = CommonEditPassable["components"];
 
 interface MCEditPassableComponents {
-	head: GeneralCustoComp<MCEditHeadProps>;
-	body: GeneralCustoComp<MCEditBodyProps>;
-	tail: GeneralCustoComp<MCEditTailProps>;
+	Head: GeneralCustoComp<MCEditHeadProps>;
+	Body: GeneralCustoComp<MCEditBodyProps>;
+	Tail: GeneralCustoComp<MCEditTailProps>;
 	statement: {
-		container: GeneralCustoComp<MCEditStatementProps>;
-		text?: GeneralCustoComp<EditTextComponentProps>;
+		Container: GeneralCustoComp<MCEditStatementProps>;
+		Text?: GeneralCustoComp<EditTextComponentProps>;
 	};
 	choices: {
-		container: GeneralCustoComp<MCEditChoicesProps>;
+		Container: GeneralCustoComp<MCEditChoicesProps>;
 		single: {
-			container: GeneralCustoComp<MCEditSingleChoiceProps>;
-			text?: GeneralCustoComp<EditTextComponentProps>;
-			decoration: GeneralCustoComp<MCEditSingleChoiceDecorationProps>;
-			rightDecoration: GeneralCustoComp<MCEditSingleChoiceDecorationProps>;
+			Container: GeneralCustoComp<MCEditSingleChoiceProps>;
+			Text?: GeneralCustoComp<EditTextComponentProps>;
+			LeftDecoration: GeneralCustoComp<MCEditSingleChoiceDecorationProps>;
+			RightDecoration: GeneralCustoComp<MCEditSingleChoiceDecorationProps>;
 		};
-		addChoice: GeneralCustoComp<MCEditAddChoiceButtonProps>;
+		AddChoice: GeneralCustoComp<MCEditAddChoiceButtonProps>;
 	};
-	explanation?: {
-		container?: GeneralCustoComp<ExplanationProps>;
-		text?: GeneralCustoComp<EditTextComponentProps>;
-	};
+	explanation?: DeeplyOptional<CommonEditComponents["explanation"]>;
 }
 
 interface MCEditPassableElements {
-	container?: GeneralCustoHTMLElement;
-	headContainer?: GeneralCustoHTMLElement;
-	bodyContainer?: GeneralCustoHTMLElement;
-	tailContainer?: GeneralCustoHTMLElement;
-	containers?: GeneralCustoHTMLElement;
-	text?: GeneralCustoHTMLElement;
+	Container?: GeneralCustoHTMLElement;
+	HeadContainer?: GeneralCustoHTMLElement;
+	BodyContainer?: GeneralCustoHTMLElement;
+	TailContainer?: GeneralCustoHTMLElement;
+	Containers?: GeneralCustoHTMLElement;
+	Text?: GeneralCustoHTMLElement;
 	statement: {
-		container?: GeneralCustoHTMLElement;
-		text?: GeneralCustoHTMLElement;
+		Container?: GeneralCustoHTMLElement;
+		Text?: GeneralCustoHTMLElement;
 	};
 	choices: {
-		container?: GeneralCustoHTMLElement;
+		Container?: GeneralCustoHTMLElement;
 		single: {
-			container?: GeneralCustoHTMLElement;
-			decorationContainer?: GeneralCustoHTMLElement;
-			icon: GeneralCustoHTMLElement;
-			rightDecorationContainer?: GeneralCustoHTMLElement;
-			rightIcon: GeneralCustoHTMLElement;
-			textContainer?: GeneralCustoHTMLElement;
-			text?: GeneralCustoHTMLElement;
+			Container?: GeneralCustoHTMLElement;
+			left: {
+				DecorationContainer?: GeneralCustoHTMLElement;
+				Icon: GeneralCustoHTMLElement;
+			};
+			right: {
+				DecorationContainer?: GeneralCustoHTMLElement;
+				Icon: GeneralCustoHTMLElement;
+			}
+			TextContainer?: GeneralCustoHTMLElement;
+			Text?: GeneralCustoHTMLElement;
 		};
-		button: GeneralCustoHTMLElement;
+		Button: GeneralCustoHTMLElement;
 	};
-	explanation: {
-		container?: GeneralCustoHTMLElement;
-		title?: GeneralCustoHTMLElement;
-		body?: GeneralCustoHTMLElement;
-		text?: GeneralCustoHTMLElement;
-	};
+	explanation: DeeplyOptional<CommonEditElements["explanation"]>;
 }
 
 interface MCEditPassableTexts {
@@ -74,14 +71,14 @@ interface MCEditPassableTexts {
 		placeholder: GeneralCustData<string>;
 	}
 	choices: {
-		addChoice: GeneralCustoText;
+		AddChoice: GeneralCustoText;
 		single: {
 			placeholder: GeneralCustData<string>;
 		}
 	};
-	canSelectMultiple: GeneralCustoText;
-	allowPartialCredit: GeneralCustoText;
-	disableShuffle: GeneralCustoText;
+	CanSelectMultiple: GeneralCustoText;
+	AllowPartialCredit: GeneralCustoText;
+	DisableShuffle: GeneralCustoText;
 }
 
 export interface MCEditPassable {
