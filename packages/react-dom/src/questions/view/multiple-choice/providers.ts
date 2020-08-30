@@ -8,39 +8,34 @@ import { CloseIcon } from "../../../icons/close";
 import styles from "./styles/index.module.css";
 
 export const useSingleChoiceContainer = () => {
-    const choiceId = mcHooks.useChoiceId();
-    const {
-        isChecked,
-        isDisabled,
-        isCorrectChoice,
-        isFullyCorrectlyAnswered,
-        canSelectMultiple,
-        isUnanswered,
-    } = mcHooks.useChoiceState(choiceId);
-    return pckgDefComponents.newDivEl(
-        {
-            className: joinClassNames(
-                styles["choice-container"],
-                isChecked && styles["checked-choice"],
-                isDisabled && styles["disabled-choice"],
-                isCorrectChoice && styles["correct-choice"],
-                canSelectMultiple &&
-                    styles["choice-can-select-multiple"],
-                isFullyCorrectlyAnswered &&
-                    styles["fully-correctly-answered"],
-                isUnanswered && styles["unanswered"]
-            ),
-        },
-        {
-            outerBeforeComponents: pckgDefComponents.newComp(
-                CounterComponent,
-                {
-                    title: "SingleChoice",
-                }
-            ),
-        }
-    );
-}
+	const choiceId = mcHooks.useChoiceId();
+	const {
+		isChecked,
+		isDisabled,
+		isCorrectChoice,
+		isFullyCorrectlyAnswered,
+		canSelectMultiple,
+		isUnanswered,
+	} = mcHooks.useChoiceState(choiceId);
+	return pckgDefComponents.newDivEl(
+		{
+			className: joinClassNames(
+				styles["choice-container"],
+				isChecked && styles["checked-choice"],
+				isDisabled && styles["disabled-choice"],
+				isCorrectChoice && styles["correct-choice"],
+				canSelectMultiple && styles["choice-can-select-multiple"],
+				isFullyCorrectlyAnswered && styles["fully-correctly-answered"],
+				isUnanswered && styles["unanswered"]
+			),
+		},
+		{
+			outerBeforeComponents: pckgDefComponents.newComp(CounterComponent, {
+				title: "SingleChoice",
+			}),
+		}
+	);
+};
 
 export const useChoiceIcon = () => {
 	const choiceId = mcHooks.useChoiceId();

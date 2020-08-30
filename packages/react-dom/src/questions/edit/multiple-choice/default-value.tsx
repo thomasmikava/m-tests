@@ -1,6 +1,4 @@
-import {
-	MCEditPassable,
-} from "m-tests-react/lib/questions/edit/multiple-choice/props/types";
+import { MCEditPassable } from "m-tests-react/lib/questions/edit/multiple-choice/props/types";
 import { pckgDefComponents } from "m-tests-react/lib/utils/shortcuts";
 import styles from "./styles/index.module.css";
 import { CreateCusto } from "custo";
@@ -14,14 +12,15 @@ const defaultMCEditPassableElements: MCEditPassable["elements"] = {
 	TailContainer: pckgDefComponents.newDivEl(),
 	Container: pckgDefComponents.newDivEl(),
 	Containers: pckgDefComponents.newDivEl(),
-	statement: {
-	},
+	statement: {},
 	choices: {
 		Container: pckgDefComponents.newDivEl({
 			className: styles["choices-container"],
 		}),
 		single: {
-			Container: CreateCusto.hookOf.Component(useEditSingleChoiceContainer),
+			Container: CreateCusto.hookOf.Component(
+				useEditSingleChoiceContainer
+			),
 			TextContainer: pckgDefComponents.newDivEl({
 				className: styles["choice-text-container"],
 			}),
@@ -36,16 +35,16 @@ const defaultMCEditPassableElements: MCEditPassable["elements"] = {
 					className: styles["choice-right-decoration-container"],
 				}),
 				Icon: pckgDefComponents.newComp(CloseIcon),
-			}
+			},
 		},
 		Button: pckgDefComponents.newHTMLEl("button"),
 	},
-	explanation: {
-	},
+	explanation: {},
 };
 
 export const defaultMCEditPassable: MCEditPassable = {
 	components: reactDefaultMCEditPassable.components,
 	elements: defaultMCEditPassableElements,
 	texts: reactDefaultMCEditPassable.texts,
+	hooks: reactDefaultMCEditPassable.hooks,
 };

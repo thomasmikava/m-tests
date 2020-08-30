@@ -47,10 +47,7 @@ export const MCStatement: React.FC<MCStatementProps> = React.memo(
 		return (
 			<Container>
 				<CounterComponent title="Statementtt" />
-				<Text
-					path={path.add("text")}
-					stat={statement}
-				/>
+				<Text path={path.add("text")} stat={statement} />
 			</Container>
 		);
 	},
@@ -93,10 +90,7 @@ export const MCSingleChoice: React.FC<MCSingleChoiceProps> = React.memo(
 				<Container onClick={handleChange}>
 					<Decoration path={path} />
 					<TextContainer>
-						<Text
-							stat={choice}
-							path={path.add("text")}
-						/>
+						<Text stat={choice} path={path.add("text")} />
 					</TextContainer>
 				</Container>
 			</MCChoiceCont.Provider>

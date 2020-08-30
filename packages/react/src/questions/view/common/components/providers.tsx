@@ -44,9 +44,7 @@ export const Explanation: React.FC<ExplanationProps> = React.memo(
 export const TextComponent = WrapInCustHookChangeError(
 	React.memo(({ path, stat }: TextComponentProps) => {
 		const Cont = useCustomizationProp("elements", path);
-		const newText = CommonHooks.contentTextTransformer.use(
-			stat.text
-		);
+		const newText = CommonHooks.contentTextTransformer.use(stat.text);
 		return <Cont>{newText}</Cont>;
 	})
 );

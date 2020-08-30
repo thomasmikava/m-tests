@@ -1,4 +1,3 @@
-
 export function getUniqueId(currentIds: number[], numOfIds = 1): number[] {
 	const ids = [...currentIds];
 	const newIds: number[] = [];

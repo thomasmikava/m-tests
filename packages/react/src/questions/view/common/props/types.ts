@@ -27,14 +27,12 @@ interface CommonElements {
 	};
 }
 
-
 interface CommonTexts {
 	explanation: {
 		Title: GeneralCustoText;
 	};
 }
-interface CommonFunctions {
-}
+interface CommonFunctions {}
 interface CommonHooks {
 	contentTextTransformer?: GeneralCustoHook<
 		(text: string) => string | JSX.Element | null

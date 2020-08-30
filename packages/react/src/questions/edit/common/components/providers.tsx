@@ -5,7 +5,6 @@ import { commonEditHooks } from "../hooks";
 import { useEditCustomizationProp } from "../hooks/helper";
 import { CounterComponent } from "../../../view/a";
 
-
 export const EditExplanation: React.FC<EditExplanationProps> = React.memo(
 	({ path }) => {
 		const explanation = commonEditHooks.useExplanation();
@@ -14,8 +13,14 @@ export const EditExplanation: React.FC<EditExplanationProps> = React.memo(
 			"components",
 			path.add("text")
 		);
-		const usePlaceholder = useEditCustomizationProp("texts", path.add("placeholder"));
-		const Cont = useEditCustomizationProp("elements", path.add("container"));
+		const usePlaceholder = useEditCustomizationProp(
+			"texts",
+			path.add("placeholder")
+		);
+		const Cont = useEditCustomizationProp(
+			"elements",
+			path.add("container")
+		);
 
 		const handleChange = commonEditHooks.useContentPathValueSetter(path);
 
@@ -25,7 +30,12 @@ export const EditExplanation: React.FC<EditExplanationProps> = React.memo(
 			<>
 				<CounterComponent title={"explanation"} />
 				<Cont>
-					<Text stat={explanation} path={path.add("text")} onChange={handleChange} usePlaceholder={usePlaceholder} />
+					<Text
+						stat={explanation}
+						path={path.add("text")}
+						onChange={handleChange}
+						usePlaceholder={usePlaceholder}
+					/>
 				</Cont>
 			</>
 		);

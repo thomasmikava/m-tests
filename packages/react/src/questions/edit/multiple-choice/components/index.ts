@@ -4,6 +4,7 @@ import { ToCustoTreeObj } from "custo/lib/classes/helper-fns/tree";
 import { useNormalizedQuestionEditContextSubscriber } from "../../customizations/providers";
 import { MCEditPassable } from "../props/types";
 import { CommonEditOnes } from "../../common/components";
+import { mcDefaultEditHooks } from "../hooks";
 
 const MCEditOnes: ToCustoTreeObj<MCEditPassable> = {
 	components: {
@@ -35,7 +36,7 @@ const MCEditOnes: ToCustoTreeObj<MCEditPassable> = {
 			AddChoice: CustoType.text,
 			single: {
 				placeholder: CustoType.data,
-			}
+			},
 		},
 		CanSelectMultiple: CustoType.text,
 		DisableShuffle: CustoType.text,
@@ -71,13 +72,35 @@ const MCEditOnes: ToCustoTreeObj<MCEditPassable> = {
 		explanation: CommonEditOnes.elements.explanation,
 		Containers: CustoType.component,
 	},
+	hooks: {
+		choices: {
+			isCurrentChoiceCorrect: CustoType.hook,
+			clickFn: CustoType.hook,
+			deleteFn: CustoType.hook,
+			addEmptyChoiceFn: CustoType.hook,
+		},
+		settings: {
+			canSelectMultipleChangeFn: CustoType.hook,
+			allowPartialCreditChangeFn: CustoType.hook,
+			disableShuffleChangeFn: CustoType.hook,
+		},
+	},
 };
 
 export const MCEdit = CreateCusto.Tree<MCEditPassable>(
 	MCEditOnes as any,
 	useNormalizedQuestionEditContextSubscriber,
-	{ prefixes: [ContentType.MultipleChoice], defaultValuesByTypes: { [CustoType.component]: CreateCusto.Component("div") } }
+	{
+		prefixes: [ContentType.MultipleChoice],
+		defaultValue: {
+			hooks: mcDefaultEditHooks,
+		},
+		defaultValuesByTypes: {
+			[CustoType.component]: CreateCusto.Component("div"),
+		},
+	}
 );
 
 export const MCEditTexts = MCEdit.texts;
 export const MCEditComps = MCEdit.components;
+export const MCEditHooks = MCEdit.hooks;

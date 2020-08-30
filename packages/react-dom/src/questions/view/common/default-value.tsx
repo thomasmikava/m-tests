@@ -4,9 +4,7 @@ import React from "react";
 import { normalizeHTML } from "../../../editor/html";
 import { covertASCIIMathToLaTex } from "../../../editor/math";
 import { reactDefaultCommonPassable } from "m-tests-react/lib/questions/view/common/components/value";
-import {
-	CommonPassable,
-} from "m-tests-react/lib/questions/view/common/props/types";
+import { CommonPassable } from "m-tests-react/lib/questions/view/common/props/types";
 import { CreateCusto } from "custo";
 
 const empty = pckgDefComponents.newDivEl();

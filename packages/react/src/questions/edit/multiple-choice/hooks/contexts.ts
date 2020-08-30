@@ -4,7 +4,9 @@ import { EditContentCont } from "../../common/hooks/contexts";
 
 type IContent = IMultipleChoiceContent;
 
-export const MCEditContentCont = EditContentCont.addInternalContext(x => x.content as IContent);
+export const MCEditContentCont = EditContentCont.addInternalContext(
+	x => x.content as IContent
+);
 
 export const MCEditChoiceCont = DynamicContext.create<
 	IContent["choices"][number]

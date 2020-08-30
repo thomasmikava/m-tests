@@ -74,7 +74,8 @@ export const QuestionEditwrapper: React.FC<IProps> = React.memo(
 		const [x, setX] = useState(0);
 		const incr = useCallback(() => setX(x => x + 1), []);
 
-		const ChooseQuestionContentType = CommonEditCusto.components.ContentSelector;
+		const ChooseQuestionContentType =
+			CommonEditCusto.components.ContentSelector;
 
 		return (
 			<CustomizationsEditNullProvider value={null}>
@@ -85,10 +86,18 @@ export const QuestionEditwrapper: React.FC<IProps> = React.memo(
 						selectedType={contentType ?? null}
 						selectedDesignStructure={designStructure ?? null}
 					/>
-					{content && <EditContentCont.Provider content={content} onChange={setContent as SetState<IRawQuestionContent>} getContent={getContent}>
-						<Content contentType={content.type} ref={ref} />
-						<button onClick={handleSave}>Save</button>
-					</EditContentCont.Provider>}
+					{content && (
+						<EditContentCont.Provider
+							content={content}
+							onChange={
+								setContent as SetState<IRawQuestionContent>
+							}
+							getContent={getContent}
+						>
+							<Content contentType={content.type} ref={ref} />
+							<button onClick={handleSave}>Save</button>
+						</EditContentCont.Provider>
+					)}
 				</div>
 			</CustomizationsEditNullProvider>
 		);

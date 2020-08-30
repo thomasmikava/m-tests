@@ -3,11 +3,25 @@ import {
 	GeneralCustoHTMLElement,
 	GeneralCustoText,
 	GeneralCustData,
+	GeneralCustoHook,
 } from "custo/lib/utils/prop-generics";
-import { MCEditBodyProps, MCEditStatementProps, MCEditChoicesProps, MCEditSingleChoiceProps, MCEditSingleChoiceDecorationProps, MCEditAddChoiceButtonProps, MCEditHeadProps, MCEditTailProps } from "../components/types";
+import {
+	MCEditBodyProps,
+	MCEditStatementProps,
+	MCEditChoicesProps,
+	MCEditSingleChoiceProps,
+	MCEditSingleChoiceDecorationProps,
+	MCEditAddChoiceButtonProps,
+	MCEditHeadProps,
+	MCEditTailProps,
+} from "../components/types";
 import { EditTextComponentProps } from "../../common/components/types";
 import { DeeplyOptional } from "custo/lib/utils/generics";
 import { CommonEditPassable } from "../../common/props/types";
+import {
+	IRMultipleChoiceContent,
+	IMultipleChoiceContent,
+} from "m-tests-core/lib/questions/multiple-choice/types";
 
 type CommonEditTexts = CommonEditPassable["texts"];
 type CommonEditElements = CommonEditPassable["elements"];
@@ -27,7 +41,9 @@ interface MCEditPassableComponents {
 			Container: GeneralCustoComp<MCEditSingleChoiceProps>;
 			Text?: GeneralCustoComp<EditTextComponentProps>;
 			LeftDecoration: GeneralCustoComp<MCEditSingleChoiceDecorationProps>;
-			RightDecoration: GeneralCustoComp<MCEditSingleChoiceDecorationProps>;
+			RightDecoration: GeneralCustoComp<
+				MCEditSingleChoiceDecorationProps
+			>;
 		};
 		AddChoice: GeneralCustoComp<MCEditAddChoiceButtonProps>;
 	};
@@ -56,7 +72,7 @@ interface MCEditPassableElements {
 			right: {
 				DecorationContainer?: GeneralCustoHTMLElement;
 				Icon: GeneralCustoHTMLElement;
-			}
+			};
 			TextContainer?: GeneralCustoHTMLElement;
 			Text?: GeneralCustoHTMLElement;
 		};
@@ -69,20 +85,47 @@ interface MCEditPassableTexts {
 	explanation?: DeeplyOptional<CommonEditTexts["explanation"]>;
 	statement: {
 		placeholder: GeneralCustData<string>;
-	}
+	};
 	choices: {
 		AddChoice: GeneralCustoText;
 		single: {
 			placeholder: GeneralCustData<string>;
-		}
+		};
 	};
 	CanSelectMultiple: GeneralCustoText;
 	AllowPartialCredit: GeneralCustoText;
 	DisableShuffle: GeneralCustoText;
 }
 
+interface MCEditPassableHooks {
+	choices?: {
+		isCurrentChoiceCorrect?: GeneralCustoHook<() => boolean>;
+		clickFn?: GeneralCustoHook<(choiceId: number) => () => void>;
+		deleteFn?: GeneralCustoHook<(choiceId: number) => () => void>;
+		addEmptyChoiceFn?: GeneralCustoHook<() => () => void>;
+	};
+	settings?: {
+		canSelectMultipleChangeFn?: GeneralCustoHook<
+			() => (
+				canSelectMultiple: IMultipleChoiceContent["canSelectMultiple"]
+			) => void
+		>;
+		allowPartialCreditChangeFn?: GeneralCustoHook<
+			() => (
+				allowPartialCredit: IMultipleChoiceContent["allowPartialCredit"]
+			) => void
+		>;
+		disableShuffleChangeFn?: GeneralCustoHook<
+			() => (
+				disableShuffle: IMultipleChoiceContent["disableShuffle"]
+			) => void
+		>;
+	};
+}
+
 export interface MCEditPassable {
 	components: MCEditPassableComponents;
 	elements: MCEditPassableElements;
 	texts: MCEditPassableTexts;
+	hooks: MCEditPassableHooks;
 }

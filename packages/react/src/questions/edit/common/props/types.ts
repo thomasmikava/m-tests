@@ -6,7 +6,8 @@ import {
 	GeneralCustoHook,
 } from "custo/lib/utils/prop-generics";
 import {
-	ExplanationProps, CheckboxWithLabelProps,
+	ExplanationProps,
+	CheckboxWithLabelProps,
 } from "../../../view/common/components/types";
 import { ContentType } from "m-tests-core/lib/questions/common-schemas";
 import { IChooseQuestionContentTypeProps } from "../components/types";
@@ -68,7 +69,6 @@ interface CommonEditHooks {
 		) => string | number | JSX.Element | null
 	>;
 }
-
 
 export interface CommonEditPassable {
 	components: CommonEditComponents;

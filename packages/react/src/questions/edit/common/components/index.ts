@@ -44,5 +44,5 @@ export const CommonEditOnes: ToCustoTreeObj<CommonEditPassable> = {
 export const CommonEditCusto = CreateCusto.Tree<CommonEditPassable>(
 	CommonEditOnes as any,
 	useNormalizedQuestionEditContextSubscriber,
-	{ prefixes: ["common"], }
+	{ prefixes: ["common"] }
 );

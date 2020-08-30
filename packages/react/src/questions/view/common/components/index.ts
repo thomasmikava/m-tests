@@ -28,8 +28,7 @@ export const CommonOnes: ToCustoTreeObj<CommonPassable> = {
 			Title: CustoType.text,
 		},
 	},
-	functions: {
-	},
+	functions: {},
 	hooks: {
 		contentTextTransformer: CustoType.hook,
 		nonContentTextTransformer: CustoType.hook,
@@ -49,8 +48,8 @@ export const Common = CreateCusto.Tree<CommonPassable>(
 			hooks: {
 				contentTextTransformer: CreateCusto.Hook(x => x),
 				nonContentTextTransformer: CreateCusto.Hook(x => x),
-			}
-		}
+			},
+		},
 	}
 );
 

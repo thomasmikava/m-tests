@@ -1,7 +1,6 @@
 import { IContentGeneralProps } from "../../../view/interfaces";
 
-export interface MultipleChoiceEditContainerProps extends IContentGeneralProps {
-}
+export type MultipleChoiceEditContainerProps = IContentGeneralProps;
 
 export type MCEditHeadProps = IContentGeneralProps;
 export type MCEditBodyProps = IContentGeneralProps;
@@ -13,7 +12,7 @@ export type MCEditChoicesProps = IContentGeneralProps;
 
 export interface MCEditSingleChoiceProps extends IContentGeneralProps {
 	choiceIndex: number;
-};
+}
 
 export type MCEditSingleChoiceDecorationProps = IContentGeneralProps & {
 	dir: "left" | "right";

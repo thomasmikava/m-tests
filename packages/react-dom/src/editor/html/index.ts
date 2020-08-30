@@ -1,13 +1,14 @@
 import {
 	createElementFromHTML,
 	forEachTag,
-	putElementInParent, replaceTagWithChildren,
-	setTagInnerHTML
+	putElementInParent,
+	replaceTagWithChildren,
+	setTagInnerHTML,
 } from "./dom-utils";
 
 const isHTMLEmpty = (html: string) => {
-	return html.trim().match(/^(&nbsp;)+$/g)
-}
+	return html.trim().match(/^(&nbsp;)+$/g);
+};
 
 export const htmlToSavableHtml = (html: string) => {
 	const body = createElementFromHTML(html);

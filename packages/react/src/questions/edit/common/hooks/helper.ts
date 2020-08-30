@@ -6,13 +6,13 @@ import { QEditCusto } from "../../val";
 import { getAbsoluteProperty } from "../../../../utils/prop";
 
 export const useEditCustomizationProp = <
-    T extends keyof NormalizedQuestionEditContentCustomization[keyof NormalizedQuestionEditContentCustomization]
+	T extends keyof NormalizedQuestionEditContentCustomization[keyof NormalizedQuestionEditContentCustomization]
 >(
-    type: T,
-    path: ContentPath
+	type: T,
+	path: ContentPath
 ): any => {
-    const contentType = commonEditHooks.useContentType();
-    const key = contentPathToPropsPath(path.relativePath);
-    const obj = (QEditCusto[contentType as any] || QEditCusto.common)[type];
-    return getAbsoluteProperty(obj, key);
+	const contentType = commonEditHooks.useContentType();
+	const key = contentPathToPropsPath(path.relativePath);
+	const obj = (QEditCusto[contentType as any] || QEditCusto.common)[type];
+	return getAbsoluteProperty(obj, key);
 };

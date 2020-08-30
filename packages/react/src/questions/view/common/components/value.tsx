@@ -16,12 +16,13 @@ const defaultCommonTexts: CommonPassable["texts"] = {
 	},
 };
 
+const defaultCommonFunctions: CommonPassable["functions"] = {};
 
-const defaultCommonFunctions: CommonPassable["functions"] = {
-};
-
-export const reactDefaultCommonPassable: Pick<CommonPassable, "components" | "texts" | "functions"> = {
+export const reactDefaultCommonPassable: Pick<
+	CommonPassable,
+	"components" | "texts" | "functions"
+> = {
 	components: defaultCommonComponents,
 	texts: defaultCommonTexts,
-	functions: defaultCommonFunctions
+	functions: defaultCommonFunctions,
 };
