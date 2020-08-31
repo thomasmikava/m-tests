@@ -49,9 +49,5 @@ export {
 	QuestionEditContentCustomizationProviders,
 };
 
-export const CustomizationsEditNullProvider = NormalizedQuestionEditContentCustomizationCont.addProvider<
-	null
->((value, prev) => prev);
-
 export const useNormalizedQuestionEditContextSubscriber =
 	NormalizedQuestionEditContentCustomizationCont.context.useSelector;

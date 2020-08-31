@@ -30,12 +30,12 @@ const MCEditOnes: ToCustoTreeObj<MCEditPassable> = {
 	texts: {
 		explanation: CommonEditOnes.texts.explanation,
 		statement: {
-			placeholder: CustoType.data,
+			Placeholder: CustoType.data,
 		},
 		choices: {
 			AddChoice: CustoType.text,
 			single: {
-				placeholder: CustoType.data,
+				Placeholder: CustoType.data,
 			},
 		},
 		CanSelectMultiple: CustoType.text,
@@ -75,7 +75,7 @@ const MCEditOnes: ToCustoTreeObj<MCEditPassable> = {
 	hooks: {
 		choices: {
 			isCurrentChoiceCorrect: CustoType.hook,
-			clickFn: CustoType.hook,
+			chooseFn: CustoType.hook,
 			deleteFn: CustoType.hook,
 			addEmptyChoiceFn: CustoType.hook,
 		},

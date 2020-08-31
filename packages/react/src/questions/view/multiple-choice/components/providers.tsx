@@ -1,7 +1,7 @@
 import React from "react";
 import { MCComps, MCElements } from ".";
 import { CounterComponent } from "../../a";
-import { mcHooks } from "../hooks";
+import { mcHooks, ConnectWithChoice, MCGetterHooks } from "../hooks";
 import { MCChoiceCont, MCContentCont } from "../hooks/contexts";
 import {
 	MCBodyProps,
@@ -11,6 +11,10 @@ import {
 	MCStatementProps,
 	MultipleChoiceNewContainerProps,
 } from "./types";
+import {
+	IRMultipleChoiceContent,
+	IMultipleChoiceContent,
+} from "m-tests-core/lib/questions/multiple-choice/types";
 
 export const MultipleChoiceContainer: React.FC<MultipleChoiceNewContainerProps> = React.memo(
 	({ content, path }) => {
@@ -41,7 +45,7 @@ export const MCBody: React.FC<MCBodyProps> = React.memo(({ path }) => {
 
 export const MCStatement: React.FC<MCStatementProps> = React.memo(
 	({ path }) => {
-		const statement = mcHooks.useStatement();
+		const statement = MCGetterHooks.statement.use();
 		const Container = MCElements.statement.Container;
 		const Text = MCComps.statement.Text;
 		return (
@@ -55,7 +59,7 @@ export const MCStatement: React.FC<MCStatementProps> = React.memo(
 );
 
 export const MCChoices: React.FC<MCChoicesProps> = React.memo(({ path }) => {
-	const choiceIds = mcHooks.useChoiceIds();
+	const choiceIds = MCGetterHooks.allChoiceIds.use();
 	const Container = MCElements.choices.Container;
 	const SingleChoice = MCComps.choices.single.Container;
 	return (
@@ -66,7 +70,8 @@ export const MCChoices: React.FC<MCChoicesProps> = React.memo(({ path }) => {
 				{choiceIds.map((choiceId, index) => (
 					<SingleChoice
 						key={choiceId}
-						choiceId={choiceId}
+						id={choiceId}
+						index={index}
 						path={path.add(index)}
 					/>
 				))}
@@ -76,26 +81,33 @@ export const MCChoices: React.FC<MCChoicesProps> = React.memo(({ path }) => {
 });
 
 export const MCSingleChoice: React.FC<MCSingleChoiceProps> = React.memo(
-	({ path, choiceId }) => {
-		const choice = mcHooks.useChoiceById(choiceId);
-		const handleChange = mcHooks.useOnChoiceCheck(choiceId);
+	ConnectWithChoice(
+		({
+			path,
+			id,
+			choice,
+		}: MCSingleChoiceProps & {
+			choice:
+				| IRMultipleChoiceContent["choices"][number]
+				| IMultipleChoiceContent["choices"][number];
+		}) => {
+			const handleChange = mcHooks.useOnChoiceCheck.use(id);
 
-		const Container = MCElements.choices.single.Container;
-		const Decoration = MCComps.choices.single.Decoration;
-		const TextContainer = MCElements.choices.single.TextContainer;
-		const Text = MCComps.choices.single.Text;
+			const Container = MCElements.choices.single.Container;
+			const Decoration = MCComps.choices.single.Decoration;
+			const TextContainer = MCElements.choices.single.TextContainer;
+			const Text = MCComps.choices.single.Text;
 
-		return (
-			<MCChoiceCont.Provider value={choice}>
+			return (
 				<Container onClick={handleChange}>
 					<Decoration path={path} />
 					<TextContainer>
 						<Text stat={choice} path={path.add("text")} />
 					</TextContainer>
 				</Container>
-			</MCChoiceCont.Provider>
-		);
-	}
+			);
+		}
+	)
 );
 
 export const MCSingleChoiceDecoration: React.FC<MCSingleChoiceDecorationProps> = React.memo(

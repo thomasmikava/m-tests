@@ -2,6 +2,10 @@ import { CreateCusto, CustoType } from "custo";
 import { ToCustoTreeObj } from "custo/lib/classes/helper-fns/tree";
 import { useNormalizedQuestionEditContextSubscriber } from "../../customizations/providers";
 import { CommonEditPassable } from "../props/types";
+import {
+	rawContentToEditableContent,
+	editableContentToRawContent,
+} from "../helper-fns";
 
 export const CommonEditOnes: ToCustoTreeObj<CommonEditPassable> = {
 	components: {
@@ -28,12 +32,16 @@ export const CommonEditOnes: ToCustoTreeObj<CommonEditPassable> = {
 	texts: {
 		explanation: {
 			Title: CustoType.text,
-			placeholder: CustoType.data,
+			Placeholder: CustoType.data,
 		},
 		contentTypes: CustoType.data,
 	},
 	functions: {
 		getEmptyText: CustoType.data,
+		rawContentToEditableContentFn: CustoType.data,
+		rawStatToEditableStatFn: CustoType.data,
+		editableContentToRawContentFn: CustoType.data,
+		editableStatToRawStatFn: CustoType.data,
 	},
 	hooks: {
 		contentTextTransformer: CustoType.data,
@@ -44,5 +52,19 @@ export const CommonEditOnes: ToCustoTreeObj<CommonEditPassable> = {
 export const CommonEditCusto = CreateCusto.Tree<CommonEditPassable>(
 	CommonEditOnes as any,
 	useNormalizedQuestionEditContextSubscriber,
-	{ prefixes: ["common"] }
+	{
+		prefixes: ["common"],
+		defaultValue: {
+			functions: {
+				rawContentToEditableContentFn: CreateCusto.Data(
+					rawContentToEditableContent
+				),
+				rawStatToEditableStatFn: CreateCusto.Data(x => x),
+				editableContentToRawContentFn: CreateCusto.Data(
+					editableContentToRawContent
+				),
+				editableStatToRawStatFn: CreateCusto.Data(x => x),
+			},
+		},
+	}
 );

@@ -1,10 +1,11 @@
-import { contentCommonPartNames, ContentType } from "../common-schemas";
+import { contentCommonPartNames, ContentType, StatTransformerFn } from "../common-schemas";
 import {
 	IRSortItemsContent,
 	ISortItemsContent,
 	ISortItemsUserAns,
 } from "./types";
 import { QuestionContent } from "../class";
+import { pickKeys } from "../../utils/objects";
 
 interface IIndicesByValue {
 	[value: number]: number;
@@ -97,6 +98,13 @@ class SortItems extends QuestionContent<ISortItemsUserAns, ISortItemsUserAns>
 	statement: ISortItemsContent["statement"];
 	items: ISortItemsContent["items"];
 	correctOrder: ISortItemsContent["correctOrder"];
+	
+	static keys: (keyof ISortItemsContent)[] = [
+		...contentCommonPartNames,
+		"statement",
+		"items",
+		"correctOrder",
+	];
 
 	constructor(content: ISortItemsContent) {
 		super();
@@ -108,9 +116,20 @@ class SortItems extends QuestionContent<ISortItemsUserAns, ISortItemsUserAns>
 				(this[fieldName] as any) = content[fieldName];
 			}
 		});
-		this.statement = content.statement;
-		this.items = content.items;
-		this.correctOrder = content.correctOrder;
+		SortItems.keys.forEach(fieldName => {
+			if (content[fieldName] !== undefined) {
+				this[fieldName as any] = content[fieldName];
+			}
+		});
+	}
+	
+	getMappedStatsContent(transformer: StatTransformerFn): ISortItemsContent {
+		return {
+			...pickKeys(this, ...SortItems.keys),
+			statement: transformer(this.statement),
+			items: this.items.map(c => transformer(c)),
+			explanation: transformer(this.explanation),
+		}
 	}
 	
 	getUsedIds(): number[] {

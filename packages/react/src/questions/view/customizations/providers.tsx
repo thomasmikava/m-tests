@@ -49,9 +49,6 @@ export {
 	NormalizedQuestionContentCustomizationCont,
 	QuestionContentCustomizationProviders,
 };
-export const CustomizationsNullProvider = NormalizedQuestionContentCustomizationCont.addProvider<
-	null
->((value, prev) => prev);
 
 export const useNormalizedQuestionContextSelector =
 	NormalizedQuestionContentCustomizationCont.context.useSelector;

@@ -84,12 +84,12 @@ interface MCEditPassableElements {
 interface MCEditPassableTexts {
 	explanation?: DeeplyOptional<CommonEditTexts["explanation"]>;
 	statement: {
-		placeholder: GeneralCustData<string>;
+		Placeholder: GeneralCustData<string>;
 	};
 	choices: {
 		AddChoice: GeneralCustoText;
 		single: {
-			placeholder: GeneralCustData<string>;
+			Placeholder: GeneralCustData<string>;
 		};
 	};
 	CanSelectMultiple: GeneralCustoText;
@@ -100,7 +100,7 @@ interface MCEditPassableTexts {
 interface MCEditPassableHooks {
 	choices?: {
 		isCurrentChoiceCorrect?: GeneralCustoHook<() => boolean>;
-		clickFn?: GeneralCustoHook<(choiceId: number) => () => void>;
+		chooseFn?: GeneralCustoHook<(choiceId: number) => () => void>;
 		deleteFn?: GeneralCustoHook<(choiceId: number) => () => void>;
 		addEmptyChoiceFn?: GeneralCustoHook<() => () => void>;
 	};

@@ -11,6 +11,10 @@ import {
 	IMultipleChoiceContent,
 } from "m-tests-core/lib/questions/multiple-choice/types";
 import { IContentProps } from "../../interfaces";
+import React from "react";
+import { CreateHookInjection } from "custo/lib/components/wrappers";
+import { MCSingleChoiceProps } from "../components/types";
+import { toCustHooks } from "custo/lib/classes/helper-fns/transformations";
 
 const useStatement = () =>
 	MCContentCont.useSelector(content => content.statement, []);
@@ -84,7 +88,7 @@ const useChoices = () => {
 	);
 };
 
-const useChoiceIds = () => {
+const useAllChoiceIds = () => {
 	const { shuffleKey } = commonHooks.useQuestionDisplaySettings();
 	const { disableShuffle } = useSettings();
 	return MCContentCont.useSelector(
@@ -92,6 +96,7 @@ const useChoiceIds = () => {
 			const choiseIds = (content.choices as IStatement[]).map(e => e.id);
 			return choicesShuffleFn(choiseIds, { disableShuffle, shuffleKey });
 		},
+		areDeeplyEqual,
 		[shuffleKey, disableShuffle]
 	);
 };
@@ -167,16 +172,32 @@ const useOnChoiceCheck = (choiceId: number) => {
 
 const useChoiceId = () => MCChoiceCont.useProperty("id");
 
-export const mcHooks = {
-	useStatement,
-	useChoices,
-	useChoicesCount,
-	useChoiceIds,
-	useChoiceById,
-	useSettings,
+export const MCGetterHooks = toCustHooks({
+	statement: useStatement,
+	choices: useChoices,
+	choicesCount: useChoicesCount,
+	allChoiceIds: useAllChoiceIds,
+	choiceById: useChoiceById,
+	currentChoiceId: useChoiceId,
+	settings: useSettings,
+	correctAnswer: useCorrectAnswer,
+});
+
+export const mcHooks = toCustHooks({
 	useChoiceState,
-	useCorrectAnswer,
 	useOnChoiceCheck,
-	useChoiceId,
 	choicesShuffleFn,
-};
+});
+
+export const ConnectWithChoice = CreateHookInjection(
+	({ index, id }: Pick<MCSingleChoiceProps, "id" | "index">) => {
+		return {
+			choice: MCGetterHooks.choiceById.use(id),
+		};
+	},
+	props => (
+		<MCChoiceCont.Provider value={props.choice}>
+			{props.children}
+		</MCChoiceCont.Provider>
+	)
+);

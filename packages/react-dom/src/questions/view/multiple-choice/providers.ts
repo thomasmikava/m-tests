@@ -1,5 +1,8 @@
 import { CounterComponent } from "m-tests-react/lib/questions/view/a";
-import { mcHooks } from "m-tests-react/lib/questions/view/multiple-choice/hooks";
+import {
+	mcHooks,
+	MCGetterHooks,
+} from "m-tests-react/lib/questions/view/multiple-choice/hooks";
 import { joinClassNames } from "m-tests-react/lib/utils/classnames";
 import { pckgDefComponents } from "m-tests-react/lib/utils/shortcuts";
 import { useMemo } from "react";
@@ -8,7 +11,7 @@ import { CloseIcon } from "../../../icons/close";
 import styles from "./styles/index.module.css";
 
 export const useSingleChoiceContainer = () => {
-	const choiceId = mcHooks.useChoiceId();
+	const choiceId = MCGetterHooks.currentChoiceId.use();
 	const {
 		isChecked,
 		isDisabled,
@@ -16,7 +19,7 @@ export const useSingleChoiceContainer = () => {
 		isFullyCorrectlyAnswered,
 		canSelectMultiple,
 		isUnanswered,
-	} = mcHooks.useChoiceState(choiceId);
+	} = mcHooks.useChoiceState.use(choiceId);
 	return pckgDefComponents.newDivEl(
 		{
 			className: joinClassNames(
@@ -38,13 +41,13 @@ export const useSingleChoiceContainer = () => {
 };
 
 export const useChoiceIcon = () => {
-	const choiceId = mcHooks.useChoiceId();
+	const choiceId = MCGetterHooks.currentChoiceId.use();
 	const {
 		displayAnswer,
 		isChecked,
 		isCorrectChoice,
 		isUnanswered,
-	} = mcHooks.useChoiceState(choiceId);
+	} = mcHooks.useChoiceState.use(choiceId);
 	return useMemo(() => {
 		if (!displayAnswer || (!isCorrectChoice && !isChecked)) {
 			return pckgDefComponents.newComp("div");

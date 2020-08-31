@@ -1,4 +1,4 @@
-import { ICommonQuestionParts, ContentType } from "./common-schemas";
+import { ICommonQuestionParts, ContentType, StatTransformerFn } from "./common-schemas";
 import { IRQuestionContent } from "./schemas";
 import { IUserAnswer } from "./user-answer";
 
@@ -17,6 +17,7 @@ export abstract class QuestionContent<AnswerType, UserAns extends IUserAnswer>
 	public abstract getShortStat(separator?: string): string;
 	public abstract getUsedIds(): number[];
 	public abstract serialize(separator?: string): string;
+	public abstract getMappedStatsContent(transformer: StatTransformerFn): any;
 	public defaultSeparator = "<br/>";
 
 	public isAnsweredCorrectly(userAnswer: UserAns): boolean {

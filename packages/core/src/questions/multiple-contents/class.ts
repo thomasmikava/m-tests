@@ -2,6 +2,7 @@ import {
 	contentCommonPartNames,
 	ContentType,
 	ITextStatement,
+	StatTransformerFn,
 } from "../common-schemas";
 import {
 	IMultipleContents,
@@ -11,6 +12,7 @@ import {
 import { newContent } from "../new-content";
 import { QuestionContent } from "../class";
 import { IQuestionContent } from "../schemas";
+import { pickKeys } from "../../utils/objects";
 
 type IItem = Omit<IMultipleContents["items"][number], "content"> & {
 	content: IQuestionContent | ITextStatement;
@@ -28,27 +30,49 @@ class MultipleContents
 
 	type: IMultipleContents["type"];
 	items: IItem[];
+	restrictViewingPagesBeforehand?: boolean;
+	
+	static keys: (keyof IMultipleContents)[] = [...contentCommonPartNames, "items", "restrictViewingPagesBeforehand"];
 
 	constructor(content: IMultipleContents) {
 		super();
 		if (content.type !== ContentType.MultipleContents) {
 			throw new Error("not multiple content items");
 		}
-		const keys = [...contentCommonPartNames, "minAnsForCredit"];
-		keys.forEach(fieldName => {
+		MultipleContents.keys.forEach(fieldName => {
 			if (content[fieldName as any] !== undefined) {
-				this[fieldName] = content[fieldName as any];
+				this[fieldName as any] = content[fieldName as any];
 			}
 		});
-		if (content.items !== undefined) {
-			this.items = content.items.map(item => {
-				if (item.content.type === ContentType.Text) {
-					return item as IItem;
+		this.items = content.items.map(item => {
+			if (item.content.type === ContentType.Text) {
+				return item as IItem;
+			}
+			return { ...item, content: newContent(item.content) };
+		});
+	}
+
+	getMappedStatsContent(transformer: StatTransformerFn): IMultipleContents {
+		return {
+			...pickKeys(this, ...MultipleContents.keys),
+			items: this.items.map(item => {
+				if (item.content.type !== ContentType.Text) {
+					const content = newContent(item.content);
+					return {
+						...item,
+						content: content.getMappedStatsContent(transformer),
+					}
+				} else {
+					return {
+						...item,
+						content: transformer(item.content),
+					}
 				}
-				return { ...item, content: newContent(item.content) };
-			});
+			}),
+			explanation: transformer(this.explanation),
 		}
 	}
+
 	getUsedIds(): number[] {
 		const ids: number[] = [];
 		this.items.forEach(item => {

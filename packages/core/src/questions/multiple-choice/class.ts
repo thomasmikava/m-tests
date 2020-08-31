@@ -1,4 +1,4 @@
-import { contentCommonPartNames, ContentType } from "../common-schemas";
+import { contentCommonPartNames, ContentType, StatTransformerFn } from "../common-schemas";
 import {
 	IMultipleChoiceContent,
 	IMultipleChoiceUserAns,
@@ -6,6 +6,7 @@ import {
 	MCContentDesignStructure,
 } from "./types";
 import { QuestionContent } from "../class";
+import { pickKeys } from "../../utils/objects";
 
 class MultipleChoice
 	extends QuestionContent<IMultipleChoiceUserAns, IMultipleChoiceUserAns>
@@ -101,28 +102,39 @@ class MultipleChoice
 	canSelectMultiple: IMultipleChoiceContent["canSelectMultiple"];
 	disableShuffle?: IMultipleChoiceContent["disableShuffle"];
 	designStructure?: IMultipleChoiceContent["designStructure"];
+	
+	static keys: (keyof IMultipleChoiceContent)[] = [
+		...contentCommonPartNames,
+		"statement",
+		"choices",
+		"canSelectMultiple",
+		"canSelectMultiple",
+		"disableShuffle",
+		"disableShuffle",
+		"designStructure",
+	];
 
 	constructor(content: IMultipleChoiceContent) {
 		super();
 		if (content.type !== ContentType.MultipleChoice) {
 			throw new Error("not multiple choice");
 		}
-		const keys = [
-			...contentCommonPartNames,
-			"statement",
-			"choices",
-			"canSelectMultiple",
-			"canSelectMultiple",
-			"disableShuffle",
-			"disableShuffle",
-			"designStructure",
-		];
-		keys.forEach(fieldName => {
+		MultipleChoice.keys.forEach(fieldName => {
 			if (content[fieldName] !== undefined) {
-				this[fieldName] = content[fieldName];
+				this[fieldName as any] = content[fieldName];
 			}
 		});
 	}
+
+	getMappedStatsContent(transformer: StatTransformerFn): IMultipleChoiceContent {
+		return {
+			...pickKeys(this, ...MultipleChoice.keys),
+			statement: transformer(this.statement),
+			choices: this.choices.map(c => transformer(c)),
+			explanation: transformer(this.explanation),
+		}
+	}
+
 	
 	getUsedIds(): number[] {
 		const ids: number[] = [];

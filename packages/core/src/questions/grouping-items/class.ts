@@ -1,4 +1,4 @@
-import { contentCommonPartNames, ContentType } from "../common-schemas";
+import { contentCommonPartNames, ContentType, StatTransformerFn } from "../common-schemas";
 import {
 	IGroupingItemsContent,
 	IGroupingItemsUserAns,
@@ -6,6 +6,7 @@ import {
 	RelationType,
 } from "./types";
 import { QuestionContent } from "../class";
+import { pickKeys } from "../../utils/objects";
 
 class GroupingItems
 	extends QuestionContent<
@@ -33,24 +34,35 @@ class GroupingItems
 	itemsToGroups: IGroupingItemsContent["itemsToGroups"];
 	groups: IGroupingItemsContent["groups"];
 	relationType: IGroupingItemsContent["relationType"];
+	
+	static keys: (keyof IGroupingItemsContent)[] = [
+		...contentCommonPartNames,
+		"items",
+		"itemsToGroups",
+		"groups",
+		"relationType",
+	];
 
 	constructor(content: IGroupingItemsContent) {
 		super();
 		if (content.type !== ContentType.GroupingItems) {
 			throw new Error("not grouping items");
 		}
-		const keys = [
-			...contentCommonPartNames,
-			"items",
-			"itemsToGroups",
-			"groups",
-			"relationType",
-		];
-		keys.forEach(fieldName => {
+		GroupingItems.keys.forEach(fieldName => {
 			if (content[fieldName] !== undefined) {
-				this[fieldName] = content[fieldName];
+				this[fieldName as any] = content[fieldName];
 			}
 		});
+	}
+	
+	getMappedStatsContent(transformer: StatTransformerFn): IGroupingItemsContent {
+		return {
+			...pickKeys(this, ...GroupingItems.keys),
+			statement: transformer(this.statement),
+			items: this.items.map(c => transformer(c)),
+			groups: this.groups.map(g => transformer(g)),
+			explanation: transformer(this.explanation),
+		}
 	}
 	
 	getUsedIds(): number[] {

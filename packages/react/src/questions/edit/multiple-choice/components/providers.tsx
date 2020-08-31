@@ -93,7 +93,7 @@ export const MCEditStatement: React.FC<MCEditStatementProps> = React.memo(
 					path={path.add("text")}
 					stat={statement}
 					onChange={handleChange}
-					usePlaceholder={MCEdit.texts.statement.placeholder}
+					usePlaceholder={MCEdit.texts.statement.Placeholder}
 				/>
 			</Container>
 		);
@@ -102,7 +102,7 @@ export const MCEditStatement: React.FC<MCEditStatementProps> = React.memo(
 
 export const MCEditChoices: React.FC<MCEditChoicesProps> = React.memo(
 	({ path }) => {
-		const choicesCount = MCEditGetterHooks.choicesCount.use();
+		const choiceIds = MCEditGetterHooks.allChoiceIds.use();
 		const {
 			AddChoice,
 			single: { Container: ChoiceContainer },
@@ -111,11 +111,12 @@ export const MCEditChoices: React.FC<MCEditChoicesProps> = React.memo(
 		return (
 			<MCEdit.elements.choices.Container>
 				<CounterComponent title="MCChoices I" />
-				{new Array(choicesCount).fill(0).map((_, index) => (
+				{choiceIds.map((choideId, index) => (
 					<ChoiceContainer
-						key={index}
-						choiceIndex={index}
+						key={choideId}
 						path={path.add(index)}
+						id={choideId}
+						index={index}
 					/>
 				))}
 				<AddChoice onClick={handleNewChoice} />
@@ -152,7 +153,7 @@ export const MCEditSingleChoice: React.FC<MCEditSingleChoiceProps> = React.memo(
 							path={path.add("text")}
 							onChange={handleChange}
 							usePlaceholder={
-								MCEdit.texts.choices.single.placeholder
+								MCEdit.texts.choices.single.Placeholder
 							}
 						/>
 					</TextContainer>
@@ -180,11 +181,11 @@ export const MCEditSingleChoiceDecoration: React.FC<MCEditSingleChoiceDecoration
 		const { DecorationContainer, Icon } = MCEdit.elements.choices.single[
 			dir
 		];
-		const onClick = MCEditHooks.choices.clickFn.use(
-			MCEditGetterHooks.choiceId.use()
-		);
+		const choiceId = MCEditGetterHooks.choiceId.use();
+		const onChoose = MCEditHooks.choices.chooseFn.use(choiceId);
+		const onDelete = MCEditHooks.choices.deleteFn.use(choiceId);
 		return (
-			<DecorationContainer onClick={onClick}>
+			<DecorationContainer onClick={dir === "left" ? onChoose : onDelete}>
 				<Icon />
 			</DecorationContainer>
 		);

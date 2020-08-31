@@ -15,7 +15,6 @@ import {
 	QuestionDisplaySettingsCont,
 	UserAnswerCont,
 } from "./common/hooks/contexts";
-import { CustomizationsNullProvider } from "./customizations/providers";
 import { IContentProps } from "./interfaces";
 import { MultipleChoiceContainer } from "./multiple-choice/components/providers";
 
@@ -46,41 +45,36 @@ export const QuestionContentTestMode: React.FC<IProps> = React.memo(
 
 		const fContent = content as IRawQuestionContent;
 		return (
-			<CustomizationsNullProvider value={null}>
-				<QuestionDisplaySettingsCont.Provider
-					displayAnswer={displayAnswer}
-					displayExplanation={displayExplanation}
-					disableEditingAnswer={disableEditingAnswer}
-					displayItemAssessments={displayItemAssessments}
-					shuffleKey={shuffleKey}
+			<QuestionDisplaySettingsCont.Provider
+				displayAnswer={displayAnswer}
+				displayExplanation={displayExplanation}
+				disableEditingAnswer={disableEditingAnswer}
+				displayItemAssessments={displayItemAssessments}
+				shuffleKey={shuffleKey}
+			>
+				<ItemAssessmentsCont.Provider
+					display={displayItemAssessments}
+					onChange={onItemsAssessmentsChange}
+					value={itemsAssessments}
 				>
-					<ItemAssessmentsCont.Provider
-						display={displayItemAssessments}
-						onChange={onItemsAssessmentsChange}
-						value={itemsAssessments}
+					<UserAnswerCont.Provider
+						onChange={dynamicOnUserAnswerChange}
+						isDisabled={!!disableEditingAnswer}
+						displayAnswer={displayAnswer}
+						userAnswer={userAnswer}
 					>
-						<UserAnswerCont.Provider
-							onChange={dynamicOnUserAnswerChange}
-							isDisabled={!!disableEditingAnswer}
-							displayAnswer={displayAnswer}
-							userAnswer={userAnswer}
+						<CommonQuestionPartsCont.Provider
+							type={fContent.type}
+							allowPartialCredit={fContent.allowPartialCredit}
+							minScoreForCredit={fContent.minScoreForCredit}
 						>
-							<CommonQuestionPartsCont.Provider
-								type={fContent.type}
-								allowPartialCredit={fContent.allowPartialCredit}
-								minScoreForCredit={fContent.minScoreForCredit}
-							>
-								<ContentCont.Provider value={content}>
-									<Content
-										content={content}
-										ref={containerRef}
-									/>
-								</ContentCont.Provider>
-							</CommonQuestionPartsCont.Provider>
-						</UserAnswerCont.Provider>
-					</ItemAssessmentsCont.Provider>
-				</QuestionDisplaySettingsCont.Provider>
-			</CustomizationsNullProvider>
+							<ContentCont.Provider value={content}>
+								<Content content={content} ref={containerRef} />
+							</ContentCont.Provider>
+						</CommonQuestionPartsCont.Provider>
+					</UserAnswerCont.Provider>
+				</ItemAssessmentsCont.Provider>
+			</QuestionDisplaySettingsCont.Provider>
 		);
 	}
 );

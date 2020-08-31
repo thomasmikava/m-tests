@@ -2,124 +2,195 @@ import { ContentType } from "m-tests-core/lib/questions/common-schemas";
 import { ContentError } from "m-tests-core/lib/questions/errors";
 import { IRawQuestionContent } from "m-tests-core/lib/questions/schemas";
 import { ContentPath } from "m-tests-core/lib/utils/path";
-import React, { useCallback, useRef, useState } from "react";
-import { useOptimizedFunc } from "../../utils/hooks";
+import React from "react";
 import { CounterComponent } from "../view/a";
 import { CommonEditCusto } from "./common/components";
-import { CustomizationsEditNullProvider } from "./customizations/providers";
 import { getChangedContent } from "./helpers/default-content";
 import { MultipleChoiceEditContainer } from "./multiple-choice/components/providers";
 import { EditContentCont } from "./common/hooks/contexts";
 import { SetState } from "../../utils/interfaces";
+import { classSetStateProp } from "../../utils/prop";
+import { InjectHook } from "custo";
+import {
+	RawContentToEditableContentFn,
+	RawStatToEditableStatFn,
+	EditableContentToRawContentFn,
+	EditableStatToRawStatFn,
+} from "./common/props/types";
+import { ComponentRef } from "custo/lib/utils/generics";
 
 export type GetChangedContentFN = (args: {
 	old: { content?: IRawQuestionContent; designStructure?: string };
 	new: { contentType: ContentType; designStructure?: string };
 }) => IRawQuestionContent | undefined;
 
-interface IProps {
+export interface IProps {
 	defaultQuestionContent?: IRawQuestionContent;
-	onSave?: (errors: ContentError[] | null, data: IRawQuestionContent) => void;
 	defaultContentType?: ContentType;
 	defaultDesignStructure?: string;
+	onChange?: (content: IRawQuestionContent | undefined) => void;
+	rawContentToEditableContentFn: RawContentToEditableContentFn;
+	rawStatToEditableStatFn: RawStatToEditableStatFn;
+	editableContentToRawContentFn: EditableContentToRawContentFn;
+	editableStatToRawStatFn: EditableStatToRawStatFn;
 }
 
-export const QuestionEditwrapper: React.FC<IProps> = React.memo(
-	({
-		defaultQuestionContent,
-		onSave,
-		defaultContentType,
-		defaultDesignStructure,
-	}: IProps) => {
-		const [content, setContent] = useState(():
-			| IRawQuestionContent
-			| undefined => {
-			if (defaultQuestionContent) {
-				return defaultQuestionContent;
-			}
-			if (defaultContentType === undefined) return undefined;
-			return getChangedContent({
+interface IState {
+	content: IRawQuestionContent | undefined;
+	counter: number;
+}
+export class QuestionEditwrapperClass extends React.PureComponent<
+	IProps,
+	IState
+> {
+	state: IState;
+	constructor(props: IProps) {
+		super(props);
+		let content: IRawQuestionContent | undefined = undefined;
+		const {
+			defaultQuestionContent,
+			defaultContentType,
+			defaultDesignStructure,
+		} = props;
+		if (defaultQuestionContent) {
+			content = defaultQuestionContent;
+		} else if (defaultContentType !== undefined) {
+			content = getChangedContent({
 				newContentType: defaultContentType,
 				newDesignStructure: defaultDesignStructure || null,
 			});
+		}
+		if (content) {
+			content = this.convertToEditable(content);
+		} else {
+		}
+		this.state = {
+			content,
+			counter: 0,
+		};
+	}
+
+	setContent: SetState<IRawQuestionContent | undefined> = classSetStateProp(
+		this,
+		"content",
+		() => {
+			if (this.props.onChange) {
+				this.props.onChange(this.state.content);
+			}
+		}
+	);
+
+	/* private */ convertToEditable = (
+		content: IRawQuestionContent
+	): IRawQuestionContent => {
+		return this.props.rawContentToEditableContentFn(content, {
+			rawStatToEditableStatFn: this.props.rawStatToEditableStatFn,
 		});
-		const contentRef = useRef(content as IRawQuestionContent);
-		const getContent = useCallback(() => contentRef.current, []);
+	};
+
+	/* private */ convertToRaw = (
+		content: IRawQuestionContent
+	): IRawQuestionContent => {
+		return this.props.editableContentToRawContentFn(content, {
+			editableStatToRawStatFn: this.props.editableStatToRawStatFn,
+		});
+	};
+
+	setEditableContent: SetState<IRawQuestionContent | undefined> = val => {
+		const fn = typeof val === "function" ? val : () => val;
+		this.setContent(old => {
+			const newVal = fn(old);
+			if (!newVal) return newVal;
+			return this.convertToEditable(newVal);
+		});
+	};
+
+	/* private */ getEditableContent = () => this.state.content!;
+
+	getRawContent = () => {
+		const content = this.getEditableContent();
+		if (!content) {
+			throw new Error("no content is defined");
+		}
+		return this.convertToRaw(content);
+	};
+
+	getErrors = (): ContentError[] | null => {
+		return null;
+	};
+
+	incr = () => this.setState(({ counter }) => ({ counter: counter + 1 }));
+
+	render() {
+		const { content, counter } = this.state;
+		const { getEditableContent, setContent, setEditableContent } = this;
 
 		const designStructure: string | null =
 			(content as any)?.designStructure ?? null;
 		const contentType = content?.type;
 
-		const ref = useRef<any>(null);
-
-		const getData = useOptimizedFunc(() => {
-			if (!ref.current) return;
-			const component = ref.current;
-			const content = component.getData() as IRawQuestionContent;
-			return content;
-		});
-
-		const getErrors = useOptimizedFunc((): ContentError[] | null => {
-			if (!ref.current) return null;
-			return ref.current.getErrors();
-		});
-
-		const handleSave = useOptimizedFunc(() => {
-			if (!onSave) return;
-			const data = getData();
-			if (!data) return;
-			onSave(getErrors(), data);
-		});
-
-		const [x, setX] = useState(0);
-		const incr = useCallback(() => setX(x => x + 1), []);
-
-		const ChooseQuestionContentType =
-			CommonEditCusto.components.ContentSelector;
+		const { ContentSelector } = CommonEditCusto.components;
 
 		return (
-			<CustomizationsEditNullProvider value={null}>
-				<div style={{ textAlign: "left" }}>
-					<button onClick={incr}>{x} increment</button>
-					<ChooseQuestionContentType
-						setContent={setContent}
-						selectedType={contentType ?? null}
-						selectedDesignStructure={designStructure ?? null}
-					/>
-					{content && (
-						<EditContentCont.Provider
-							content={content}
-							onChange={
-								setContent as SetState<IRawQuestionContent>
-							}
-							getContent={getContent}
-						>
-							<Content contentType={content.type} ref={ref} />
-							<button onClick={handleSave}>Save</button>
-						</EditContentCont.Provider>
-					)}
-				</div>
-			</CustomizationsEditNullProvider>
+			<div style={{ textAlign: "left" }}>
+				<button onClick={this.incr}>{counter} increment</button>
+				<ContentSelector
+					setContent={setEditableContent}
+					selectedType={contentType ?? null}
+					selectedDesignStructure={designStructure ?? null}
+				/>
+				{content && (
+					<EditContentCont.Provider
+						content={content}
+						onChange={setContent as SetState<IRawQuestionContent>}
+						getContent={getEditableContent}
+					>
+						<Content contentType={content.type} />
+					</EditContentCont.Provider>
+				)}
+			</div>
 		);
+	}
+}
+
+export const QuestionEditwrapper = InjectHook(
+	QuestionEditwrapperClass,
+	props => {
+		const rawContentToEditableContentFn = CommonEditCusto.functions.rawContentToEditableContentFn.use();
+		const rawStatToEditableStatFn = CommonEditCusto.functions.rawStatToEditableStatFn.use();
+		const editableContentToRawContentFn = CommonEditCusto.functions.editableContentToRawContentFn.use();
+		const editableStatToRawStatFn = CommonEditCusto.functions.editableStatToRawStatFn.use();
+		return {
+			rawContentToEditableContentFn,
+			rawStatToEditableStatFn,
+			editableContentToRawContentFn,
+			editableStatToRawStatFn,
+		};
 	}
 );
 
 const defaultContentPath = new ContentPath();
 
-const Content = React.memo(
-	React.forwardRef(
-		({ contentType }: { contentType: ContentType }, ref: any) => {
-			const Cont = CommonEditCusto.elements.OuterContainer;
-			return (
-				<Cont ref={ref}>
-					<CounterComponent title={"Content"} />
-					{contentType === ContentType.MultipleChoice && (
-						<MultipleChoiceEditContainer
-							path={defaultContentPath}
-						/>
-					)}
-				</Cont>
-			);
-		}
-	)
-);
+const Content = React.memo(({ contentType }: { contentType: ContentType }) => {
+	const Cont = CommonEditCusto.elements.OuterContainer;
+	return (
+		<Cont>
+			<CounterComponent title={"Content"} />
+			{contentType === ContentType.MultipleChoice && (
+				<MultipleChoiceEditContainer path={defaultContentPath} />
+			)}
+		</Cont>
+	);
+});
+
+type CC = React.RefForwardingComponent<
+	QuestionEditwrapperClass,
+	Pick<
+		IProps,
+		| "defaultQuestionContent"
+		| "defaultContentType"
+		| "defaultDesignStructure"
+		| "onChange"
+	>
+>;
+type R = ComponentRef<CC>;

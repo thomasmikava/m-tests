@@ -49,12 +49,12 @@ export const reactDefaultMCEditPassable: Pick<
 	},
 	texts: {
 		statement: {
-			placeholder: CreateCusto.Data("Statement"),
+			Placeholder: CreateCusto.Data("Statement"),
 		},
 		choices: {
 			AddChoice: CreateCusto.Text("Add choice"),
 			single: {
-				placeholder: CreateCusto.hookOf.Data(
+				Placeholder: CreateCusto.hookOf.Data(
 					useSingleChoicePlaceholderText
 				),
 			},

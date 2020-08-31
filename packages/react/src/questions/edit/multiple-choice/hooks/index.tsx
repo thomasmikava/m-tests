@@ -4,16 +4,17 @@ import { areDeeplyEqual } from "m-tests-core/lib/utils/optimizations";
 import { useOptimizedFunc } from "../../../../utils/hooks";
 import { commonEditHooks } from "../../common/hooks";
 import { ContentType } from "m-tests-core/lib/questions/common-schemas";
-import { getUniqueId } from "../../../../utils/array";
+import { generateUniqueId } from "../../../../utils/array";
 import { newContent } from "m-tests-core/lib/questions/new-content";
 import { CommonEditCusto } from "../../common/components";
 import { IRMultipleChoiceContent } from "m-tests-core/lib/questions/multiple-choice/types";
 import { CreateHookInjection } from "custo/lib/components/wrappers";
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { MCEdit } from "../components";
 import { MCEditPassable } from "../props/types";
 import { DeeplyRequired } from "custo/lib/utils/generics";
-import { CreateCusto } from "custo";
+import { toCustHooks } from "custo/lib/classes/helper-fns/transformations";
+import { MCEditSingleChoiceProps } from "../components/types";
 
 const useStatement = () =>
 	MCEditContentCont.useSelector(content => content.statement, []);
@@ -22,7 +23,21 @@ const useChoices = () =>
 	MCEditContentCont.useSelector(content => content.choices, []);
 
 const useChoicesCount = () =>
-	MCEditContentCont.useSelector(content => content.choices.length, []);
+	MCEditContentCont.useSelector(
+		content => {
+			return content.choices.length;
+		},
+		[],
+		"useChoicesCount"
+	);
+
+const useAllChoiceIds = () =>
+	MCEditContentCont.useSelector(
+		content => content.choices.map(e => e.id),
+		areDeeplyEqual,
+		[],
+		"useAllChoiceIds"
+	);
 
 const useChoiceId = () => MCEditChoiceCont.useProperty("id");
 
@@ -93,7 +108,7 @@ const useAddEmptyChoiceFn = () => {
 		setContent(content => {
 			if (content.type !== ContentType.MultipleChoice) return content;
 			const usedIds = newContent(content).getUsedIds();
-			const [newId] = getUniqueId(usedIds);
+			const newId = generateUniqueId(usedIds);
 			return {
 				...content,
 				choices: [
@@ -161,42 +176,50 @@ const useCanSelectMultipleChangeFn = () => {
 	});
 };
 
-export const MCEditGetterHooks = {
-	statement: CreateCusto.Hook(useStatement),
-	choices: CreateCusto.Hook(useChoices),
-	choicesCount: CreateCusto.Hook(useChoicesCount),
-	choiceId: CreateCusto.Hook(useChoiceId),
-	settings: CreateCusto.Hook(useSettings),
-};
+export const MCEditGetterHooks = toCustHooks({
+	statement: useStatement,
+	choices: useChoices,
+	choicesCount: useChoicesCount,
+	allChoiceIds: useAllChoiceIds,
+	choiceId: useChoiceId,
+	settings: useSettings,
+});
 
-export const mcDefaultEditHooks: DeeplyRequired<MCEditPassable["hooks"]> = {
-	choices: {
-		isCurrentChoiceCorrect: CreateCusto.Hook(useIsCurrentChoiceCorrect),
-		clickFn: CreateCusto.Hook(useChoiceOnClick),
-		deleteFn: CreateCusto.Hook(useChoiceDeleteHandler),
-		addEmptyChoiceFn: CreateCusto.Hook(useAddEmptyChoiceFn),
-	},
-	settings: {
-		canSelectMultipleChangeFn: CreateCusto.Hook(
-			useCanSelectMultipleChangeFn
-		),
-		allowPartialCreditChangeFn: CreateCusto.Hook(() =>
-			useSetPropFn("allowPartialCredit")
-		),
-		disableShuffleChangeFn: CreateCusto.Hook(() =>
-			useSetPropFn("disableShuffle")
-		),
-	},
-};
+export const mcDefaultEditHooks: DeeplyRequired<MCEditPassable["hooks"]> = toCustHooks(
+	{
+		choices: {
+			isCurrentChoiceCorrect: useIsCurrentChoiceCorrect,
+			chooseFn: useChoiceOnClick,
+			deleteFn: useChoiceDeleteHandler,
+			addEmptyChoiceFn: useAddEmptyChoiceFn,
+		},
+		settings: {
+			canSelectMultipleChangeFn: useCanSelectMultipleChangeFn,
+			allowPartialCreditChangeFn: () =>
+				useSetPropFn("allowPartialCredit"),
+			disableShuffleChangeFn: () => useSetPropFn("disableShuffle"),
+		},
+	}
+);
 
 const getMCHooks = () => MCEdit.hooks;
 
 export const ConnectWithEditingChoice = CreateHookInjection(
-	({ choiceIndex }: { choiceIndex: number }) => ({
-		choice: MCEditContentCont.useSelector(x => x.choices[choiceIndex], [
-			choiceIndex,
-		]),
-	}),
+	({ index, id }: Pick<MCEditSingleChoiceProps, "id" | "index">) => {
+		return {
+			choice: MCEditContentCont.useSelector(
+				x => {
+					const choice = x.choices[index];
+					if (!choice) {
+						throw new Error(`choice not found for index ${index}`);
+					}
+					return choice;
+				},
+				[index],
+				"useChoiceByIndex"
+			),
+		};
+	},
 	props => (
 		<MCEditChoiceCont.Provider value={props.choice}>
 			{props.children}

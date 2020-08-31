@@ -10,7 +10,7 @@ export const reactDefaultCommonEditPassable: Pick<
 	texts: {
 		explanation: {
 			Title: CreateCusto.Text("Explanation"),
-			placeholder: CreateCusto.Data("Explanation"),
+			Placeholder: CreateCusto.Data("Explanation"),
 		},
 		contentTypes: CreateCusto.hookOf.Data(() => [
 			{

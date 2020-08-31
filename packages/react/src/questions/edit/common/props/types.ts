@@ -9,9 +9,13 @@ import {
 	ExplanationProps,
 	CheckboxWithLabelProps,
 } from "../../../view/common/components/types";
-import { ContentType } from "m-tests-core/lib/questions/common-schemas";
+import {
+	ContentType,
+	IStatement,
+} from "m-tests-core/lib/questions/common-schemas";
 import { IChooseQuestionContentTypeProps } from "../components/types";
 import { EditTextComponentProps } from "../components/types";
+import { IRawQuestionContent } from "m-tests-core/lib/questions/schemas";
 
 interface CommonEditComponents {
 	Text: GeneralCustoComp<EditTextComponentProps>;
@@ -45,7 +49,7 @@ export interface ContentTypeChooseValue {
 interface CommonEditTexts {
 	explanation: {
 		Title: GeneralCustoText;
-		placeholder: GeneralCustData<string>;
+		Placeholder: GeneralCustData<string>;
 	};
 	contentTypes: GeneralCustData<
 		{
@@ -55,8 +59,32 @@ interface CommonEditTexts {
 	>;
 }
 
+export type RawStatToEditableStatFn = <T extends IStatement | undefined | null>(
+	stat: T
+) => any;
+
+export type EditableStatToRawStatFn = (stat: any) => IStatement;
+
+export type RawContentToEditableContentFn = (
+	content: IRawQuestionContent,
+	helpers: { rawStatToEditableStatFn: RawStatToEditableStatFn }
+) => IRawQuestionContent;
+
+export type EditableContentToRawContentFn = (
+	content: IRawQuestionContent,
+	helpers: { editableStatToRawStatFn: EditableStatToRawStatFn }
+) => IRawQuestionContent;
+
 interface CommonEditFunctions {
 	getEmptyText: GeneralCustData<() => any>;
+	rawContentToEditableContentFn?: GeneralCustData<
+		RawContentToEditableContentFn
+	>;
+	editableContentToRawContentFn?: GeneralCustData<
+		EditableContentToRawContentFn
+	>;
+	rawStatToEditableStatFn?: GeneralCustData<RawStatToEditableStatFn>;
+	editableStatToRawStatFn?: GeneralCustData<EditableStatToRawStatFn>;
 }
 
 interface CommonEditHooks {

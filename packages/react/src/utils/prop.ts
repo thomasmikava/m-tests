@@ -1,3 +1,5 @@
+import { SetState } from "./interfaces";
+
 export function getAbsoluteProperty(obj: object, deepKey: string) {
 	const keys = deepKey.split(".");
 	let last: any = obj;
@@ -38,3 +40,26 @@ export function getUpdatedAbsoluteProperty(
 	last[lastKey] = newValue;
 	return main;
 }
+
+export const classSetStateProp = <
+	T extends Readonly<Record<any, any>>,
+	K extends keyof T
+>(
+	that: { setState: React.Component<any, T>["setState"] },
+	key: K,
+	callback?: () => void
+): SetState<T[K]> => {
+	return vl => {
+		const setState = that.setState;
+		const fn: any = typeof vl === "function" ? vl : () => vl;
+		setState.call(
+			that,
+			({ [key]: currentVal }: any) => {
+				return {
+					[key]: fn(currentVal),
+				} as any;
+			},
+			callback
+		);
+	};
+};

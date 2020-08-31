@@ -11,7 +11,8 @@ export type MCEditStatementProps = IContentGeneralProps;
 export type MCEditChoicesProps = IContentGeneralProps;
 
 export interface MCEditSingleChoiceProps extends IContentGeneralProps {
-	choiceIndex: number;
+	id: number;
+	index: number;
 }
 
 export type MCEditSingleChoiceDecorationProps = IContentGeneralProps & {

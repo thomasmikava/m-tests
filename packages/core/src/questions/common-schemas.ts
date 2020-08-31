@@ -54,3 +54,5 @@ export const forbiddenProperties: forbiddenProperty[] = [
 	"explanation",
 	"minScoreForCredit",
 ];
+
+export type StatTransformerFn = <T extends IStatement | undefined>(data: T) => any;

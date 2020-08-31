@@ -14,8 +14,10 @@ import {
 	contentCommonPartNames,
 	ContentType,
 	IStatement,
+	StatTransformerFn,
 } from "../common-schemas";
 import { QuestionContent } from "../class";
+import { pickKeys } from "../../utils/objects";
 
 export interface IAnswer {
 	[id: number]: {
@@ -115,25 +117,44 @@ class FillingBlanks extends QuestionContent<IAnswer, IFillingBlanksUserAns>
 
 	items: IFillingBlanksContent["items"];
 	ignoreOrderOfInputs: IFillingBlanksContent["ignoreOrderOfInputs"];
+	
+	static keys: (keyof IFillingBlanksContent)[] = [
+		...contentCommonPartNames,
+		"items",
+		"ignoreOrderOfInputs",
+		"designStructure",
+	];
 
 	constructor(content: IFillingBlanksContent) {
 		super();
 		if (content.type !== ContentType.FillingBlanks) {
 			throw new Error("not filling blanks");
 		}
-		const keys = [
-			...contentCommonPartNames,
-			"items",
-			"ignoreOrderOfInputs",
-			"designStructure",
-		];
-		keys.forEach(fieldName => {
+		FillingBlanks.keys.forEach(fieldName => {
 			if (content[fieldName] !== undefined) {
-				this[fieldName] = content[fieldName];
+				this[fieldName as any] = content[fieldName];
 			}
 		});
 	}
 	
+	getMappedStatsContent(transformer: StatTransformerFn): IFillingBlanksContent {
+		return {
+			...pickKeys(this, ...FillingBlanks.keys),
+			items: this.items.map(item => {
+				if (item.type === FBItemType.Input) {
+					return {
+						...item,
+						correctInputs: item.correctInputs.map(inp => transformer(inp)),
+					};
+				}
+				if (item.type === FBItemType.Text) {
+					return transformer(item);
+				}
+				return item;
+			}),
+			explanation: transformer(this.explanation),
+		}
+	}
 
 	getUsedIds(): number[] {
 		const ids: number[] = [];
