@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { normalizeLinkingFlags } from "../../../utils/shortcuts";
 import { linkCommonProps } from "../common/props/links";
 import { linkMCProps } from "../multiple-choice/props/links";
 import {
@@ -10,17 +9,15 @@ import { flattenFlags } from "custo/lib/flags";
 import { createLinkFn } from "custo/lib/utils/objects";
 import { deepCopyCustomizations } from "custo/lib/utils/deep-copy";
 import { createDeeplyOptimizedCustomizedPropsHook } from "custo/lib/utils/hooks";
-import { createProviders } from "custo";
+import { createProviders, CustoProviderRawValue } from "custo";
 
 const computeNormalizedCustomizations = ({
 	value: customizations,
-	meta,
-}: {
-	value: QuestionContentCustomization;
-	meta: any;
-}): NormalizedQuestionContentCustomization => {
-	const flags = flattenFlags(meta);
-	normalizeLinkingFlags(flags);
+	mergeFlags,
+}: CustoProviderRawValue<
+	QuestionContentCustomization
+>): NormalizedQuestionContentCustomization => {
+	const flags = flattenFlags(mergeFlags || []);
 	const linkFn = createLinkFn({ flags });
 	const newObj = deepCopyCustomizations(customizations);
 	linkCommonProps(linkFn, newObj);

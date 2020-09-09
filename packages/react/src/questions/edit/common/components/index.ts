@@ -16,6 +16,7 @@ export const CommonEditOnes: ToCustoTreeObj<CommonEditPassable> = {
 		},
 		ContentSelector: CustoType.component,
 		CheckboxWithLabel: CustoType.component,
+		Select: CustoType.component,
 	},
 	elements: {
 		OuterContainer: CustoType.component,
@@ -28,13 +29,17 @@ export const CommonEditOnes: ToCustoTreeObj<CommonEditPassable> = {
 		},
 		InnerContainers: CustoType.component,
 		Text: CustoType.component,
+		ContentSelectorContainer: CustoType.component,
 	},
 	texts: {
 		explanation: {
 			Title: CustoType.text,
 			Placeholder: CustoType.data,
 		},
-		contentTypes: CustoType.data,
+		contentTypes: {
+			Placeholder: CustoType.data,
+			options: CustoType.data,
+		},
 	},
 	functions: {
 		getEmptyText: CustoType.data,

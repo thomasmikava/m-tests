@@ -14,3 +14,15 @@ export interface CheckboxWithLabelProps {
 	value: boolean;
 	label?: JSX.Element | string | number | null;
 }
+
+export interface SelectProps<
+	V extends { label: string | JSX.Element | null; value: any } = {
+		label: string | JSX.Element | null;
+		value: any;
+	}
+> {
+	value: V | undefined;
+	onChange: (value: V) => void;
+	options: V[];
+	placeholder?: string | null;
+}

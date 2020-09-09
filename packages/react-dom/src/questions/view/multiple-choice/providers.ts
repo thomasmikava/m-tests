@@ -1,10 +1,8 @@
-import { CounterComponent } from "m-tests-react/lib/questions/view/a";
 import {
 	mcHooks,
 	MCGetterHooks,
 } from "m-tests-react/lib/questions/view/multiple-choice/hooks";
-import { joinClassNames } from "m-tests-react/lib/utils/classnames";
-import { pckgDefComponents } from "m-tests-react/lib/utils/shortcuts";
+import { cDom } from "../../utils";
 import { useMemo } from "react";
 import { CheckMarkIcon } from "../../../icons/checkmark";
 import { CloseIcon } from "../../../icons/close";
@@ -20,23 +18,14 @@ export const useSingleChoiceContainer = () => {
 		canSelectMultiple,
 		isUnanswered,
 	} = mcHooks.useChoiceState.use(choiceId);
-	return pckgDefComponents.newDivEl(
-		{
-			className: joinClassNames(
-				styles["choice-container"],
-				isChecked && styles["checked-choice"],
-				isDisabled && styles["disabled-choice"],
-				isCorrectChoice && styles["correct-choice"],
-				canSelectMultiple && styles["choice-can-select-multiple"],
-				isFullyCorrectlyAnswered && styles["fully-correctly-answered"],
-				isUnanswered && styles["unanswered"]
-			),
-		},
-		{
-			outerBeforeComponents: pckgDefComponents.newComp(CounterComponent, {
-				title: "SingleChoice",
-			}),
-		}
+	return cDom.newClassedDiv(
+		styles["choice-container"],
+		isChecked && styles["checked-choice"],
+		isDisabled && styles["disabled-choice"],
+		isCorrectChoice && styles["correct-choice"],
+		canSelectMultiple && styles["choice-can-select-multiple"],
+		isFullyCorrectlyAnswered && styles["fully-correctly-answered"],
+		isUnanswered && styles["unanswered"]
 	);
 };
 
@@ -50,11 +39,11 @@ export const useChoiceIcon = () => {
 	} = mcHooks.useChoiceState.use(choiceId);
 	return useMemo(() => {
 		if (!displayAnswer || (!isCorrectChoice && !isChecked)) {
-			return pckgDefComponents.newComp("div");
+			return cDom.newDiv();
 		}
 		if (isCorrectChoice) {
-			return pckgDefComponents.newComp(CheckMarkIcon);
+			return cDom.newComp(CheckMarkIcon);
 		}
-		return pckgDefComponents.newComp(CloseIcon);
+		return cDom.newComp(CloseIcon);
 	}, [displayAnswer, isChecked, isCorrectChoice]);
 };

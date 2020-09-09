@@ -1,7 +1,7 @@
 import { mcDefaultEditHooks } from "../hooks";
 import { MCEditPassable } from "../props/types";
 import { CreateCusto } from "custo";
-import { pckgDefComponents } from "../../../../utils/shortcuts";
+import { wrapAsPackageCusto } from "../../../../utils/shortcuts";
 import {
 	MCEditHead,
 	MCEditBody,
@@ -23,30 +23,24 @@ export const reactDefaultMCEditPassable: Pick<
 	MCEditPassable,
 	"components" | "texts" | "hooks"
 > = {
-	components: {
-		Head: pckgDefComponents.newComp(MCEditHead),
-		Body: CreateCusto.hookOf.Component(() =>
-			pckgDefComponents.newComp(MCEditBody)
-		),
-		Tail: pckgDefComponents.newComp(MCEditTail),
+	components: wrapAsPackageCusto({
+		Head: MCEditHead,
+		Body: CreateCusto.hookOf.Component(() => MCEditBody),
+		Tail: MCEditTail,
 		statement: {
-			Container: pckgDefComponents.newComp(MCEditStatement),
+			Container: MCEditStatement,
 		},
 		choices: {
-			Container: pckgDefComponents.newComp(MCEditChoices),
+			Container: MCEditChoices,
 			single: {
-				Container: pckgDefComponents.newComp(MCEditSingleChoice),
-				LeftDecoration: pckgDefComponents.newComp(
-					MCEditSingleChoiceDecoration
-				),
-				RightDecoration: pckgDefComponents.newComp(
-					MCEditSingleChoiceDecoration
-				),
+				Container: MCEditSingleChoice,
+				LeftDecoration: MCEditSingleChoiceDecoration,
+				RightDecoration: MCEditSingleChoiceDecoration,
 			},
-			AddChoice: pckgDefComponents.newComp(MCEditAddChoiceButton),
+			AddChoice: MCEditAddChoiceButton,
 		},
 		explanation: {},
-	},
+	}),
 	texts: {
 		statement: {
 			Placeholder: CreateCusto.Data("Statement"),

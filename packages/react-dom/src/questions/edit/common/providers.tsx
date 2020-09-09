@@ -1,77 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { WrapInCustHookChangeError } from "custo";
-import { ContentType } from "m-tests-core/lib/questions/common-schemas";
-import { CommonEditCusto } from "m-tests-react/lib/questions/edit/common/components";
-import { IChooseQuestionContentTypeProps } from "m-tests-react/lib/questions/edit/common/components/types";
 import { EditTextComponentProps } from "m-tests-react/lib/questions/edit/common/components/types";
 import { useEditCustomizationProp } from "m-tests-react/lib/questions/edit/common/hooks/helper";
-import { ContentTypeChooseValue } from "m-tests-react/lib/questions/edit/common/props/types";
-import { getChangedContent } from "m-tests-react/lib/questions/edit/helpers/default-content";
-import { useOptimizedFunc } from "m-tests-react/lib/utils/hooks";
-import React, {
-	useCallback,
-	useLayoutEffect,
-	useMemo,
-	useRef,
-	useState,
-} from "react";
 import { CheckboxWithLabelProps } from "m-tests-react/lib/questions/view/common/components/types";
-
-// FIXME: move this to dom package
-export const ChooseQuestionContentType: React.FC<IChooseQuestionContentTypeProps> = React.memo(
-	WrapInCustHookChangeError(
-		({ selectedType, selectedDesignStructure, setContent }) => {
-			const options = CommonEditCusto.texts.contentTypes.use();
-
-			const onContentChange = ({
-				contentType,
-				designStructure,
-			}: {
-				contentType: ContentType;
-				designStructure: string | null;
-			}) => {
-				setContent(content =>
-					getChangedContent({
-						oldContent: content,
-						newContentType: contentType,
-						newDesignStructure: designStructure,
-					})
-				);
-			};
-
-			const handleChange = useOptimizedFunc(
-				(select: { value: ContentTypeChooseValue; label: string }) => {
-					onContentChange({
-						contentType: select.value.contentType,
-						designStructure: select.value.designStructure,
-					});
-				}
-			);
-
-			const selectedOption = useMemo(() => {
-				return selectedType === undefined
-					? undefined
-					: options.find(
-							e =>
-								e.value.contentType === selectedType &&
-								e.value.designStructure ===
-									selectedDesignStructure
-					  );
-			}, [options, selectedDesignStructure, selectedType]);
-
-			return (
-				<div style={{ marginBottom: 30 }}>
-					<NativeSelect
-						value={selectedOption}
-						onChange={handleChange}
-						options={options}
-						placeholder={"Choose Question Type"}
-					/>
-				</div>
-			);
-		}
-	)
-);
+import { useOptimizedFunc } from "m-tests-react/lib/utils/hooks";
+import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 
 interface NativeSelectProps<
 	V extends { label: string | JSX.Element | null; value: any }

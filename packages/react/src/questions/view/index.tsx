@@ -6,7 +6,6 @@ import {
 import { ContentPath } from "m-tests-core/lib/utils/path";
 import React, { useRef } from "react";
 import { useStateOnChange } from "../../utils/hooks";
-import { CounterComponent } from "./a";
 import { CommonElements } from "./common/components";
 import {
 	CommonQuestionPartsCont,
@@ -90,7 +89,6 @@ const Content = React.memo(
 			const Cont = CommonElements.OuterContainer;
 			return (
 				<Cont ref={ref}>
-					<CounterComponent title={"Content"} />
 					{content.type === ContentType.MultipleChoice && (
 						<MultipleChoiceContainer
 							content={content}

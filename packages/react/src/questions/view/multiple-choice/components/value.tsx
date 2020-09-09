@@ -1,6 +1,6 @@
 import { MCPassable } from "../props/types";
 import { CreateCusto } from "custo";
-import { pckgDefComponents } from "../../../../utils/shortcuts";
+import { wrapAsPackageCusto } from "../../../../utils/shortcuts";
 import {
 	MCBody,
 	MCStatement,
@@ -13,22 +13,20 @@ export const reactDefaultMCPassable: Pick<
 	MCPassable,
 	"components" | "texts"
 > = {
-	components: {
-		Body: CreateCusto.hookOf.Component(() =>
-			pckgDefComponents.newComp(MCBody)
-		),
+	components: wrapAsPackageCusto({
+		Body: CreateCusto.hookOf.Component(() => MCBody),
 		statement: {
-			Container: pckgDefComponents.newComp(MCStatement),
+			Container: MCStatement,
 		},
 		choices: {
-			Container: pckgDefComponents.newComp(MCChoices),
+			Container: MCChoices,
 			single: {
-				Container: pckgDefComponents.newComp(MCSingleChoice),
-				Decoration: pckgDefComponents.newComp(MCSingleChoiceDecoration),
+				Container: MCSingleChoice,
+				Decoration: MCSingleChoiceDecoration,
 			},
 		},
 		explanation: {},
-	},
+	}),
 	texts: {
 		explanation: {},
 	},

@@ -1,6 +1,5 @@
 import { WrapInCustHookChangeError } from "custo";
 import React from "react";
-import { CounterComponent } from "../../a";
 import { commonHooks } from "../hooks";
 import { ExplanationProps, TextComponentProps } from "./types";
 import { useCustomizationProp } from "../hooks/helper";
@@ -26,17 +25,14 @@ export const Explanation: React.FC<ExplanationProps> = React.memo(
 		}
 
 		return (
-			<>
-				<CounterComponent title={"explanation"} />
-				<Cont>
-					<TitleCont>
-						<Title />
-					</TitleCont>
-					<BodyCont>
-						<Text stat={explanation} path={path.add("text")} />
-					</BodyCont>
-				</Cont>
-			</>
+			<Cont>
+				<TitleCont>
+					<Title />
+				</TitleCont>
+				<BodyCont>
+					<Text stat={explanation} path={path.add("text")} />
+				</BodyCont>
+			</Cont>
 		);
 	}
 );

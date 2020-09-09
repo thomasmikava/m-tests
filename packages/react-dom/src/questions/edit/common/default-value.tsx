@@ -1,37 +1,38 @@
 import { covertASCIIMathToLaTex } from "../../../editor/math";
 import { reactDefaultCommonEditPassable } from "m-tests-react/lib/questions/edit/common/components/value";
 import { normalizeHTML } from "../../../editor/html";
-import { EditExplanation } from "m-tests-react/lib/questions/edit/common/components/providers";
+import {
+	EditExplanation,
+	ChooseQuestionContentType,
+} from "m-tests-react/lib/questions/edit/common/components/providers";
 import React from "react";
 import { CommonEditPassable } from "m-tests-react/lib/questions/edit/common/props/types";
-import { pckgDefComponents } from "m-tests-react/lib/utils/shortcuts";
+import { cDom } from "../../utils";
 import { CreateCusto } from "custo";
 import {
-	ChooseQuestionContentType,
 	EditTextComponent,
 	CheckboxWithLabel,
+	NativeSelect,
 } from "./providers";
 
-const defaultCommonEditComponents: CommonEditPassable["components"] = {
-	Text: CreateCusto.hookOf.Component(() =>
-		pckgDefComponents.newComp(EditTextComponent)
-	),
-	explanation: {
-		Container: pckgDefComponents.newComp(EditExplanation),
-	},
-	ContentSelector: pckgDefComponents.newComp(ChooseQuestionContentType),
-	CheckboxWithLabel: pckgDefComponents.newComp(CheckboxWithLabel),
-};
+const defaultCommonEditComponents: CommonEditPassable["components"] = cDom.asComp(
+	{
+		Text: CreateCusto.hookOf.Component(() => EditTextComponent),
+		explanation: {
+			Container: EditExplanation,
+		},
+		ContentSelector: ChooseQuestionContentType,
+		CheckboxWithLabel: CheckboxWithLabel,
+		Select: NativeSelect,
+	}
+);
 
 const defaultCommonEditElements: CommonEditPassable["elements"] = {
-	OuterContainer: pckgDefComponents.newDivEl({
-		style: { fontFamily: "FiraGO", border: "2px solid red" },
-	}),
-	BodyContainer: pckgDefComponents.newDivEl(),
+	OuterContainer: cDom.newDiv(),
+	BodyContainer: cDom.newDiv(),
 	explanation: {},
-	Text: pckgDefComponents.newComp("textarea", {
-		style: { border: "10px solid blue" },
-	}),
+	Text: cDom.newComp("textarea"),
+	ContentSelectorContainer: cDom.newDiv(),
 };
 
 const defaultContentTextTransformer = (text: string) => {

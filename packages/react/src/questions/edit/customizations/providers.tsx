@@ -1,4 +1,3 @@
-import { normalizeLinkingFlags } from "../../../utils/shortcuts";
 import { linkCommonEditProps } from "../common/props/links";
 import { linkMCEditProps } from "../multiple-choice/props/links";
 import {
@@ -7,19 +6,17 @@ import {
 } from "./types";
 import { flattenFlags } from "custo/lib/flags";
 import { createLinkFn } from "custo/lib/utils/objects";
-import { createProviders } from "custo";
+import { createProviders, CustoProviderRawValue } from "custo";
 import { createDeeplyOptimizedCustomizedPropsHook } from "custo/lib/utils/hooks";
 import { deepCopyCustomizations } from "custo/lib/utils/deep-copy";
 
 export const computeNormalizedEitCustomizations = ({
 	value: customizations,
-	meta,
-}: {
-	value: QuestionEditContentCustomization;
-	meta: any;
-}): NormalizedQuestionEditContentCustomization => {
-	const flags = flattenFlags(meta);
-	normalizeLinkingFlags(flags);
+	mergeFlags,
+}: CustoProviderRawValue<
+	QuestionEditContentCustomization
+>): NormalizedQuestionEditContentCustomization => {
+	const flags = flattenFlags(mergeFlags || []);
 	const linkFn = createLinkFn({ flags });
 	const newObj = deepCopyCustomizations(customizations);
 	linkCommonEditProps(linkFn, newObj);

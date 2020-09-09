@@ -12,50 +12,54 @@ export const reactDefaultCommonEditPassable: Pick<
 			Title: CreateCusto.Text("Explanation"),
 			Placeholder: CreateCusto.Data("Explanation"),
 		},
-		contentTypes: CreateCusto.hookOf.Data(() => [
-			{
-				value: {
-					contentType: ContentType.MultipleChoice,
-					designStructure: null,
+		contentTypes: {
+			Placeholder: CreateCusto.Data("Choose content type"),
+			options: CreateCusto.Data([
+				{
+					value: {
+						contentType: ContentType.MultipleChoice,
+						designStructure: null,
+					},
+					label: "Multiple Choice",
 				},
-				label: "Multiple Choice",
-			},
-			{
-				value: {
-					contentType: ContentType.SortItems,
-					designStructure: null,
+				{
+					value: {
+						contentType: ContentType.SortItems,
+						designStructure: null,
+					},
+					label: "Sorting Items",
 				},
-				label: "Sorting Items",
-			},
-			{
-				value: {
-					contentType: ContentType.FillingBlanks,
-					designStructure: null,
+				{
+					value: {
+						contentType: ContentType.FillingBlanks,
+						designStructure: null,
+					},
+					label: "Filling Blanks",
 				},
-				label: "Filling Blanks",
-			},
-			{
-				value: {
-					contentType: ContentType.MultipleContents,
-					designStructure: null,
+				{
+					value: {
+						contentType: ContentType.MultipleContents,
+						designStructure: null,
+					},
+					label: "Multiple Contents",
 				},
-				label: "Multiple Contents",
-			},
-			{
-				value: {
-					contentType: ContentType.FillingBlanks,
-					designStructure: FBContentDesignStructure.essay,
+				{
+					value: {
+						contentType: ContentType.FillingBlanks,
+						designStructure: FBContentDesignStructure.essay,
+					},
+					label: "Essay",
 				},
-				label: "Essay",
-			},
-			{
-				value: {
-					contentType: ContentType.FillingBlanks,
-					designStructure: FBContentDesignStructure.essayWithFiles,
+				{
+					value: {
+						contentType: ContentType.FillingBlanks,
+						designStructure:
+							FBContentDesignStructure.essayWithFiles,
+					},
+					label: "Essay With Files",
 				},
-				label: "Essay With Files",
-			},
-		]),
+			]),
+		},
 	},
 	functions: {
 		getEmptyText: CreateCusto.Data(() => ""),

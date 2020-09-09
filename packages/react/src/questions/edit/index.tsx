@@ -3,7 +3,6 @@ import { ContentError } from "m-tests-core/lib/questions/errors";
 import { IRawQuestionContent } from "m-tests-core/lib/questions/schemas";
 import { ContentPath } from "m-tests-core/lib/utils/path";
 import React from "react";
-import { CounterComponent } from "../view/a";
 import { CommonEditCusto } from "./common/components";
 import { getChangedContent } from "./helpers/default-content";
 import { MultipleChoiceEditContainer } from "./multiple-choice/components/providers";
@@ -17,7 +16,6 @@ import {
 	EditableContentToRawContentFn,
 	EditableStatToRawStatFn,
 } from "./common/props/types";
-import { ComponentRef } from "custo/lib/utils/generics";
 
 export type GetChangedContentFN = (args: {
 	old: { content?: IRawQuestionContent; designStructure?: string };
@@ -37,7 +35,6 @@ export interface IProps {
 
 interface IState {
 	content: IRawQuestionContent | undefined;
-	counter: number;
 }
 export class QuestionEditwrapperClass extends React.PureComponent<
 	IProps,
@@ -66,7 +63,6 @@ export class QuestionEditwrapperClass extends React.PureComponent<
 		}
 		this.state = {
 			content,
-			counter: 0,
 		};
 	}
 
@@ -119,10 +115,8 @@ export class QuestionEditwrapperClass extends React.PureComponent<
 		return null;
 	};
 
-	incr = () => this.setState(({ counter }) => ({ counter: counter + 1 }));
-
 	render() {
-		const { content, counter } = this.state;
+		const { content } = this.state;
 		const { getEditableContent, setContent, setEditableContent } = this;
 
 		const designStructure: string | null =
@@ -133,7 +127,6 @@ export class QuestionEditwrapperClass extends React.PureComponent<
 
 		return (
 			<div style={{ textAlign: "left" }}>
-				<button onClick={this.incr}>{counter} increment</button>
 				<ContentSelector
 					setContent={setEditableContent}
 					selectedType={contentType ?? null}
@@ -175,22 +168,9 @@ const Content = React.memo(({ contentType }: { contentType: ContentType }) => {
 	const Cont = CommonEditCusto.elements.OuterContainer;
 	return (
 		<Cont>
-			<CounterComponent title={"Content"} />
 			{contentType === ContentType.MultipleChoice && (
 				<MultipleChoiceEditContainer path={defaultContentPath} />
 			)}
 		</Cont>
 	);
 });
-
-type CC = React.RefForwardingComponent<
-	QuestionEditwrapperClass,
-	Pick<
-		IProps,
-		| "defaultQuestionContent"
-		| "defaultContentType"
-		| "defaultDesignStructure"
-		| "onChange"
-	>
->;
-type R = ComponentRef<CC>;

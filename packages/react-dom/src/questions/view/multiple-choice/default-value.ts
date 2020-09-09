@@ -1,52 +1,31 @@
-import { pckgDefComponents } from "m-tests-react/lib/utils/shortcuts";
-import { CounterComponent } from "m-tests-react/lib/questions/view/a";
+import { cDom } from "../../utils";
 import { reactDefaultMCPassable } from "m-tests-react/lib/questions/view/multiple-choice/components/value";
 import styles from "./styles/index.module.css";
 import { MCPassable } from "m-tests-react/lib/questions/view/multiple-choice/props/types";
 import { CreateCusto } from "custo";
 import { useChoiceIcon, useSingleChoiceContainer } from "./providers";
 
-const Texts = pckgDefComponents.newDivEl({ style: { color: "red" } });
-
-const defaultMCPassableElements: MCPassable["elements"] = {
+const defaultMCPassableElements: MCPassable["elements"] = cDom.asComp({
 	statement: {
-		Container: pckgDefComponents.newDivEl({
-			style: { boxShadow: "rgba(0,0,0,0.5) 0 0 10px inset" },
-		}),
-		Text: Texts,
+		Container: cDom.div,
+		Text: cDom.div,
 	},
 	choices: {
-		Container: pckgDefComponents.newDivEl(
-			{
-				className: styles["choices-container"],
-			},
-			{
-				innerStartComponents: pckgDefComponents.newComp(
-					CounterComponent,
-					{ title: "Choices container Inner" }
-				),
-			}
-		),
+		Container: cDom.newClassedDiv(styles["choices-container"]),
 		single: {
 			Container: CreateCusto.hookOf.Component(useSingleChoiceContainer),
-			TextContainer: pckgDefComponents.newDivEl({
-				className: styles["choice-text-container"],
-			}),
-			DecorationContainer: pckgDefComponents.newDivEl({
-				className: styles["choice-decoration-container"],
-			}),
+			TextContainer: cDom.newClassedDiv(styles["choice-text-container"]),
+			DecorationContainer: cDom.newClassedDiv(
+				styles["choice-decoration-container"]
+			),
 			Icon: CreateCusto.hookOf.Component(useChoiceIcon),
 		},
 	},
 	explanation: {
-		Container: pckgDefComponents.newHTMLEl("span", {
-			style: { boxShadow: "rgba(0,0,0,0.8) 0 0 10px 25px" },
-		}),
-		Text: pckgDefComponents.newDivEl({
-			style: { color: "blue", fontWeight: "bold" },
-		}),
+		Container: cDom.newHTML("span"),
+		Text: cDom.div,
 	},
-};
+});
 
 export const defaultMCPassable: MCPassable = {
 	components: reactDefaultMCPassable.components,

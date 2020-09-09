@@ -1,6 +1,6 @@
 {
   "name": "m-tests-react",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -19,8 +19,8 @@
   "license": "MIT",
   "dependencies": {},
   "peerDependencies": {
-    "custo": "^0.0.3",
-    "m-tests-core": "^0.0.2",
+    "custo": "^0.0.5",
+    "m-tests-core": "^0.0.3",
     "react": ">=16.8.0"
   },
   "devDependencies": {

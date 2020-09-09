@@ -14,7 +14,7 @@ import { IContentProps } from "../../interfaces";
 import React from "react";
 import { CreateHookInjection } from "custo/lib/components/wrappers";
 import { MCSingleChoiceProps } from "../components/types";
-import { toCustHooks } from "custo/lib/classes/helper-fns/transformations";
+import { CustoType, transformToCusto } from "custo";
 
 const useStatement = () =>
 	MCContentCont.useSelector(content => content.statement, []);
@@ -172,7 +172,7 @@ const useOnChoiceCheck = (choiceId: number) => {
 
 const useChoiceId = () => MCChoiceCont.useProperty("id");
 
-export const MCGetterHooks = toCustHooks({
+export const MCGetterHooks = transformToCusto.Hooks(CustoType.data, {
 	statement: useStatement,
 	choices: useChoices,
 	choicesCount: useChoicesCount,
@@ -183,7 +183,7 @@ export const MCGetterHooks = toCustHooks({
 	correctAnswer: useCorrectAnswer,
 });
 
-export const mcHooks = toCustHooks({
+export const mcHooks = transformToCusto.Hooks(CustoType.data, {
 	useChoiceState,
 	useOnChoiceCheck,
 	choicesShuffleFn,

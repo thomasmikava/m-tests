@@ -9,12 +9,11 @@ import { newContent } from "m-tests-core/lib/questions/new-content";
 import { CommonEditCusto } from "../../common/components";
 import { IRMultipleChoiceContent } from "m-tests-core/lib/questions/multiple-choice/types";
 import { CreateHookInjection } from "custo/lib/components/wrappers";
-import React, { useLayoutEffect } from "react";
-import { MCEdit } from "../components";
+import React from "react";
 import { MCEditPassable } from "../props/types";
 import { DeeplyRequired } from "custo/lib/utils/generics";
-import { toCustHooks } from "custo/lib/classes/helper-fns/transformations";
 import { MCEditSingleChoiceProps } from "../components/types";
+import { CustoType, transformToCusto } from "custo";
 
 const useStatement = () =>
 	MCEditContentCont.useSelector(content => content.statement, []);
@@ -176,7 +175,7 @@ const useCanSelectMultipleChangeFn = () => {
 	});
 };
 
-export const MCEditGetterHooks = toCustHooks({
+export const MCEditGetterHooks = transformToCusto.Hooks(CustoType.data, {
 	statement: useStatement,
 	choices: useChoices,
 	choicesCount: useChoicesCount,
@@ -185,7 +184,8 @@ export const MCEditGetterHooks = toCustHooks({
 	settings: useSettings,
 });
 
-export const mcDefaultEditHooks: DeeplyRequired<MCEditPassable["hooks"]> = toCustHooks(
+export const mcDefaultEditHooks: DeeplyRequired<MCEditPassable["hooks"]> = transformToCusto.Hooks(
+	CustoType.data,
 	{
 		choices: {
 			isCurrentChoiceCorrect: useIsCurrentChoiceCorrect,
@@ -201,8 +201,6 @@ export const mcDefaultEditHooks: DeeplyRequired<MCEditPassable["hooks"]> = toCus
 		},
 	}
 );
-
-const getMCHooks = () => MCEdit.hooks;
 
 export const ConnectWithEditingChoice = CreateHookInjection(
 	({ index, id }: Pick<MCEditSingleChoiceProps, "id" | "index">) => {

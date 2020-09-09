@@ -1,14 +1,16 @@
-import { pckgDefComponents } from "../../../../utils/shortcuts";
+import { wrapAsPackageCusto } from "../../../../utils/shortcuts";
 import { CommonPassable } from "../props/types";
 import { TextComponent, Explanation } from "./providers";
 import { CreateCusto } from "custo";
 
-const defaultCommonComponents: CommonPassable["components"] = {
-	Text: pckgDefComponents.newComp(TextComponent),
-	explanation: {
-		Container: pckgDefComponents.newComp(Explanation),
-	},
-};
+const defaultCommonComponents: CommonPassable["components"] = wrapAsPackageCusto(
+	{
+		Text: TextComponent,
+		explanation: {
+			Container: Explanation,
+		},
+	}
+);
 
 const defaultCommonTexts: CommonPassable["texts"] = {
 	explanation: {

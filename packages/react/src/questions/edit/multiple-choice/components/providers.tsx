@@ -1,5 +1,4 @@
 import React from "react";
-import { CounterComponent } from "../../../view/a";
 import { MCEditComps, MCEdit, MCEditTexts, MCEditHooks } from ".";
 import {
 	MultipleChoiceEditContainerProps,
@@ -21,7 +20,6 @@ export const MultipleChoiceEditContainer: React.FC<MultipleChoiceEditContainerPr
 	({ path }) => {
 		return (
 			<MCEdit.elements.Container>
-				<CounterComponent title={"MultipleChoiceEditNewContainer"} />
 				<MCEditComps.Head path={path} />
 				<MCEditComps.Body path={path} />
 				<MCEditComps.Tail path={path} />
@@ -110,7 +108,6 @@ export const MCEditChoices: React.FC<MCEditChoicesProps> = React.memo(
 		const handleNewChoice = MCEditHooks.choices.addEmptyChoiceFn.use();
 		return (
 			<MCEdit.elements.choices.Container>
-				<CounterComponent title="MCChoices I" />
 				{choiceIds.map((choideId, index) => (
 					<ChoiceContainer
 						key={choideId}

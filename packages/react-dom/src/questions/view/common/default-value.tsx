@@ -1,28 +1,20 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { pckgDefComponents } from "m-tests-react/lib/utils/shortcuts";
-import React from "react";
+import { cDom } from "../../utils";
 import { normalizeHTML } from "../../../editor/html";
 import { covertASCIIMathToLaTex } from "../../../editor/math";
 import { reactDefaultCommonPassable } from "m-tests-react/lib/questions/view/common/components/value";
 import { CommonPassable } from "m-tests-react/lib/questions/view/common/props/types";
 import { CreateCusto } from "custo";
-
-const empty = pckgDefComponents.newDivEl();
+import React from "react";
 
 const defaultCommonElements: CommonPassable["elements"] = {
-	OuterContainer: empty,
-	BodyContainer: empty,
-	InnerContainers: pckgDefComponents.newDivEl({
-		style: {
-			fontFamily: "FiraGO",
-			background: "rgba(0,0,0,0.2)",
-			borderRadius: 20,
-		},
-	}),
-	Text: empty,
+	OuterContainer: cDom.div,
+	BodyContainer: cDom.div,
+	InnerContainers: cDom.div,
+	Text: cDom.div,
 	explanation: {
-		Title: empty,
-		Body: empty,
+		Title: cDom.div,
+		Body: cDom.div,
 	},
 };
 

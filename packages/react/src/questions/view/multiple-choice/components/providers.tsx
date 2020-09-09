@@ -1,6 +1,5 @@
 import React from "react";
 import { MCComps, MCElements } from ".";
-import { CounterComponent } from "../../a";
 import { mcHooks, ConnectWithChoice, MCGetterHooks } from "../hooks";
 import { MCChoiceCont, MCContentCont } from "../hooks/contexts";
 import {
@@ -19,12 +18,9 @@ import {
 export const MultipleChoiceContainer: React.FC<MultipleChoiceNewContainerProps> = React.memo(
 	({ content, path }) => {
 		return (
-			<>
-				<CounterComponent title={"MultipleChoiceNewContainer"} />
-				<MCContentCont.Provider value={content}>
-					<MCComps.Body path={path} />
-				</MCContentCont.Provider>
-			</>
+			<MCContentCont.Provider value={content}>
+				<MCComps.Body path={path} />
+			</MCContentCont.Provider>
 		);
 	}
 );
@@ -50,7 +46,6 @@ export const MCStatement: React.FC<MCStatementProps> = React.memo(
 		const Text = MCComps.statement.Text;
 		return (
 			<Container>
-				<CounterComponent title="Statementtt" />
 				<Text path={path.add("text")} stat={statement} />
 			</Container>
 		);
@@ -63,20 +58,16 @@ export const MCChoices: React.FC<MCChoicesProps> = React.memo(({ path }) => {
 	const Container = MCElements.choices.Container;
 	const SingleChoice = MCComps.choices.single.Container;
 	return (
-		<>
-			<CounterComponent title="MCChoices O" />
-			<Container>
-				<CounterComponent title="MCChoices I" />
-				{choiceIds.map((choiceId, index) => (
-					<SingleChoice
-						key={choiceId}
-						id={choiceId}
-						index={index}
-						path={path.add(index)}
-					/>
-				))}
-			</Container>
-		</>
+		<Container>
+			{choiceIds.map((choiceId, index) => (
+				<SingleChoice
+					key={choiceId}
+					id={choiceId}
+					index={index}
+					path={path.add(index)}
+				/>
+			))}
+		</Container>
 	);
 });
 

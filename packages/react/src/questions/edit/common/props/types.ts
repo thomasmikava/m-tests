@@ -8,6 +8,7 @@ import {
 import {
 	ExplanationProps,
 	CheckboxWithLabelProps,
+	SelectProps,
 } from "../../../view/common/components/types";
 import {
 	ContentType,
@@ -21,6 +22,7 @@ interface CommonEditComponents {
 	Text: GeneralCustoComp<EditTextComponentProps>;
 	ContentSelector: GeneralCustoComp<IChooseQuestionContentTypeProps>;
 	CheckboxWithLabel: GeneralCustoComp<CheckboxWithLabelProps>;
+	Select: GeneralCustoComp<SelectProps>;
 	explanation: {
 		Container: GeneralCustoComp<ExplanationProps>;
 		Text?: GeneralCustoComp<EditTextComponentProps>;
@@ -32,6 +34,7 @@ interface CommonEditElements {
 	BodyContainer: GeneralCustoHTMLElement;
 	Text: GeneralCustoHTMLElement;
 	InnerContainers?: GeneralCustoHTMLElement;
+	ContentSelectorContainer: GeneralCustoHTMLElement;
 	explanation: {
 		Container?: GeneralCustoHTMLElement;
 		Title?: GeneralCustoHTMLElement;
@@ -51,12 +54,15 @@ interface CommonEditTexts {
 		Title: GeneralCustoText;
 		Placeholder: GeneralCustData<string>;
 	};
-	contentTypes: GeneralCustData<
-		{
-			value: ContentTypeChooseValue;
-			label: RichText;
-		}[]
-	>;
+	contentTypes: {
+		Placeholder: GeneralCustData<string>;
+		options: GeneralCustData<
+			{
+				value: ContentTypeChooseValue;
+				label: RichText;
+			}[]
+		>;
+	};
 }
 
 export type RawStatToEditableStatFn = <T extends IStatement | undefined | null>(
