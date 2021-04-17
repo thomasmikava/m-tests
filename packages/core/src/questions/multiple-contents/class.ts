@@ -31,8 +31,12 @@ class MultipleContents
 	type: IMultipleContents["type"];
 	items: IItem[];
 	restrictViewingPagesBeforehand?: boolean;
-	
-	static keys: (keyof IMultipleContents)[] = [...contentCommonPartNames, "items", "restrictViewingPagesBeforehand"];
+
+	static keys: (keyof IMultipleContents)[] = [
+		...contentCommonPartNames,
+		"items",
+		"restrictViewingPagesBeforehand",
+	];
 
 	constructor(content: IMultipleContents) {
 		super();
@@ -61,16 +65,16 @@ class MultipleContents
 					return {
 						...item,
 						content: content.getMappedStatsContent(transformer),
-					}
+					};
 				} else {
 					return {
 						...item,
 						content: transformer(item.content),
-					}
+					};
 				}
 			}),
 			explanation: transformer(this.explanation),
-		}
+		};
 	}
 
 	getUsedIds(): number[] {
@@ -84,7 +88,7 @@ class MultipleContents
 		});
 		if (this.explanation) ids.push(this.explanation.id);
 		return ids;
-	};
+	}
 
 	getStripped() {
 		const stripped: IRMultipleContents = {

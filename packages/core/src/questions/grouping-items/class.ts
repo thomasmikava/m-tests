@@ -1,4 +1,8 @@
-import { contentCommonPartNames, ContentType, StatTransformerFn } from "../common-schemas";
+import {
+	contentCommonPartNames,
+	ContentType,
+	StatTransformerFn,
+} from "../common-schemas";
 import {
 	IGroupingItemsContent,
 	IGroupingItemsUserAns,
@@ -34,7 +38,7 @@ class GroupingItems
 	itemsToGroups: IGroupingItemsContent["itemsToGroups"];
 	groups: IGroupingItemsContent["groups"];
 	relationType: IGroupingItemsContent["relationType"];
-	
+
 	static keys: (keyof IGroupingItemsContent)[] = [
 		...contentCommonPartNames,
 		"items",
@@ -54,29 +58,31 @@ class GroupingItems
 			}
 		});
 	}
-	
-	getMappedStatsContent(transformer: StatTransformerFn): IGroupingItemsContent {
+
+	getMappedStatsContent(
+		transformer: StatTransformerFn
+	): IGroupingItemsContent {
 		return {
 			...pickKeys(this, ...GroupingItems.keys),
 			statement: transformer(this.statement),
 			items: this.items.map(c => transformer(c)),
 			groups: this.groups.map(g => transformer(g)),
 			explanation: transformer(this.explanation),
-		}
+		};
 	}
-	
+
 	getUsedIds(): number[] {
 		const ids: number[] = [];
 		ids.push(this.statement.id);
-		this.items.forEach((item) => {
+		this.items.forEach(item => {
 			ids.push(item.id);
 		});
-		this.groups.forEach((group) => {
+		this.groups.forEach(group => {
 			ids.push(group.id);
 		});
 		if (this.explanation) ids.push(this.explanation.id);
 		return ids;
-	};
+	}
 
 	getStripped() {
 		const stripped: IRGroupingItemsContent = {

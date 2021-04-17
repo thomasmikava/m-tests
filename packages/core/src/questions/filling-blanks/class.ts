@@ -117,7 +117,7 @@ class FillingBlanks extends QuestionContent<IAnswer, IFillingBlanksUserAns>
 
 	items: IFillingBlanksContent["items"];
 	ignoreOrderOfInputs: IFillingBlanksContent["ignoreOrderOfInputs"];
-	
+
 	static keys: (keyof IFillingBlanksContent)[] = [
 		...contentCommonPartNames,
 		"items",
@@ -136,15 +136,19 @@ class FillingBlanks extends QuestionContent<IAnswer, IFillingBlanksUserAns>
 			}
 		});
 	}
-	
-	getMappedStatsContent(transformer: StatTransformerFn): IFillingBlanksContent {
+
+	getMappedStatsContent(
+		transformer: StatTransformerFn
+	): IFillingBlanksContent {
 		return {
 			...pickKeys(this, ...FillingBlanks.keys),
 			items: this.items.map(item => {
 				if (item.type === FBItemType.Input) {
 					return {
 						...item,
-						correctInputs: item.correctInputs.map(inp => transformer(inp)),
+						correctInputs: item.correctInputs.map(inp =>
+							transformer(inp)
+						),
 					};
 				}
 				if (item.type === FBItemType.Text) {
@@ -153,7 +157,7 @@ class FillingBlanks extends QuestionContent<IAnswer, IFillingBlanksUserAns>
 				return item;
 			}),
 			explanation: transformer(this.explanation),
-		}
+		};
 	}
 
 	getUsedIds(): number[] {

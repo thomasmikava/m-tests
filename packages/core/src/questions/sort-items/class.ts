@@ -1,4 +1,8 @@
-import { contentCommonPartNames, ContentType, StatTransformerFn } from "../common-schemas";
+import {
+	contentCommonPartNames,
+	ContentType,
+	StatTransformerFn,
+} from "../common-schemas";
 import {
 	IRSortItemsContent,
 	ISortItemsContent,
@@ -98,7 +102,7 @@ class SortItems extends QuestionContent<ISortItemsUserAns, ISortItemsUserAns>
 	statement: ISortItemsContent["statement"];
 	items: ISortItemsContent["items"];
 	correctOrder: ISortItemsContent["correctOrder"];
-	
+
 	static keys: (keyof ISortItemsContent)[] = [
 		...contentCommonPartNames,
 		"statement",
@@ -122,23 +126,23 @@ class SortItems extends QuestionContent<ISortItemsUserAns, ISortItemsUserAns>
 			}
 		});
 	}
-	
+
 	getMappedStatsContent(transformer: StatTransformerFn): ISortItemsContent {
 		return {
 			...pickKeys(this, ...SortItems.keys),
 			statement: transformer(this.statement),
 			items: this.items.map(c => transformer(c)),
 			explanation: transformer(this.explanation),
-		}
+		};
 	}
-	
+
 	getUsedIds(): number[] {
 		const ids: number[] = [];
 		ids.push(this.statement.id);
 		this.items.forEach(e => ids.push(e.id));
 		if (this.explanation) ids.push(this.explanation.id);
 		return ids;
-	};
+	}
 
 	getStripped() {
 		const stripped: IRSortItemsContent = {

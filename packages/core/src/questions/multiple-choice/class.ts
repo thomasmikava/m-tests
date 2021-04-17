@@ -1,4 +1,8 @@
-import { contentCommonPartNames, ContentType, StatTransformerFn } from "../common-schemas";
+import {
+	contentCommonPartNames,
+	ContentType,
+	StatTransformerFn,
+} from "../common-schemas";
 import {
 	IMultipleChoiceContent,
 	IMultipleChoiceUserAns,
@@ -102,7 +106,7 @@ class MultipleChoice
 	canSelectMultiple: IMultipleChoiceContent["canSelectMultiple"];
 	disableShuffle?: IMultipleChoiceContent["disableShuffle"];
 	designStructure?: IMultipleChoiceContent["designStructure"];
-	
+
 	static keys: (keyof IMultipleChoiceContent)[] = [
 		...contentCommonPartNames,
 		"statement",
@@ -126,23 +130,24 @@ class MultipleChoice
 		});
 	}
 
-	getMappedStatsContent(transformer: StatTransformerFn): IMultipleChoiceContent {
+	getMappedStatsContent(
+		transformer: StatTransformerFn
+	): IMultipleChoiceContent {
 		return {
 			...pickKeys(this, ...MultipleChoice.keys),
 			statement: transformer(this.statement),
 			choices: this.choices.map(c => transformer(c)),
 			explanation: transformer(this.explanation),
-		}
+		};
 	}
 
-	
 	getUsedIds(): number[] {
 		const ids: number[] = [];
 		ids.push(this.statement.id);
 		this.choices.forEach(e => ids.push(e.id));
 		if (this.explanation) ids.push(this.explanation.id);
 		return ids;
-	};
+	}
 
 	getStripped() {
 		const stripped: IRMultipleChoiceContent = {
