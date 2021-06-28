@@ -1,6 +1,6 @@
 {
   "name": "m-tests-react",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -38,7 +38,7 @@
     "prettier": "^1.19.1",
     "react": "^16.13.0",
     "custo": "^0.0.11",
-    "typescript": "3.9.7"
+    "typescript": "4.2.4"
   },
   "eslintConfig": {
     "extends": "react-app"

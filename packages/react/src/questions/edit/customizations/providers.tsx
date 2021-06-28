@@ -32,7 +32,7 @@ const optimizedNormalizedCustomizations = createDeeplyOptimizedCustomizedPropsHo
 
 const {
 	Container: NormalizedQuestionEditContentCustomizationCont,
-	...QuestionEditContentCustomizationProviders
+	...rest
 } = buildCusto<
 	QuestionEditContentCustomization,
 	NormalizedQuestionEditContentCustomization
@@ -40,6 +40,8 @@ const {
 	defaultValue: undefined,
 	rawToFinalValueHook: optimizedNormalizedCustomizations,
 });
+
+const QuestionEditContentCustomizationProviders = rest as any;
 
 export {
 	NormalizedQuestionEditContentCustomizationCont,
