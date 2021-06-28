@@ -8,11 +8,12 @@ import {
 	MCSingleChoice,
 	MCSingleChoiceDecoration,
 } from "./providers";
+import { ToVeryGeneralCusto } from "custo/lib/utils/prop-generics";
 
-export const reactDefaultMCPassable: Pick<
+export const reactDefaultMCPassable: ToVeryGeneralCusto<Pick<
 	MCPassable,
 	"components" | "texts"
-> = {
+>> = {
 	components: wrapAsPackageCusto({
 		Body: CreateCusto.hookOf.Component(() => MCBody),
 		statement: {

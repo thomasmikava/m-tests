@@ -1,12 +1,4 @@
-import {
-	GeneralCustoText,
-	GeneralCustoComp,
-	GeneralCustoHTMLElement,
-} from "custo/lib/utils/prop-generics";
-import {
-	ExplanationProps,
-	TextComponentProps,
-} from "../../common/components/types";
+import { TextComponentProps } from "../../common/components/types";
 import {
 	MCBodyProps,
 	MCStatementProps,
@@ -16,44 +8,45 @@ import {
 } from "../components/types";
 import { CommonPassable } from "../../common/props/types";
 import { DeeplyOptional } from "custo/lib/utils/generics";
+import { CustoDeff } from "../../../../elements";
 
 type CommonTexts = CommonPassable["texts"];
 type CommonElements = CommonPassable["elements"];
 type CommonComponents = CommonPassable["components"];
 
 interface MCPassableComponents {
-	Body: GeneralCustoComp<MCBodyProps>;
+	Body: CustoDeff.Component<MCBodyProps>;
 	statement: {
-		Container: GeneralCustoComp<MCStatementProps>;
-		Text?: GeneralCustoComp<TextComponentProps>;
+		Container: CustoDeff.Component<MCStatementProps>;
+		Text?: CustoDeff.Component<TextComponentProps>;
 	};
 	choices: {
-		Container: GeneralCustoComp<MCChoicesProps>;
+		Container: CustoDeff.Component<MCChoicesProps>;
 		single: {
-			Container: GeneralCustoComp<MCSingleChoiceProps>;
-			Text?: GeneralCustoComp<TextComponentProps>;
-			Decoration?: GeneralCustoComp<MCSingleChoiceDecorationProps>;
+			Container: CustoDeff.Component<MCSingleChoiceProps>;
+			Text?: CustoDeff.Component<TextComponentProps>;
+			Decoration?: CustoDeff.Component<MCSingleChoiceDecorationProps>;
 		};
 	};
 	explanation: DeeplyOptional<CommonComponents["explanation"]>;
 }
 
 interface MCPassableElements {
-	Containers?: GeneralCustoHTMLElement;
-	BodyContainer?: GeneralCustoHTMLElement;
-	Text?: GeneralCustoHTMLElement;
+	Containers?: CustoDeff.HTMLElement;
+	BodyContainer?: CustoDeff.HTMLElement;
+	Text?: CustoDeff.HTMLElement;
 	statement: {
-		Container?: GeneralCustoHTMLElement;
-		Text?: GeneralCustoHTMLElement;
+		Container?: CustoDeff.HTMLElement;
+		Text?: CustoDeff.HTMLElement;
 	};
 	choices: {
-		Container?: GeneralCustoHTMLElement;
+		Container?: CustoDeff.HTMLElement;
 		single: {
-			Container?: GeneralCustoHTMLElement;
-			DecorationContainer?: GeneralCustoHTMLElement;
-			Icon?: GeneralCustoHTMLElement;
-			TextContainer?: GeneralCustoHTMLElement;
-			Text?: GeneralCustoHTMLElement;
+			Container?: CustoDeff.HTMLElement;
+			DecorationContainer?: CustoDeff.HTMLElement;
+			Icon?: CustoDeff.HTMLElement;
+			TextContainer?: CustoDeff.HTMLElement;
+			Text?: CustoDeff.HTMLElement;
 		};
 	};
 	explanation: DeeplyOptional<CommonElements["explanation"]>;

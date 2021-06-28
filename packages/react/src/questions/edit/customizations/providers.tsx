@@ -6,7 +6,7 @@ import {
 } from "./types";
 import { flattenFlags } from "custo/lib/flags";
 import { createLinkFn } from "custo/lib/utils/objects";
-import { createProviders, CustoProviderRawValue } from "custo";
+import { buildCusto, CustoProviderRawValue } from "custo";
 import { createDeeplyOptimizedCustomizedPropsHook } from "custo/lib/utils/hooks";
 import { deepCopyCustomizations } from "custo/lib/utils/deep-copy";
 
@@ -21,7 +21,7 @@ export const computeNormalizedEitCustomizations = ({
 	const newObj = deepCopyCustomizations(customizations);
 	linkCommonEditProps(linkFn, newObj);
 	linkMCEditProps(linkFn, newObj);
-	return newObj as NormalizedQuestionEditContentCustomization;
+	return (newObj as any) as NormalizedQuestionEditContentCustomization;
 };
 
 const optimizedNormalizedCustomizations = createDeeplyOptimizedCustomizedPropsHook(
@@ -33,7 +33,7 @@ const optimizedNormalizedCustomizations = createDeeplyOptimizedCustomizedPropsHo
 const {
 	Container: NormalizedQuestionEditContentCustomizationCont,
 	...QuestionEditContentCustomizationProviders
-} = createProviders<
+} = buildCusto<
 	QuestionEditContentCustomization,
 	NormalizedQuestionEditContentCustomization
 >({

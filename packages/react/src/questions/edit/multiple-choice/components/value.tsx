@@ -12,6 +12,7 @@ import {
 	MCEditSingleChoiceDecoration,
 	MCEditAddChoiceButton,
 } from "./providers";
+import { ToVeryGeneralCusto } from "custo/lib/utils/prop-generics";
 
 const useSingleChoicePlaceholderText = (): string => {
 	const isCorrect = mcDefaultEditHooks.choices.isCurrentChoiceCorrect.use();
@@ -19,10 +20,10 @@ const useSingleChoicePlaceholderText = (): string => {
 	return "Another choice";
 };
 
-export const reactDefaultMCEditPassable: Pick<
+export const reactDefaultMCEditPassable: ToVeryGeneralCusto<Pick<
 	MCEditPassable,
 	"components" | "texts" | "hooks"
-> = {
+>> = {
 	components: wrapAsPackageCusto({
 		Head: MCEditHead,
 		Body: CreateCusto.hookOf.Component(() => MCEditBody),

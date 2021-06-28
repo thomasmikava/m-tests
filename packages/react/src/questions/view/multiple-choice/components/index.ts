@@ -1,6 +1,6 @@
 import { ContentType } from "m-tests-core/lib/questions/common-schemas";
 import { CreateCusto, CustoType } from "custo";
-import { ToCustoTreeObj } from "custo/lib/classes/helper-fns/tree";
+import { CustoTree, ToCustoTreeObj } from "custo/lib/classes/helper-fns/tree";
 import { useNormalizedQuestionContextSelector } from "../../customizations/providers";
 import { MCPassable } from "../props/types";
 import { getTextTransformationHook, CommonOnes } from "../../common/components";
@@ -47,7 +47,7 @@ const MCOnes: ToCustoTreeObj<MCPassable> = {
 	},
 };
 
-export const MC = CreateCusto.Tree<MCPassable>(
+export const MC: CustoTree<MCPassable> = CreateCusto.Tree<MCPassable>(
 	MCOnes as any,
 	useNormalizedQuestionContextSelector,
 	{

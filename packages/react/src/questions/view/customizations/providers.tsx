@@ -9,7 +9,7 @@ import { flattenFlags } from "custo/lib/flags";
 import { createLinkFn } from "custo/lib/utils/objects";
 import { deepCopyCustomizations } from "custo/lib/utils/deep-copy";
 import { createDeeplyOptimizedCustomizedPropsHook } from "custo/lib/utils/hooks";
-import { createProviders, CustoProviderRawValue } from "custo";
+import { buildCusto, CustoProviderRawValue } from "custo";
 
 const computeNormalizedCustomizations = ({
 	value: customizations,
@@ -34,7 +34,7 @@ const optimizedNormalizedCustomizations = createDeeplyOptimizedCustomizedPropsHo
 const {
 	Container: NormalizedQuestionContentCustomizationCont,
 	...QuestionContentCustomizationProviders
-} = createProviders<
+} = buildCusto<
 	QuestionContentCustomization,
 	NormalizedQuestionContentCustomization
 >({

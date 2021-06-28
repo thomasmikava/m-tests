@@ -1,43 +1,38 @@
-import {
-	GeneralCustoComp,
-	GeneralCustoHTMLElement,
-	GeneralCustoText,
-	GeneralCustoHook,
-} from "custo/lib/utils/prop-generics";
 import { ExplanationProps, TextComponentProps } from "../components/types";
+import { CustoDeff } from "../../../../elements";
 
 interface CommonComponents {
-	Text: GeneralCustoComp<TextComponentProps>;
+	Text: CustoDeff.Component<TextComponentProps>;
 	explanation: {
-		Container: GeneralCustoComp<ExplanationProps>;
-		Text?: GeneralCustoComp<TextComponentProps>;
+		Container: CustoDeff.Component<ExplanationProps>;
+		Text?: CustoDeff.Component<TextComponentProps>;
 	};
 }
 
 interface CommonElements {
-	OuterContainer: GeneralCustoHTMLElement;
-	BodyContainer: GeneralCustoHTMLElement;
-	Text: GeneralCustoHTMLElement;
-	InnerContainers?: GeneralCustoHTMLElement;
+	OuterContainer: CustoDeff.HTMLElement;
+	BodyContainer: CustoDeff.HTMLElement;
+	Text: CustoDeff.HTMLElement;
+	InnerContainers?: CustoDeff.HTMLElement;
 	explanation: {
-		Container?: GeneralCustoHTMLElement;
-		Title: GeneralCustoHTMLElement;
-		Body: GeneralCustoHTMLElement;
-		Text?: GeneralCustoHTMLElement;
+		Container?: CustoDeff.HTMLElement;
+		Title: CustoDeff.HTMLElement;
+		Body: CustoDeff.HTMLElement;
+		Text?: CustoDeff.HTMLElement;
 	};
 }
 
 interface CommonTexts {
 	explanation: {
-		Title: GeneralCustoText;
+		Title: CustoDeff.Text;
 	};
 }
 interface CommonFunctions {}
 interface CommonHooks {
-	contentTextTransformer?: GeneralCustoHook<
+	contentTextTransformer?: CustoDeff.Hook<
 		(text: string) => string | JSX.Element | null
 	>;
-	nonContentTextTransformer?: GeneralCustoHook<
+	nonContentTextTransformer?: CustoDeff.Hook<
 		(
 			text: string | number | JSX.Element | null
 		) => string | number | JSX.Element | null

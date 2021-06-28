@@ -1,11 +1,4 @@
 import {
-	GeneralCustoComp,
-	GeneralCustoHTMLElement,
-	GeneralCustoText,
-	GeneralCustData,
-	GeneralCustoHook,
-} from "custo/lib/utils/prop-generics";
-import {
 	ExplanationProps,
 	CheckboxWithLabelProps,
 	SelectProps,
@@ -17,29 +10,30 @@ import {
 import { IChooseQuestionContentTypeProps } from "../components/types";
 import { EditTextComponentProps } from "../components/types";
 import { IRawQuestionContent } from "m-tests-core/lib/questions/schemas";
+import { CustoDeff } from "../../../../elements";
 
 interface CommonEditComponents {
-	Text: GeneralCustoComp<EditTextComponentProps>;
-	ContentSelector: GeneralCustoComp<IChooseQuestionContentTypeProps>;
-	CheckboxWithLabel: GeneralCustoComp<CheckboxWithLabelProps>;
-	Select: GeneralCustoComp<SelectProps>;
+	Text: CustoDeff.Component<EditTextComponentProps>;
+	ContentSelector: CustoDeff.Component<IChooseQuestionContentTypeProps>;
+	CheckboxWithLabel: CustoDeff.Component<CheckboxWithLabelProps>;
+	Select: CustoDeff.Component<SelectProps>;
 	explanation: {
-		Container: GeneralCustoComp<ExplanationProps>;
-		Text?: GeneralCustoComp<EditTextComponentProps>;
+		Container: CustoDeff.Component<ExplanationProps>;
+		Text?: CustoDeff.Component<EditTextComponentProps>;
 	};
 }
 
 interface CommonEditElements {
-	OuterContainer: GeneralCustoHTMLElement;
-	BodyContainer: GeneralCustoHTMLElement;
-	Text: GeneralCustoHTMLElement;
-	InnerContainers?: GeneralCustoHTMLElement;
-	ContentSelectorContainer: GeneralCustoHTMLElement;
+	OuterContainer: CustoDeff.HTMLElement;
+	BodyContainer: CustoDeff.HTMLElement;
+	Text: CustoDeff.HTMLElement;
+	InnerContainers?: CustoDeff.HTMLElement;
+	ContentSelectorContainer: CustoDeff.HTMLElement;
 	explanation: {
-		Container?: GeneralCustoHTMLElement;
-		Title?: GeneralCustoHTMLElement;
-		Body?: GeneralCustoHTMLElement;
-		Text?: GeneralCustoHTMLElement;
+		Container?: CustoDeff.HTMLElement;
+		Title?: CustoDeff.HTMLElement;
+		Body?: CustoDeff.HTMLElement;
+		Text?: CustoDeff.HTMLElement;
 	};
 }
 type RichText = string | JSX.Element;
@@ -51,12 +45,12 @@ export interface ContentTypeChooseValue {
 
 interface CommonEditTexts {
 	explanation: {
-		Title: GeneralCustoText;
-		Placeholder: GeneralCustData<string>;
+		Title: CustoDeff.Text;
+		Placeholder: CustoDeff.Data<string>;
 	};
 	contentTypes: {
-		Placeholder: GeneralCustData<string>;
-		options: GeneralCustData<
+		Placeholder: CustoDeff.Data<string>;
+		options: CustoDeff.Data<
 			{
 				value: ContentTypeChooseValue;
 				label: RichText;
@@ -82,22 +76,22 @@ export type EditableContentToRawContentFn = (
 ) => IRawQuestionContent;
 
 interface CommonEditFunctions {
-	getEmptyText: GeneralCustData<() => any>;
-	rawContentToEditableContentFn?: GeneralCustData<
+	getEmptyText: CustoDeff.Data<() => string>;
+	rawContentToEditableContentFn?: CustoDeff.Data<
 		RawContentToEditableContentFn
 	>;
-	editableContentToRawContentFn?: GeneralCustData<
+	editableContentToRawContentFn?: CustoDeff.Data<
 		EditableContentToRawContentFn
 	>;
-	rawStatToEditableStatFn?: GeneralCustData<RawStatToEditableStatFn>;
-	editableStatToRawStatFn?: GeneralCustData<EditableStatToRawStatFn>;
+	rawStatToEditableStatFn?: CustoDeff.Data<RawStatToEditableStatFn>;
+	editableStatToRawStatFn?: CustoDeff.Data<EditableStatToRawStatFn>;
 }
 
 interface CommonEditHooks {
-	contentTextTransformer?: GeneralCustoHook<
+	contentTextTransformer?: CustoDeff.Hook<
 		(text: string) => string | JSX.Element | null
 	>;
-	nonContentTextTransformer?: GeneralCustoHook<
+	nonContentTextTransformer?: CustoDeff.Hook<
 		(
 			text: string | number | JSX.Element | null
 		) => string | number | JSX.Element | null

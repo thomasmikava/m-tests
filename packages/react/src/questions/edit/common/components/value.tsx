@@ -2,11 +2,12 @@ import { CommonEditPassable } from "../props/types";
 import { CreateCusto } from "custo";
 import { ContentType } from "m-tests-core/lib/questions/common-schemas";
 import { FBContentDesignStructure } from "m-tests-core/lib/questions/filling-blanks/types";
+import { ToVeryGeneralCusto } from "../../../../../../../../custo/lib/utils/prop-generics";
 
-export const reactDefaultCommonEditPassable: Pick<
+export const reactDefaultCommonEditPassable: ToVeryGeneralCusto<Pick<
 	CommonEditPassable,
 	"texts" | "functions" | "hooks"
-> = {
+>> = {
 	texts: {
 		explanation: {
 			Title: CreateCusto.Text("Explanation"),
@@ -62,7 +63,7 @@ export const reactDefaultCommonEditPassable: Pick<
 		},
 	},
 	functions: {
-		getEmptyText: CreateCusto.Data(() => ""),
+		getEmptyText: () => "",
 	},
 	hooks: {},
 };

@@ -1,11 +1,4 @@
 import {
-	GeneralCustoComp,
-	GeneralCustoHTMLElement,
-	GeneralCustoText,
-	GeneralCustData,
-	GeneralCustoHook,
-} from "custo/lib/utils/prop-generics";
-import {
 	MCEditBodyProps,
 	MCEditStatementProps,
 	MCEditChoicesProps,
@@ -19,64 +12,64 @@ import { EditTextComponentProps } from "../../common/components/types";
 import { DeeplyOptional } from "custo/lib/utils/generics";
 import { CommonEditPassable } from "../../common/props/types";
 import {
-	IRMultipleChoiceContent,
 	IMultipleChoiceContent,
 } from "m-tests-core/lib/questions/multiple-choice/types";
+import { CustoDeff } from "../../../../elements";
 
 type CommonEditTexts = CommonEditPassable["texts"];
 type CommonEditElements = CommonEditPassable["elements"];
 type CommonEditComponents = CommonEditPassable["components"];
 
 interface MCEditPassableComponents {
-	Head: GeneralCustoComp<MCEditHeadProps>;
-	Body: GeneralCustoComp<MCEditBodyProps>;
-	Tail: GeneralCustoComp<MCEditTailProps>;
+	Head: CustoDeff.Component<MCEditHeadProps>;
+	Body: CustoDeff.Component<MCEditBodyProps>;
+	Tail: CustoDeff.Component<MCEditTailProps>;
 	statement: {
-		Container: GeneralCustoComp<MCEditStatementProps>;
-		Text?: GeneralCustoComp<EditTextComponentProps>;
+		Container: CustoDeff.Component<MCEditStatementProps>;
+		Text?: CustoDeff.Component<EditTextComponentProps>;
 	};
 	choices: {
-		Container: GeneralCustoComp<MCEditChoicesProps>;
+		Container: CustoDeff.Component<MCEditChoicesProps>;
 		single: {
-			Container: GeneralCustoComp<MCEditSingleChoiceProps>;
-			Text?: GeneralCustoComp<EditTextComponentProps>;
-			LeftDecoration: GeneralCustoComp<MCEditSingleChoiceDecorationProps>;
-			RightDecoration: GeneralCustoComp<
+			Container: CustoDeff.Component<MCEditSingleChoiceProps>;
+			Text?: CustoDeff.Component<EditTextComponentProps>;
+			LeftDecoration: CustoDeff.Component<MCEditSingleChoiceDecorationProps>;
+			RightDecoration: CustoDeff.Component<
 				MCEditSingleChoiceDecorationProps
 			>;
 		};
-		AddChoice: GeneralCustoComp<MCEditAddChoiceButtonProps>;
+		AddChoice: CustoDeff.Component<MCEditAddChoiceButtonProps>;
 	};
 	explanation?: DeeplyOptional<CommonEditComponents["explanation"]>;
 }
 
 interface MCEditPassableElements {
-	Container?: GeneralCustoHTMLElement;
-	HeadContainer?: GeneralCustoHTMLElement;
-	BodyContainer?: GeneralCustoHTMLElement;
-	TailContainer?: GeneralCustoHTMLElement;
-	Containers?: GeneralCustoHTMLElement;
-	Text?: GeneralCustoHTMLElement;
+	Container?: CustoDeff.HTMLElement;
+	HeadContainer?: CustoDeff.HTMLElement;
+	BodyContainer?: CustoDeff.HTMLElement;
+	TailContainer?: CustoDeff.HTMLElement;
+	Containers?: CustoDeff.HTMLElement;
+	Text?: CustoDeff.HTMLElement;
 	statement: {
-		Container?: GeneralCustoHTMLElement;
-		Text?: GeneralCustoHTMLElement;
+		Container?: CustoDeff.HTMLElement;
+		Text?: CustoDeff.HTMLElement;
 	};
 	choices: {
-		Container?: GeneralCustoHTMLElement;
+		Container?: CustoDeff.HTMLElement;
 		single: {
-			Container?: GeneralCustoHTMLElement;
+			Container?: CustoDeff.HTMLElement;
 			left: {
-				DecorationContainer?: GeneralCustoHTMLElement;
-				Icon: GeneralCustoHTMLElement;
+				DecorationContainer?: CustoDeff.HTMLElement;
+				Icon: CustoDeff.HTMLElement;
 			};
 			right: {
-				DecorationContainer?: GeneralCustoHTMLElement;
-				Icon: GeneralCustoHTMLElement;
+				DecorationContainer?: CustoDeff.HTMLElement;
+				Icon: CustoDeff.HTMLElement;
 			};
-			TextContainer?: GeneralCustoHTMLElement;
-			Text?: GeneralCustoHTMLElement;
+			TextContainer?: CustoDeff.HTMLElement;
+			Text?: CustoDeff.HTMLElement;
 		};
-		Button: GeneralCustoHTMLElement;
+		Button: CustoDeff.HTMLElement;
 	};
 	explanation: DeeplyOptional<CommonEditElements["explanation"]>;
 }
@@ -84,38 +77,38 @@ interface MCEditPassableElements {
 interface MCEditPassableTexts {
 	explanation?: DeeplyOptional<CommonEditTexts["explanation"]>;
 	statement: {
-		Placeholder: GeneralCustData<string>;
+		Placeholder: CustoDeff.Data<string>;
 	};
 	choices: {
-		AddChoice: GeneralCustoText;
+		AddChoice: CustoDeff.Text;
 		single: {
-			Placeholder: GeneralCustData<string>;
+			Placeholder: CustoDeff.Data<string>;
 		};
 	};
-	CanSelectMultiple: GeneralCustoText;
-	AllowPartialCredit: GeneralCustoText;
-	DisableShuffle: GeneralCustoText;
+	CanSelectMultiple: CustoDeff.Text;
+	AllowPartialCredit: CustoDeff.Text;
+	DisableShuffle: CustoDeff.Text;
 }
 
 interface MCEditPassableHooks {
 	choices?: {
-		isCurrentChoiceCorrect?: GeneralCustoHook<() => boolean>;
-		chooseFn?: GeneralCustoHook<(choiceId: number) => () => void>;
-		deleteFn?: GeneralCustoHook<(choiceId: number) => () => void>;
-		addEmptyChoiceFn?: GeneralCustoHook<() => () => void>;
+		isCurrentChoiceCorrect?: CustoDeff.Hook<() => boolean>;
+		chooseFn?: CustoDeff.Hook<(choiceId: number) => () => void>;
+		deleteFn?: CustoDeff.Hook<(choiceId: number) => () => void>;
+		addEmptyChoiceFn?: CustoDeff.Hook<() => () => void>;
 	};
 	settings?: {
-		canSelectMultipleChangeFn?: GeneralCustoHook<
+		canSelectMultipleChangeFn?: CustoDeff.Hook<
 			() => (
 				canSelectMultiple: IMultipleChoiceContent["canSelectMultiple"]
 			) => void
 		>;
-		allowPartialCreditChangeFn?: GeneralCustoHook<
+		allowPartialCreditChangeFn?: CustoDeff.Hook<
 			() => (
 				allowPartialCredit: IMultipleChoiceContent["allowPartialCredit"]
 			) => void
 		>;
-		disableShuffleChangeFn?: GeneralCustoHook<
+		disableShuffleChangeFn?: CustoDeff.Hook<
 			() => (
 				disableShuffle: IMultipleChoiceContent["disableShuffle"]
 			) => void
