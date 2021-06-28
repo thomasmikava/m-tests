@@ -14,8 +14,10 @@ import {
 	CheckboxWithLabel,
 	NativeSelect,
 } from "./providers";
+import { ToVeryGeneralCusto } from "custo/lib/utils/prop-generics";
+import { wrapAsPackageCusto } from "m-tests-react/lib/utils/shortcuts";
 
-const defaultCommonEditComponents: CommonEditPassable["components"] = cDom.asComp(
+const defaultCommonEditComponents: ToVeryGeneralCusto<CommonEditPassable["components"]> = cDom.asComp(
 	{
 		Text: CreateCusto.hookOf.Component(() => EditTextComponent),
 		explanation: {
@@ -27,7 +29,7 @@ const defaultCommonEditComponents: CommonEditPassable["components"] = cDom.asCom
 	}
 );
 
-const defaultCommonEditElements: CommonEditPassable["elements"] = {
+const defaultCommonEditElements: ToVeryGeneralCusto<CommonEditPassable["elements"]> = {
 	OuterContainer: cDom.newDiv(),
 	BodyContainer: cDom.newDiv(),
 	explanation: {},
@@ -45,14 +47,14 @@ const defaultContentTextTransformer = (text: string) => {
 	);
 };
 
-const defaultCommonEditHooks: CommonEditPassable["hooks"] = {
+const defaultCommonEditHooks: ToVeryGeneralCusto<CommonEditPassable["hooks"]> = {
 	contentTextTransformer: CreateCusto.Hook(defaultContentTextTransformer),
 	nonContentTextTransformer: CreateCusto.Hook(x => x),
 };
 
-export const defaultCommonEdit: CommonEditPassable = {
-	components: defaultCommonEditComponents,
-	elements: defaultCommonEditElements,
+export const defaultCommonEdit: ToVeryGeneralCusto<CommonEditPassable> = {
+	components: wrapAsPackageCusto(defaultCommonEditComponents),
+	elements: wrapAsPackageCusto(defaultCommonEditElements),
 	texts: reactDefaultCommonEditPassable.texts,
 	functions: reactDefaultCommonEditPassable.functions,
 	hooks: defaultCommonEditHooks,
