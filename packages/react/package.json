@@ -1,6 +1,6 @@
 {
   "name": "m-tests-react",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -34,11 +34,11 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.18.0",
     "eslint-plugin-react-hooks": "^2.3.0",
-    "prettier": "^1.19.1",
-    "typescript": "3.9.7",
     "m-tests-core": "^0.0.4",
+    "prettier": "^1.19.1",
     "react": "^16.13.0",
-    "custo": "^0.0.11"
+    "custo": "^0.0.11",
+    "typescript": "3.9.7"
   },
   "eslintConfig": {
     "extends": "react-app"
