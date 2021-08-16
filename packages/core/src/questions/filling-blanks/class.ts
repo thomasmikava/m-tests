@@ -13,6 +13,7 @@ import {
 import {
 	contentCommonPartNames,
 	ContentType,
+	EmptyContentCreationSettings,
 	IStatement,
 	StatTransformerFn,
 } from "../common-schemas";
@@ -40,8 +41,9 @@ class FillingBlanks extends QuestionContent<IAnswer, IFillingBlanksUserAns>
 	designStructure?: IFillingBlanksContent["designStructure"];
 
 	public static getEmptyContent(
-		designStructure?: FBContentDesignStructure
+		settings: EmptyContentCreationSettings
 	): IFillingBlanksContent {
+		const { designStructure } = settings;
 		if (designStructure === FBContentDesignStructure.essay) {
 			return {
 				type: ContentType.FillingBlanks,

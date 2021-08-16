@@ -57,7 +57,6 @@ export const NativeSelect: <V extends {
 export const EditTextComponent = WrapInCustHookChangeError(
 	React.memo(
 		({ path, stat, usePlaceholder, onChange }: EditTextComponentProps) => {
-			const haRef = useRef<any>(null);
 			const Cont = useEditCustomizationProp("elements", path);
 			const placeholder = usePlaceholder
 				? usePlaceholder.use()
@@ -70,21 +69,19 @@ export const EditTextComponent = WrapInCustHookChangeError(
 						...old,
 						text,
 					}));
+				} else {
+					onChange(old => ({
+						...old,
+						text: e as any,
+					}));
 				}
 			}, []);
-
-			useLayoutEffect(() => {
-				if (haRef.current) {
-					haRef.current.value = stat.text;
-				}
-			});
 
 			return (
 				<Cont
 					placeholder={placeholder}
-					ref={haRef}
 					onChange={handleChange}
-					defaultValue={stat.text}
+					value={stat.text}
 				/>
 			);
 		}

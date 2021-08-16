@@ -1,10 +1,9 @@
-import { ContentType } from "m-tests-core/lib/questions/common-schemas";
+import { ContentType, EmptyContentCreationSettings } from "m-tests-core/lib/questions/common-schemas";
 import { ContentError } from "m-tests-core/lib/questions/errors";
 import { IRawQuestionContent } from "m-tests-core/lib/questions/schemas";
 import { ContentPath } from "m-tests-core/lib/utils/path";
 import React from "react";
 import { CommonEditCusto } from "./common/components";
-import { getChangedContent } from "./helpers/default-content";
 import { MultipleChoiceEditContainer } from "./multiple-choice/components/providers";
 import { EditContentCont } from "./common/hooks/contexts";
 import { SetState } from "../../utils/interfaces";
@@ -15,22 +14,19 @@ import {
 	RawStatToEditableStatFn,
 	EditableContentToRawContentFn,
 	EditableStatToRawStatFn,
+	GetChangedContentFn,
 } from "./common/props/types";
-
-export type GetChangedContentFN = (args: {
-	old: { content?: IRawQuestionContent; designStructure?: string };
-	new: { contentType: ContentType; designStructure?: string };
-}) => IRawQuestionContent | undefined;
+import { IChooseQuestionContentTypeRef } from "./common/components/types";
 
 export interface IProps {
 	defaultQuestionContent?: IRawQuestionContent;
-	defaultContentType?: ContentType;
-	defaultDesignStructure?: string;
+	defaultContentSettings?: EmptyContentCreationSettings;
 	onChange?: (content: IRawQuestionContent | undefined) => void;
 	rawContentToEditableContentFn: RawContentToEditableContentFn;
 	rawStatToEditableStatFn: RawStatToEditableStatFn;
 	editableContentToRawContentFn: EditableContentToRawContentFn;
 	editableStatToRawStatFn: EditableStatToRawStatFn;
+	getChangedContent: GetChangedContentFn;
 }
 
 interface IState {
@@ -46,15 +42,13 @@ export class QuestionEditwrapperClass extends React.PureComponent<
 		let content: IRawQuestionContent | undefined = undefined;
 		const {
 			defaultQuestionContent,
-			defaultContentType,
-			defaultDesignStructure,
+			defaultContentSettings
 		} = props;
 		if (defaultQuestionContent) {
 			content = defaultQuestionContent;
-		} else if (defaultContentType !== undefined) {
-			content = getChangedContent({
-				newContentType: defaultContentType,
-				newDesignStructure: defaultDesignStructure || null,
+		} else if (defaultContentSettings && defaultContentSettings.contentType !== undefined) {
+			content = this.props.getChangedContent({
+				newContentSettings: defaultContentSettings
 			});
 		}
 		if (content) {
@@ -64,6 +58,18 @@ export class QuestionEditwrapperClass extends React.PureComponent<
 		this.state = {
 			content,
 		};
+	}
+
+	contentSelectorRef = React.createRef<IChooseQuestionContentTypeRef>();
+
+	getSeletedContentSettings = (): EmptyContentCreationSettings | undefined => {
+		if (!this.contentSelectorRef.current) return undefined;
+		return this.contentSelectorRef.current.getSettings();
+	}
+	
+	setSeletedContentSettings = (settings: EmptyContentCreationSettings): void => {
+		if (!this.contentSelectorRef.current) return;
+		return this.contentSelectorRef.current.setSettings(settings);
 	}
 
 	setContent: SetState<IRawQuestionContent | undefined> = classSetStateProp(
@@ -119,18 +125,14 @@ export class QuestionEditwrapperClass extends React.PureComponent<
 		const { content } = this.state;
 		const { getEditableContent, setContent, setEditableContent } = this;
 
-		const designStructure: string | null =
-			(content as any)?.designStructure ?? null;
-		const contentType = content?.type;
-
 		const { ContentSelector } = CommonEditCusto.components;
 
 		return (
 			<div style={{ textAlign: "left" }}>
 				<ContentSelector
+					defaultSettings={this.props.defaultContentSettings}
 					setContent={setEditableContent}
-					selectedType={contentType ?? null}
-					selectedDesignStructure={designStructure ?? null}
+					ref={this.contentSelectorRef}
 				/>
 				{content && (
 					<EditContentCont.Provider
@@ -153,11 +155,13 @@ export const QuestionEditwrapper = InjectHook(
 		const rawStatToEditableStatFn = CommonEditCusto.functions.rawStatToEditableStatFn.use();
 		const editableContentToRawContentFn = CommonEditCusto.functions.editableContentToRawContentFn.use();
 		const editableStatToRawStatFn = CommonEditCusto.functions.editableStatToRawStatFn.use();
+		const getChangedContent = CommonEditCusto.functions.getChangedContentFn.use();
 		return {
 			rawContentToEditableContentFn,
 			rawStatToEditableStatFn,
 			editableContentToRawContentFn,
 			editableStatToRawStatFn,
+			getChangedContent,
 		};
 	}
 );

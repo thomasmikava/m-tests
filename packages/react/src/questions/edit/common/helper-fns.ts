@@ -6,7 +6,7 @@ import {
 	EditableContentToRawContentFn,
 } from "./props/types";
 import { newContent } from "m-tests-core/lib/questions/new-content";
-import { generateUniqueId } from "../../../utils/array";
+import { generateUniqueId } from "m-tests-core/lib//utils/array";
 
 export const createMapContent = (
 	contentMapFn: (content: IRawQuestionContent) => any

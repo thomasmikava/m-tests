@@ -6,6 +6,7 @@ import {
 	rawContentToEditableContent,
 	editableContentToRawContent,
 } from "../helper-fns";
+import { getChangedContent } from "../../helpers/default-content";
 
 export const CommonEditOnes: ToCustoTreeObj<CommonEditPassable> = {
 	components: {
@@ -47,6 +48,7 @@ export const CommonEditOnes: ToCustoTreeObj<CommonEditPassable> = {
 		rawStatToEditableStatFn: CustoType.data,
 		editableContentToRawContentFn: CustoType.data,
 		editableStatToRawStatFn: CustoType.data,
+		getChangedContentFn: CustoType.data,
 	},
 	hooks: {
 		contentTextTransformer: CustoType.data,
@@ -69,6 +71,7 @@ export const CommonEditCusto = CreateCusto.Tree<CommonEditPassable>(
 					editableContentToRawContent
 				),
 				editableStatToRawStatFn: CreateCusto.Data(x => x),
+				getChangedContentFn: CreateCusto.Data(getChangedContent)
 			},
 		},
 	}

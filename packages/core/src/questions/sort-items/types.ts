@@ -18,3 +18,6 @@ export type IRSortItemsContent = Omit<
 >;
 
 export type ISortItemsUserAns = number[] | null;
+
+export interface StrictSortItemsEmptyContentSettings {
+}

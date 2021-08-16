@@ -33,8 +33,8 @@ const optimizedNormalizedCustomizations = createDeeplyOptimizedCustomizedPropsHo
 
 const {
 	Container: NormalizedQuestionContentCustomizationCont,
-	...QuestionContentCustomizationProviders
-} = buildCusto<
+	Providers: QuestionContentCustomizationProviders
+}  = buildCusto<
 	QuestionContentCustomization,
 	NormalizedQuestionContentCustomization
 >({

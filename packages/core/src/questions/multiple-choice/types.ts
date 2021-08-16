@@ -5,16 +5,6 @@ import {
 	IStatement,
 } from "../common-schemas";
 
-export enum MCContentDesignStructure {
-	twoColumns = "2Cols",
-	dataSufficiency = "DataSufficiency",
-}
-
-export const MCContentDesignStructures = [
-	MCContentDesignStructure.twoColumns,
-	MCContentDesignStructure.dataSufficiency,
-];
-
 export interface IMultipleChoiceContent extends ICommonQuestionParts {
 	type: ContentType.MultipleChoice;
 	statement: IStatement & Record<any, any>;
@@ -23,7 +13,7 @@ export interface IMultipleChoiceContent extends ICommonQuestionParts {
 	})[];
 	canSelectMultiple?: boolean;
 	disableShuffle?: boolean;
-	designStructure?: MCContentDesignStructure;
+	designStructure?: string;
 }
 
 export type IRMultipleChoiceContent = Omit<
@@ -34,3 +24,9 @@ export type IRMultipleChoiceContent = Omit<
 };
 
 export type IMultipleChoiceUserAns = number | number[] | null;
+
+export interface StrictMultipleChoiceEmptyContentSettings {
+	canSelectMultiple?: boolean;
+	disableShuffle?: boolean;
+	numOfChoices?: number;
+}

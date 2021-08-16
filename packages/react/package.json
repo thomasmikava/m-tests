@@ -19,9 +19,9 @@
   "license": "MIT",
   "dependencies": {},
   "peerDependencies": {
-    "custo": "^0.0.11",
-    "m-tests-core": "^0.0.4",
-    "react": ">=16.8.0"
+    "custo": "^0.0.14",
+    "m-tests-core": "^0.0.5",
+    "@types/react": ">=16.8.0"
   },
   "devDependencies": {
     "@types/react": "16.9.41",
@@ -37,7 +37,7 @@
     "m-tests-core": "^0.0.4",
     "prettier": "^1.19.1",
     "react": "^16.13.0",
-    "custo": "^0.0.11",
+    "custo": "@latest",
     "typescript": "4.2.4"
   },
   "eslintConfig": {

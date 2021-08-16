@@ -19,28 +19,24 @@ export const reactDefaultCommonEditPassable: ToVeryGeneralCusto<Pick<
 				{
 					value: {
 						contentType: ContentType.MultipleChoice,
-						designStructure: null,
 					},
 					label: "Multiple Choice",
 				},
 				{
 					value: {
 						contentType: ContentType.SortItems,
-						designStructure: null,
 					},
 					label: "Sorting Items",
 				},
 				{
 					value: {
 						contentType: ContentType.FillingBlanks,
-						designStructure: null,
 					},
 					label: "Filling Blanks",
 				},
 				{
 					value: {
 						contentType: ContentType.MultipleContents,
-						designStructure: null,
 					},
 					label: "Multiple Contents",
 				},

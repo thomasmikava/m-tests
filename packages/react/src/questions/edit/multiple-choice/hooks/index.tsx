@@ -4,7 +4,7 @@ import { areDeeplyEqual } from "m-tests-core/lib/utils/optimizations";
 import { useOptimizedFunc } from "../../../../utils/hooks";
 import { commonEditHooks } from "../../common/hooks";
 import { ContentType } from "m-tests-core/lib/questions/common-schemas";
-import { generateUniqueId } from "../../../../utils/array";
+import { generateUniqueId } from "m-tests-core/lib/utils/array";
 import { newContent } from "m-tests-core/lib/questions/new-content";
 import { CommonEditCusto } from "../../common/components";
 import { IRMultipleChoiceContent } from "m-tests-core/lib/questions/multiple-choice/types";

@@ -1,99 +1,46 @@
 import {
 	contentCommonPartNames,
 	ContentType,
+	EmptyContentCreationSettings,
 	StatTransformerFn,
 } from "../common-schemas";
 import {
 	IMultipleChoiceContent,
 	IMultipleChoiceUserAns,
 	IRMultipleChoiceContent,
-	MCContentDesignStructure,
 } from "./types";
 import { QuestionContent } from "../class";
 import { pickKeys } from "../../utils/objects";
+import { generateUniqueId } from "../../utils/array";
 
 class MultipleChoice
 	extends QuestionContent<IMultipleChoiceUserAns, IMultipleChoiceUserAns>
 	implements IMultipleChoiceContent {
-	static getEmptyContent(
-		designStructure?: MCContentDesignStructure
-	): IMultipleChoiceContent {
-		if (designStructure === MCContentDesignStructure.twoColumns) {
-			return {
-				type: ContentType.MultipleChoice,
-				statement: {
-					id: 1,
-					text: "",
-					textA: "",
-					textB: "",
-				},
-				choices: [
-					{
-						id: 2,
-						text:
-							"A სვეტის უჯრაში მოცემული რაოდენობა მეტია B სვეტის უჯრაში მოცემულ რაოდენობაზე.",
-					},
-					{
-						id: 3,
-						text:
-							"B სვეტის უჯრაში მოცემული რაოდენობა მეტია A სვეტის უჯრაში მოცემულ რაოდენობაზე.",
-					},
-					{
-						id: 4,
-						text:
-							"A სვეტის უჯრაში მოცემული რაოდენობა B სვეტის უჯრაში მოცემული რაოდენობის ტოლია.",
-					},
-					{
-						id: 5,
-						text:
-							"მოცემული ინფორმაცია საკმარისი არაა იმის დასადგენად, რომელი რაოდენობაა მეტი.",
-					},
-				],
-				designStructure: MCContentDesignStructure.twoColumns,
-			};
+	static getEmptyContent(settings: EmptyContentCreationSettings): IMultipleChoiceContent {
+		const additional: Partial<IMultipleChoiceContent> = {};
+		if (settings.canSelectMultiple) {
+			additional.canSelectMultiple = true;
 		}
-		if (designStructure === MCContentDesignStructure.dataSufficiency) {
-			return {
-				type: ContentType.MultipleChoice,
-				statement: {
-					id: 1,
-					text: "<br/>მოცემულია ორი პირობა:<br/>I. <br/>II. <br/>",
-				},
-				choices: [
-					{
-						id: 2,
-						text: "I პირობა საკმარისია, II კი – არა.",
-					},
-					{
-						id: 3,
-						text: "II პირობა საკმარისია, I კი – არა.",
-					},
-					{
-						id: 4,
-						text:
-							"I და II პირობა ერთად საკმარისია, ცალ-ცალკე არც ერთი არ არის საკმარისი.",
-					},
-					{
-						id: 5,
-						text:
-							"საკმარისია ცალ-ცალკე როგორც I, ასევე, II პირობა.",
-					},
-					{
-						id: 6,
-						text: "მოცემული პირობები არ არის საკმარისი.",
-					},
-				],
-				designStructure: MCContentDesignStructure.dataSufficiency,
-			};
+		if (settings.disableShuffle) {
+			additional.disableShuffle = true;
 		}
+		let numOfChoices = 4;
+		if (!Number.isNaN(settings.numOfChoices) && settings.numOfChoices >= 0) {
+			numOfChoices = Math.floor(settings.numOfChoices);
+		}
+
+		const statementId = 1;
+		const choiceIds = generateUniqueId([statementId], numOfChoices);
+		
 		return {
+			...additional,
 			type: ContentType.MultipleChoice,
 			statement: {
-				id: 1,
+				id: statementId,
 				text: "",
 			},
-			choices: new Array(4).fill(0).map((e, i) => ({
-				id: i + 1,
+			choices: new Array(numOfChoices).fill(0).map((e, i) => ({
+				id: choiceIds[i],
 				text: "",
 			})),
 		};
@@ -269,15 +216,6 @@ class MultipleChoice
 	}
 
 	getShortStat(separator = this.defaultSeparator) {
-		if (this.designStructure === MCContentDesignStructure.twoColumns) {
-			return [
-				this.statement.text,
-				this.statement.textA,
-				this.statement.textB,
-			]
-				.filter(e => !!e)
-				.join(separator);
-		}
 		return this.statement.text;
 	}
 

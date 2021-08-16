@@ -1,3 +1,9 @@
+import { StrictFillingBlanksEmptyContentSettings } from "./filling-blanks/types";
+import { StrictGroupingItemsEmptyContentSettings } from "./grouping-items/types";
+import { StrictMultipleChoiceEmptyContentSettings } from "./multiple-choice/types";
+import { StrictMultipleContentsEmptyContentSettings } from "./multiple-contents/types";
+import { StrictSortItemsEmptyContentSettings } from "./sort-items/types";
+
 export enum ContentType {
 	MultipleChoice = 1,
 	TwoColumns = 2,
@@ -56,3 +62,17 @@ export const forbiddenProperties: forbiddenProperty[] = [
 ];
 
 export type StatTransformerFn = <T extends IStatement | undefined>(data: T) => any;
+
+export interface EmptyContentCreationSettings {
+	contentType: ContentType;
+	designStructure?: string | null;
+	[key: string]: any;
+}
+
+export interface StrictEmptyContentCreationSettings {
+	[ContentType.FillingBlanks]: StrictFillingBlanksEmptyContentSettings;
+	[ContentType.GroupingItems]: StrictGroupingItemsEmptyContentSettings;
+	[ContentType.MultipleChoice]: StrictMultipleChoiceEmptyContentSettings;
+	[ContentType.MultipleContents]: StrictMultipleContentsEmptyContentSettings;
+	[ContentType.SortItems]: StrictSortItemsEmptyContentSettings;
+}

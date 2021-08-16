@@ -3,7 +3,8 @@ import MultipleChoice from "./multiple-choice/class";
 import MultipleContents from "./multiple-contents/class";
 import SortItems from "./sort-items/class";
 import { IRawQuestionContent, IQuestionContent } from "./schemas";
-import { ContentType } from "./common-schemas";
+import { ContentType, EmptyContentCreationSettings } from "./common-schemas";
+import GroupingItems from "./grouping-items/class";
 
 export function newContent(content: IRawQuestionContent): IQuestionContent {
 	switch (content.type) {
@@ -21,3 +22,20 @@ export function newContent(content: IRawQuestionContent): IQuestionContent {
 			);
 	}
 }
+
+export const getEmptyContent = (settings: EmptyContentCreationSettings) => {
+	switch (settings.contentType) {
+		case ContentType.MultipleChoice:
+			return MultipleChoice.getEmptyContent(settings);
+		case ContentType.FillingBlanks:
+			return FillingBlanks.getEmptyContent(settings);
+		case ContentType.SortItems:
+			return SortItems.getEmptyContent();
+		case ContentType.GroupingItems:
+			return GroupingItems.getEmptyContent();
+		case ContentType.MultipleContents:
+			return MultipleContents.getEmptyContent();
+		default:
+			throw new Error(`content type ${settings.contentType} is not supported`);
+	}
+};

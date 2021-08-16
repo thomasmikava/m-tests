@@ -1,16 +1,15 @@
 import {
-	ExplanationProps,
-	CheckboxWithLabelProps,
-	SelectProps,
-} from "../../../view/common/components/types";
-import {
 	ContentType,
+	EmptyContentCreationSettings,
 	IStatement,
+	StrictEmptyContentCreationSettings
 } from "m-tests-core/lib/questions/common-schemas";
-import { IChooseQuestionContentTypeProps } from "../components/types";
-import { EditTextComponentProps } from "../components/types";
 import { IRawQuestionContent } from "m-tests-core/lib/questions/schemas";
 import { CustoDeff } from "../../../../elements";
+import {
+	CheckboxWithLabelProps, ExplanationProps, SelectProps
+} from "../../../view/common/components/types";
+import { EditTextComponentProps, IChooseQuestionContentTypeProps } from "../components/types";
 
 interface CommonEditComponents {
 	Text: CustoDeff.Component<EditTextComponentProps>;
@@ -38,9 +37,10 @@ interface CommonEditElements {
 }
 type RichText = string | JSX.Element;
 
-export interface ContentTypeChooseValue {
-	contentType: ContentType;
-	designStructure: string | null;
+
+export interface ContentTypeChooseOption {
+	value: EmptyContentCreationSettings;
+	label: RichText;
 }
 
 interface CommonEditTexts {
@@ -50,12 +50,7 @@ interface CommonEditTexts {
 	};
 	contentTypes: {
 		Placeholder: CustoDeff.Data<string>;
-		options: CustoDeff.Data<
-			{
-				value: ContentTypeChooseValue;
-				label: RichText;
-			}[]
-		>;
+		options: CustoDeff.Data<ContentTypeChooseOption[]>;
 	};
 }
 
@@ -64,6 +59,10 @@ export type RawStatToEditableStatFn = <T extends IStatement | undefined | null>(
 ) => any;
 
 export type EditableStatToRawStatFn = (stat: any) => IStatement;
+export type GetChangedContentFn = (settings: {
+	oldContent?: IRawQuestionContent;
+	newContentSettings: EmptyContentCreationSettings;
+}) => IRawQuestionContent | undefined;
 
 export type RawContentToEditableContentFn = (
 	content: IRawQuestionContent,
@@ -85,6 +84,7 @@ interface CommonEditFunctions {
 	>;
 	rawStatToEditableStatFn?: CustoDeff.Data<RawStatToEditableStatFn>;
 	editableStatToRawStatFn?: CustoDeff.Data<EditableStatToRawStatFn>;
+	getChangedContentFn?: CustoDeff.Data<GetChangedContentFn>;
 }
 
 interface CommonEditHooks {
@@ -104,4 +104,9 @@ export interface CommonEditPassable {
 	texts: CommonEditTexts;
 	functions: CommonEditFunctions;
 	hooks: CommonEditHooks;
+}
+
+
+export type StrictEmptyContentOptionValue = {
+	[key in keyof StrictEmptyContentCreationSettings & ContentType]: StrictEmptyContentCreationSettings[key] & { contentType: key };
 }

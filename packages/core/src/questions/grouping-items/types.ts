@@ -39,3 +39,6 @@ export type IGroupingItemsUserAns = {
 	itemId: number;
 	groupId: number;
 }[];
+
+export interface StrictGroupingItemsEmptyContentSettings {
+}

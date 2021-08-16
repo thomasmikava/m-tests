@@ -1,6 +1,5 @@
 import Joi from "joi";
 import { ContentType } from "m-tests-core/lib/questions/common-schemas";
-import { MCContentDesignStructures } from "m-tests-core/lib/questions/multiple-choice/types";
 import { CommonQuestionPartsSchema, StatementSchema } from "../common-schemas";
 
 export const MultipleChoiceContentSchema = CommonQuestionPartsSchema.keys({
@@ -17,7 +16,7 @@ export const MultipleChoiceContentSchema = CommonQuestionPartsSchema.keys({
 		.required(),
 	canSelectMultiple: Joi.boolean(),
 	disableShuffle: Joi.boolean(),
-	designStructure: Joi.string().valid(...MCContentDesignStructures),
+	designStructure: Joi.string(),
 }).unknown(true);
 
 export const RMultipleChoiceContentSchema = MultipleChoiceContentSchema.keys({

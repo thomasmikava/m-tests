@@ -1,18 +1,18 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useMemo } from "react";
+import React, { useCallback, useImperativeHandle, useMemo, useState } from "react";
 import {
 	EditExplanationProps,
 	EditTextComponentProps,
 	IChooseQuestionContentTypeProps,
+	IChooseQuestionContentTypeRef,
 } from "./types";
 import { commonEditHooks } from "../hooks";
 import { useEditCustomizationProp } from "../hooks/helper";
 import { useOptimizedFunc } from "../../../../utils/hooks";
-import { ContentTypeChooseValue } from "../props/types";
-import { ContentType } from "m-tests-core/lib/questions/common-schemas";
+import { EmptyContentCreationSettings } from "m-tests-core/lib/questions/common-schemas";
 import { CommonEditCusto } from ".";
-import { getChangedContent } from "../../helpers/default-content";
 import { WrapInCustHookChangeError } from "custo";
+import { ContentTypeChooseOption } from "../props/types";
 
 export const EditExplanation: React.FC<EditExplanationProps> = React.memo(
 	({ path }) => {
@@ -49,48 +49,41 @@ export const EditExplanation: React.FC<EditExplanationProps> = React.memo(
 );
 
 export const ChooseQuestionContentType: React.FC<IChooseQuestionContentTypeProps> = React.memo(
-	WrapInCustHookChangeError(
-		({ selectedType, selectedDesignStructure, setContent }) => {
+	WrapInCustHookChangeError(React.forwardRef<IChooseQuestionContentTypeRef, IChooseQuestionContentTypeProps>(
+		({ setContent, defaultSettings }, ref) => {
 			const { ContentSelectorContainer } = CommonEditCusto.elements;
 			const { Select } = CommonEditCusto.components;
 			const options = CommonEditCusto.texts.contentTypes.options.use();
 			const placeholder = CommonEditCusto.texts.contentTypes.Placeholder.use();
-
-			const onContentChange = ({
-				contentType,
-				designStructure,
-			}: {
-				contentType: ContentType;
-				designStructure: string | null;
-			}) => {
+			const getChangedContent = CommonEditCusto.functions.getChangedContentFn.use();
+			
+			const [settings, setSettings] = useState(defaultSettings); 
+			
+			const handleSettingsChange = useOptimizedFunc((settings: EmptyContentCreationSettings) => {
+				setSettings(settings);
 				setContent(content =>
 					getChangedContent({
 						oldContent: content,
-						newContentType: contentType,
-						newDesignStructure: designStructure,
+						newContentSettings: settings,
 					})
 				);
-			};
+			});
 
-			const handleChange = useOptimizedFunc(
-				(select: { value: ContentTypeChooseValue; label: string }) => {
-					onContentChange({
-						contentType: select.value.contentType,
-						designStructure: select.value.designStructure,
-					});
-				}
-			);
+			const handleChange = useCallback((option: ContentTypeChooseOption) => {
+				handleSettingsChange(option.value);
+			}, [handleSettingsChange]);
+
+			useImperativeHandle(ref, () => ({
+				getSettings: () => settings,
+				setSettings: handleSettingsChange
+			}), [settings, handleSettingsChange]);
 
 			const selectedOption = useMemo(() => {
-				return selectedType === undefined
-					? undefined
-					: options.find(
-							e =>
-								e.value.contentType === selectedType &&
-								e.value.designStructure ===
-									selectedDesignStructure
-					  );
-			}, [options, selectedDesignStructure, selectedType]);
+				if (!settings) return undefined;
+				return options.find(
+					e => areEqualOnDepth1(e.value, settings)
+				);
+			}, [options, settings]);
 
 			return (
 				<ContentSelectorContainer>
@@ -104,4 +97,22 @@ export const ChooseQuestionContentType: React.FC<IChooseQuestionContentTypeProps
 			);
 		}
 	)
-);
+));
+
+function areEqualOnDepth1(o1: any, o2: any){ // FIXME: import from another package? probably use propsComparison from m-tests-core
+    for(var p in o1){
+        if(o1.hasOwnProperty(p)){
+            if(o1[p] !== o2[p]){
+                return false;
+            }
+        }
+    }
+    for(var p in o2){
+        if(o2.hasOwnProperty(p)){
+            if(o1[p] !== o2[p]){
+                return false;
+            }
+        }
+    }
+    return true;
+};

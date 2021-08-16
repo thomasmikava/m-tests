@@ -138,3 +138,6 @@ interface IFBItemUserAnswer extends IStatement {
 export interface IFillingBlanksUserAns {
 	[x: string]: IFBItemUserAnswer | undefined;
 }
+export interface StrictFillingBlanksEmptyContentSettings {
+	designStructure?: FBContentDesignStructure;
+}

@@ -36,3 +36,6 @@ export type IRMultipleContents = Omit<
 export type IMultipleContentsUserAns = {
 	[contentId: number]: IUserAnswer | null | undefined;
 } | null;
+
+export interface StrictMultipleContentsEmptyContentSettings {
+}

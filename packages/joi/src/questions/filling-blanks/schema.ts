@@ -76,7 +76,7 @@ export const FillingBlanksContentSchema = CommonQuestionPartsSchema.keys({
 		)
 		.required(),
 	ignoreOrderOfInputs: Joi.boolean(),
-	designStructure: Joi.string().valid(...FBContentDesignStructures),
+	designStructure: Joi.string(),
 });
 
 export const RFillingBlanksContentSchema = CommonQuestionPartsSchema.keys({
@@ -93,7 +93,7 @@ export const RFillingBlanksContentSchema = CommonQuestionPartsSchema.keys({
 		)
 		.required(),
 	ignoreOrderOfInputs: Joi.boolean(),
-	designStructure: Joi.string().valid(...FBContentDesignStructures),
+	designStructure: Joi.string(),
 }).fork("explanation", markKeysForbidden);
 
 ///

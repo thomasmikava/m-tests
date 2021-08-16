@@ -19,7 +19,7 @@ import { wrapAsPackageCusto } from "m-tests-react/lib/utils/shortcuts";
 
 const defaultCommonEditComponents: ToVeryGeneralCusto<CommonEditPassable["components"]> = cDom.asComp(
 	{
-		Text: CreateCusto.hookOf.Component(() => EditTextComponent),
+		Text: EditTextComponent,
 		explanation: {
 			Container: EditExplanation,
 		},
